@@ -6,10 +6,10 @@ import ReactDOM from 'react-dom/client';
 
 
 // import BACKEND packages
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import {useAuthState} from 'react-firebase-hooks/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
+import {useAuthState, useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 
 // import web app pages
@@ -36,27 +36,59 @@ const firebaseConfig = {
   measurementId: "G-HF52PR1GMX"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// Initialize Firebase Backend
 
-/* SECTION START: RUNNING THIS WILL CRASH SITE
-firebase.initializeApp({
-  // firebase config
-})
-
+firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-const firestore = firebase.firestore();
+const firestore = firebase.firestore(); // db = firebase.firestore() for database access
+
+//const app = initializeApp(firebaseConfig);
+// we don't case about analytics for the project yet
+//const analytics = getAnalytics(app);
+
+// SECTION START: RUNNING THIS WILL CRASH SITE
 // SECTION END
-*/
+
+function SignIn()
+{
+  const useSignInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+  }
+  
+  return (
+    <button className="signIn" onClick={useSignInWithGoogle}>Sign in with Google</button>
+  )
+}
+
+function SignOut()
+{
+  return auth.currentUser && (
+    <button className="signOut" onClick={() => auth.signOut()}>Sign Out</button>
+  )
+}
+
+function ChatRoom()
+{
+  const messagesRef = firestore.collection('messages');
+  const query = messagesRef.orderBy('createdAt').limit(25);
+
+  const [messages] = useCollectionData(query, {idField: 'id'}); // use React Hooks to detect component change and re-render()
+}
 
 // ========================== Main Application ===========================
 
 function App() {
+
+  const [user] = useAuthState(auth);
+
   return (
     <div className="App">
       <header className="App-header">
         <p>Website Exists</p>
+        <section>
+          {user ? <ChatRoom /> : <SignIn />}
+        </section>
+
         {/*
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -71,6 +103,7 @@ function App() {
           Learn React
         </a>
       */}
+
       </header>
     </div>
   );
