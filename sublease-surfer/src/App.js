@@ -1,19 +1,31 @@
 //import logo from './logo.svg';
 
 // import FRONTEND packages
-import React from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 
 
 // import BACKEND packages
 import firebase from 'firebase/compat/app';
+//import * as firebaseui from 'firebaseui';
+//import 'firebaseui/dist/firebaseui.css';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import {useAuthState, useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 
-// import web app pages
+// import web app pages and variables
 import './App.css';
+
+import {ChatRoom, 
+  ChatMessage, 
+  SignIn, 
+  SignOut, 
+  post,
+  read,
+  auth} from './backend';
+
+//import {ChatRoom} from './backend.js';
 
 // ========================== initialize backend: Google Firebase ===========================
 
@@ -23,73 +35,31 @@ import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+// ========================== Frontend Diplay Components' Functions ===========================
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBysQ6DRQtUpCZKvcW0mhYNP-wp_KRUrto",
-  authDomain: "sublease-surfer.firebaseapp.com",
-  projectId: "sublease-surfer",
-  storageBucket: "sublease-surfer.appspot.com",
-  messagingSenderId: "520847563465",
-  appId: "1:520847563465:web:e1c4f6beb69e6e94104b18",
-  measurementId: "G-HF52PR1GMX"
-};
-
-// Initialize Firebase Backend
-
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const firestore = firebase.firestore(); // db = firebase.firestore() for database access
-
-//const app = initializeApp(firebaseConfig);
-// we don't case about analytics for the project yet
-//const analytics = getAnalytics(app);
-
-// SECTION START: RUNNING THIS WILL CRASH SITE
-// SECTION END
-
-function SignIn()
-{
-  const useSignInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-  }
-  
-  return (
-    <button className="signIn" onClick={useSignInWithGoogle}>Sign in with Google</button>
-  )
-}
-
-function SignOut()
-{
-  return auth.currentUser && (
-    <button className="signOut" onClick={() => auth.signOut()}>Sign Out</button>
-  )
-}
-
-function ChatRoom()
-{
-  const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt').limit(25);
-
-  const [messages] = useCollectionData(query, {idField: 'id'}); // use React Hooks to detect component change and re-render()
-}
-
-// ========================== Main Application ===========================
+// ========================== Main Page Display ===========================
 
 function App() {
 
+  // get user authentication token
   const [user] = useAuthState(auth);
 
   return (
     <div className="App">
       <header className="App-header">
         <p>Website Exists</p>
+        <h1>Hello, {user ? user.displayName : " sign-in here"}</h1> {/*Dyanmic component dependent on user login status*/}
         <section>
-          {user ? <ChatRoom /> : <SignIn />}
+          {/*<ChatRoom />*/}
+          {user ? <SignOut /> : <SignIn />} {/* Conditonal CSS displays different components based on User Login STATE*/}
         </section>
 
-        {/*
+        <div>
+          {/*user ? <postField /> : <defaultDisplay />*/}
+        </div>
+
+        {/* 
+        // DEFAULT REACT PAGE 
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
