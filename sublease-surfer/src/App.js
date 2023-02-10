@@ -48,7 +48,6 @@ import { getAnalytics } from "firebase/analytics";
 // Component for user to create new sublease posting / listing 
 function PostField() // consider making user page its own class to use this.state.value and onChange function
 {
-  var slider = document.getElementById("slide");
   
   return (
     <div>
@@ -62,14 +61,21 @@ function PostField() // consider making user page its own class to use this.stat
       {/*Create Price input slider*/}
       <input type="range" min="0" max="4000" id="slide"/><br></br>
 
-      <p>Sublease Price / month: {slider}</p>
-      <button onClick={console.log("Slider value: " + slider)}>Submit Posting</button>
+      <p>Sublease Price / month: {}</p>
+      <button onClick={getSliderValue()}>Submit Posting</button>
     </div>
   // onClick={ TO DO - add posting data to database
   )
- 
+
 }
 
+function getSliderValue()
+{
+  var slider = slider ? document.getElementById("slide").value : 0;
+  alert(slider);
+  alert("hi")
+
+}
 // temp dummy display for create post field if user NOT logged in
 function DefaultDisplay() 
 {
@@ -82,6 +88,7 @@ function DefaultDisplay()
 
 // ========================== Main Page Display ===========================
 
+
 function App() {
 
   // get user authentication token
@@ -89,14 +96,15 @@ function App() {
 
   // Toggle dark / light mode TODO: CREATE TOGGLE ELEMENT UI/UX
   const [theme, setTheme] = useState('light');
-  const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
-  };
-  
+  
+  const toggleTheme = () => {
+        if (theme === 'light') {
+          setTheme('dark');
+        } else {
+          setTheme('light');
+        }
+  };
+
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
@@ -106,7 +114,7 @@ function App() {
       <header className="App-header">
         <p>Website Exists</p>
         <div className={theme}>
-          <button onClick={toggleTheme}>Toggle Theme, NOT working! Don't Click</button>
+          <button>Toggle Theme, NOT working! Don't Click</button>
         </div>
 
         <h1>Hello, {user ? user.displayName : " sign-in here"}</h1> {/*Dyanmic component dependent on user login status*/}
@@ -114,7 +122,7 @@ function App() {
           {/*<ChatRoom />*/}
           {user ? <SignOut /> : <SignIn />} {/* Conditonal CSS displays different components based on User Login STATE*/}
           <div>
-          {user ? <PostField /> : <DefaultDisplay />}
+          {user ? <PostField onClick={getSliderValue}/> : <DefaultDisplay />}
           </div>
         </section>
 

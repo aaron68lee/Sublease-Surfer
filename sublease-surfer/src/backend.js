@@ -136,6 +136,7 @@ function SignOut()
 
 // ========================== Event Listeners ===========================
 // Bindings on load event listeners
+/*
 window.addEventListener('load', function() {
   // Bind Sign in button.
   signInButton.addEventListener('click', function() {
@@ -151,7 +152,7 @@ window.addEventListener('load', function() {
   // Listen for auth state changes
   //firebase.auth().onAuthStateChanged(onAuthStateChanged);
 });
-
+*/
 
 /**
  * Starts listening for new posts and populates posts lists.
