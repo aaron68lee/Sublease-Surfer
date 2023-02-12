@@ -24,6 +24,8 @@ import './themes.css';
 //import './Navbar.js';
 //import './Login.js';
 
+// importing backend functions and components
+
 import {ChatRoom, 
   ChatMessage, 
   SignIn, 
@@ -32,15 +34,11 @@ import {ChatRoom,
   read,
   auth} from './backend';
 
-//import {ChatRoom} from './backend.js';
-
 // ========================== initialize backend: Google Firebase ===========================
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // ========================== Frontend Diplay Components' Functions ===========================
 
@@ -62,13 +60,14 @@ function PostField() // consider making user page its own class to use this.stat
       <input type="range" min="0" max="4000" id="slide"/><br></br>
 
       <p>Sublease Price / month: {}</p>
-      <button onClick={getSliderValue()}>Submit Posting</button>
+      <button onClick={alert("submit clicked")}>Submit Posting</button>
     </div>
   // onClick={ TO DO - add posting data to database
   )
 
 }
 
+// doesn't work, 
 function getSliderValue()
 {
   var slider = slider ? document.getElementById("slide").value : 0;
@@ -88,7 +87,6 @@ function DefaultDisplay()
 
 // ========================== Main Page Display ===========================
 
-
 function App() {
 
   // get user authentication token
@@ -105,6 +103,7 @@ function App() {
         }
   };
 
+  //
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);

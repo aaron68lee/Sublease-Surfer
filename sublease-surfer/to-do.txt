@@ -1,0 +1,19 @@
+To Do List
+
+Tasks                                                                       Assigned
+
+1) Grayed out text boxes (click to enter)                                                    
+2) Get Slider Value and display on paragraph <p> component                  
+3) Submit Button posts dummy data to backend                                Aaron
+4) Refactor Code to reflect proper tree app structure                       Aaron
+5) Toggle Theme changes light/dark mode                                     Others
+    CSS in place
+    toggles theme variable between "light" and "dark"
+    Research React Hook UseEffect and UseState to update dynamically
+6) Google Maps display? 
+7) Create Different Pages and Navbar navigator for pages:                   Others
+    Login
+    User's Main Page
+        Tag Searched                    
+    Create Posting Page
+    Edit Profile Page
