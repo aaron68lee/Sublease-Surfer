@@ -1,16 +1,11 @@
-//import logo from './logo.svg';
 
 // import FRONTEND packages
 import React, {useRef, useState, useEffect} from 'react';
-import ReactDOM from 'react-dom/client';
-import { get } from 'https';
-// import { TextDecoder } from 'text-encoding';
-// const csv = require('csvtojson');
+import { Routes, Route, Navigate } from 'react-router-dom'; // <Routes> replaces <Switch> in dom version 6
 
 // import BACKEND packages
+
 import firebase from 'firebase/compat/app';
-//import * as firebaseui from 'firebaseui';
-//import 'firebaseui/dist/firebaseui.css';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import {useAuthState, useSignInWithGoogle} from 'react-firebase-hooks/auth';
@@ -19,6 +14,11 @@ import {useCollectionData} from 'react-firebase-hooks/firestore';
 // import web app pages and variables
 import './App.css';
 import './themes.css';
+import Frontpage from './frontpage';
+//import Frontpage from './frontpage';
+//import { PostField } from './components/posts.js';
+//import Links from './routes';
+
 // ================ FIX THESE FILES BEFORE IMPORTING ================ 
 //import './Login.js';
 //import './Navbar.js';
@@ -26,63 +26,15 @@ import './themes.css';
 
 // importing backend functions and components
 
-import {ChatRoom, 
-  ChatMessage, 
+import {
   SignIn, 
   SignOut, 
   post,
   read,
-  auth} from './backend';
+  auth} from './components/backend';
 
-// ========================== initialize backend: Google Firebase ===========================
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 // ========================== Frontend Diplay Components' Functions ===========================
-
-
-// Component for user to create new sublease posting / listing 
-function PostField() // consider making user page its own class to use this.state.value and onChange function
-{
-  
-  return (
-    <div>
-      {/*Create Text Description Field*/}
-      <input defaultValue={"Full Address"} type = "text"></input><br></br>
-      <input defaultValue={"Your Name"} type = "text"></input> 
-      <p>Start Date: </p> <input type = "date"></input> 
-      <p>End Date: </p> <input type = "date"></input> <br></br>
-      <input defaultValue={"Description"} type = "text"></input><br></br>
-      <input defaultValue={"Contact Info: "} type = "text"></input><br></br>
-      {/*Create Price input slider*/}
-      <input type="range" min="0" max="4000" id="slide"/><br></br>
-
-      <p>Sublease Price / month: {}</p>
-      <button onClick={alert("submit clicked")}>Submit Posting</button>
-    </div>
-  // onClick={ TO DO - add posting data to database
-  )
-
-}
-
-// doesn't work, 
-function getSliderValue()
-{
-  var slider = slider ? document.getElementById("slide").value : 0;
-  alert(slider);
-  alert("hi")
-
-}
-// temp dummy display for create post field if user NOT logged in
-function DefaultDisplay() 
-{
-  return (
-  <p>dummy component</p>
-  )
-}
-
 
 
 // ========================== Main Page Display ===========================
@@ -92,60 +44,55 @@ function App() {
   // get user authentication token
   const [user] = useAuthState(auth);
 
+  /*
   // Toggle dark / light mode TODO: CREATE TOGGLE ELEMENT UI/UX
   const [theme, setTheme] = useState('light');
-  
+        
   const toggleTheme = () => {
-        if (theme === 'light') {
-          setTheme('dark');
-        } else {
-          setTheme('light');
-        }
+      if (theme === 'light') {
+        setTheme('dark');
+      } else {
+        setTheme('light');
+      }
   };
 
   //
-  useEffect(() => {
-    document.body.className = theme;
-  }, [theme]);
+    useEffect(() => {
+      document.body.className = theme;
+    }, [theme]);
+  */
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Website Exists</p>
-        <div className={theme}>
-          <button>Toggle Theme, NOT working! Don't Click</button>
-        </div>
-
-        <h1>Hello, {user ? user.displayName : " sign-in here"}</h1> {/*Dyanmic component dependent on user login status*/}
-        <section>
-          {/*<ChatRoom />*/}
-          {user ? <SignOut /> : <SignIn />} {/* Conditonal CSS displays different components based on User Login STATE*/}
-          <div>
-          {user ? <PostField onClick={getSliderValue}/> : <DefaultDisplay />}
-          </div>
-        </section>
-
-
-
-        {/* 
-        // DEFAULT REACT PAGE 
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      */}
-
-      </header>
+    <div className='App'>
+      <Frontpage />
     </div>
-  );
+  )
+
 }
 
 export default App;
+
+/*
+
+import React from "react";
+import PageLogin from "./pages/PageLogin";
+import PagePosts from "./pages/PagePosts";
+import PageProfile from "./pages/PageProfile";
+import Error from "./components/404";
+
+import { Switch, Route, Routes, BrowserRouter } from "react-router-dom";
+
+const App = () => {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route exact path="/" element={<PageLogin />} />
+                <Route exact path="/Postings" element={<PagePosts />} />
+                <Route exact path="/Profile" element={<PageProfile />} />
+                <Route path="*" element={<Error />} />
+            </Routes>
+        </BrowserRouter>
+    );
+};
+
+*/

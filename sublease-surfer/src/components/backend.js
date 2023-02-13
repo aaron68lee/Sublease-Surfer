@@ -2,15 +2,20 @@
 import React, {useRef, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 
-
 // import BACKEND packages
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import { GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth';
-import {useAuthState, useSignInWithGoogle} from 'react-firebase-hooks/auth';
+import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {doc, collection, addDoc, getDocs, updateDoc} from "firebase/firestore"; 
+
+// ========================== initialize backend: Google Firebase ===========================
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 // Initialize Firebase Backend
 // Your web app's Firebase configuration
@@ -28,31 +33,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore(); // db = firebase.firestore() for database access
-
-//const app = initializeApp(firebaseConfig);
-// we don't case about analytics for the project yet
-//const analytics = getAnalytics(app);
-
-// SECTION START: RUNNING THIS WILL CRASH SITE
-// SECTION END
-
-
-// Shortcuts to DOM Elements (some unused)
-var messageForm = document.getElementById('message-form');
-var messageInput = document.getElementById('new-post-message');
-var titleInput = document.getElementById('new-post-title');
-var signInButton = document.getElementById('sign-in-button');
-var signOutButton = document.getElementById('sign-out-button');
-var splashPage = document.getElementById('page-splash');
-var addPost = document.getElementById('add-post');
-var addButton = document.getElementById('add');
-var recentPostsSection = document.getElementById('recent-posts-list');
-var userPostsSection = document.getElementById('user-posts-list');
-var topUserPostsSection = document.getElementById('top-user-posts-list');
-var recentMenuButton = document.getElementById('menu-recent');
-var myPostsMenuButton = document.getElementById('menu-my-posts');
-var myTopPostsMenuButton = document.getElementById('menu-my-top-posts');
-var listeningFirebaseRefs = [];
 
 // write data to the database, db, creating a new sublease post for User === uid
 // ========================== Create Post ===========================
@@ -96,34 +76,35 @@ async function read()
 
 function SignIn()
 {
-  const useSignInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    signInWithPopup(auth, provider) // use signInWithRedirect for mobile devices preferred
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        //alert(user);
-        // IdP data available using getAdditionalUserInfo(result)
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        //alert("Sign In Error occurred.");
-      });
-    //auth.signInWithPopup(provider);
-    console.log("Login clicked!");
-  }
-
   return (
     <button className="signIn" onClick={useSignInWithGoogle}>Sign in with Google</button>
-  )
+  );
 }
+
+const useSignInWithGoogle = () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  signInWithPopup(auth, provider) // use signInWithRedirect for mobile devices preferred
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      //alert(user);
+      // IdP data available using getAdditionalUserInfo(result)
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      //alert("Sign In Error occurred.");
+    });
+  //auth.signInWithPopup(provider);
+  console.log("Login clicked!");
+}
+
 
 // ========================== SignOut ===========================
 // component displayed when user IS signed in 
@@ -310,4 +291,4 @@ export {SignIn,
         SignOut, 
         post,
         read,
-        auth};
+        auth, db};

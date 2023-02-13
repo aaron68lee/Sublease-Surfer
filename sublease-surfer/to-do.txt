@@ -2,7 +2,9 @@ To Do List
 
 Tasks                                                                       Assigned
 
-1) Grayed out text boxes (click to enter)                                                    
+
+1) Grayed out text boxes (click to enter)  
+    1.1) Users on post page upload photos (.jpg files)  <html component>                                                
 2) Get Slider Value and display on paragraph <p> component                  
 3) Submit Button posts dummy data to backend                                Aaron
 4) Refactor Code to reflect proper tree app structure                       Aaron
@@ -17,3 +19,4 @@ Tasks                                                                       Assi
         Tag Searched                    
     Create Posting Page
     Edit Profile Page
+
