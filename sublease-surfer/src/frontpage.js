@@ -15,11 +15,11 @@ function Frontpage()
 {
     return (
         <div className="page-container">
-            {<Navbar/>} {/* Doesn't Work */}
+            <Navbar/>
             <header className="App-header">
-                <p>Welcome to Sublease Surfer!</p>
+                <p>Sublease Surfer</p>
                 <SignIn />
-                
+                <button onClick={() => {alert(Date.now().toLocaleString());}}>Post default shit test backend</button>
                 {/*<button>Toggle Theme, NOT working! Don't Click</button>*/}
         
             </header>
