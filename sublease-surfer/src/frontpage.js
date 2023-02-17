@@ -13,11 +13,10 @@ function Frontpage()
 {
     return (
         <div className="page-container">
-            {/*<Navbar/> DOESN'T WORK*/}
+            {<Navbar/>} {/* Doesn't Work */}
             <header className="App-header">
                 <p>Website Exists</p>
                 <SignIn />
-                <SignOut/>
                 <button>Toggle Theme, NOT working! Don't Click</button>
         
             </header>

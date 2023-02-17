@@ -2,6 +2,9 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import {auth} from './backend';
+
 /* 
 
 REWRITE ACCORDINGLY
@@ -15,17 +18,26 @@ import Gallery from './pages/gallery';
 function Navbar()
 {
     return (
-        {/* <div>
-            <Link to='/insert-page-here'>Edit Profile</Link>
-            <Link to='/insert-page-here'>Create Post</Link>
-        </div> */}
-       
+        <div>
+            <Link to='/feed'> Home </Link>
+            <Link to='/frontpage' onClick={() => auth.signOut()}> Logout </Link>
+            <Link to='/insert-page-here'> Create Post </Link>
+            <Link to='/profile'> Edit Profile </Link>
+            
+        </div>
+        
     );
 }
 
 export default Navbar;
 
 /*
+
+{<div>
+            <Link to='/insert-page-here'>Edit Profile</Link>
+            <Link to='/insert-page-here'>Create Post</Link>
+        </div> 
+       
 
 OLD CODE: 
 

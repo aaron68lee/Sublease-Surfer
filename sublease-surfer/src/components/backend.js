@@ -1,6 +1,7 @@
 // import FRONTEND packages
 import React, {useRef, useState} from 'react';
 import ReactDOM from 'react-dom/client';
+import { useNavigate } from 'react-router-dom';
 
 // import BACKEND packages
 import firebase from 'firebase/compat/app';
@@ -36,18 +37,35 @@ const db = firebase.firestore(); // db = firebase.firestore() for database acces
 
 // write data to the database, db, creating a new sublease post for User === uid
 // ========================== Create Post ===========================
-async function post(uid, username, picture, title, body) 
+async function post(picture, title, body) 
 {
     try {
-        const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815
+        const docRef = await addDoc(collection(db, "posts"), {
+          uid: auth.currentUser,
+          username: auth.currentUser.displayName,
+          picture: picture, // find way to uplaod file
+          title: title,
+          description: body,
         });
         console.log("Document written with ID: ", docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
     }
+}
+
+// post button component
+function PostButton(uid, username, picture, title, body) 
+{
+  const navigate = useNavigate();
+  return (
+    <>
+    <button className="post" 
+      onClick={() =>{
+        post();
+        navigate("/main");
+      }}>Submit Posting</button>
+    </>
+  );
 }
 
 // ========================== Delete Post ===========================
@@ -76,8 +94,13 @@ async function read()
 
 function SignIn()
 {
+  const navigate = useNavigate();
   return (
-    <button className="signIn" onClick={useSignInWithGoogle}>Sign in with Google</button>
+    <button className="signIn" 
+      onClick={() =>{
+        useSignInWithGoogle();
+        navigate("/");
+      }}>Sign in with Google</button>
   );
 }
 
@@ -111,7 +134,9 @@ const useSignInWithGoogle = () => {
 function SignOut()
 {
   return auth.currentUser && (
+    <div>
     <button className="signOut" onClick={() => auth.signOut()}>Sign Out</button>
+    </div>
   )
 }
 
