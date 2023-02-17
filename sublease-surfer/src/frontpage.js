@@ -1,10 +1,11 @@
 
-import React, { Component } from 'react';
+import React, { Component, useState} from 'react';
 import { Link } from "react-router-dom";
 import './App.css';
 import Navbar from "./components/navbar.js";
 import {SignIn, 
     SignOut, 
+    PostButton,
     post,
     read,
     auth, db} from './components/backend';
@@ -13,13 +14,21 @@ import {SignIn,
 
 function Frontpage()
 {
+    const [input, setInput] = useState('');
+
+    const handleChange = event =>
+    {
+        setInput(event.target.value);
+    }
     return (
         <div className="page-container">
             <Navbar/>
             <header className="App-header">
                 <p>Sublease Surfer</p>
                 <SignIn />
-                <button onClick={() => {alert(Date.now().toLocaleString());}}>Post default shit test backend</button>
+                <PostButton props={input}/>
+                <input type="text" onChange={handleChange} value={input}/>
+                <p>Input: {input}</p>
                 {/*<button>Toggle Theme, NOT working! Don't Click</button>*/}
         
             </header>

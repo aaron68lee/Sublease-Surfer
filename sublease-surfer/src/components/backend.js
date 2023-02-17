@@ -10,7 +10,7 @@ import 'firebase/compat/auth';
 import { GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
-import {doc, collection, addDoc, getDocs, updateDoc} from "firebase/firestore"; 
+import {doc, collection, addDoc, getDocs, updateDoc, setDoc} from "firebase/firestore"; 
 
 // import web app pages and variables
 import '../App.css'; //.. is used because App.css isn't in the components folder, it's in components' parent directory
@@ -18,7 +18,7 @@ import '../App.css'; //.. is used because App.css isn't in the components folder
 // ========================== initialize backend: Google Firebase ===========================
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getFirestore} from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 // Initialize Firebase Backend
@@ -38,22 +38,53 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore(); // db = firebase.firestore() for database access
 
+// ========================== Initialize Database Structure: ONLY RUN ONCE ===========================
+async function initializePost()
+{
+  try {
+    await setDoc(doc(db, "postings", "Posts"), 
+    {
+      uid: "",
+      username: "",
+      picture: "", // find way to upload file
+      title: "",
+      description: "hi", 
+    });
+  } catch(e) {
+    console.error("Error adding document: ", e); 
+  }
+}
+
 // write data to the database, db, creating a new sublease post for User === uid
 // ========================== Create Post ===========================
 async function post(picture, title, body) 
 {
+  alert('made post');
+  
+  const ref = collection(db, 'posts');
     try {
-        const docRef = await addDoc(collection(db, "posts"), {
+      /*
+      db.collection('posts').add({
+        uid: auth.currentUser,
+        username: auth.currentUser.displayName,
+        picture: picture, // find way to uplaod file
+        title: title,
+        description: body,
+      });
+      */
+        const docRef = await addDoc(collection(db, "Posts"), {
           uid: auth.currentUser,
           username: auth.currentUser.displayName,
           picture: picture, // find way to uplaod file
           title: title,
           description: body,
         });
-        console.log("Document written with ID: ", docRef.id);
+      
+        console.log("Document written");
     } catch (e) {
         console.error("Error adding document: ", e);
     }
+    
 }
 
 // post button component
@@ -65,7 +96,9 @@ function PostButton(uid, username, picture, title, body)
     <button className="post" 
       onClick={() =>{
         post();
-        navigate("/main");
+        //initializePost();
+        //post("pic", "title", Date.now().toString);
+        navigate("/feed");
       }}>Submit Posting</button>
     </>
   );
@@ -107,7 +140,7 @@ function SignIn()
   );
 }
 
-const useSignInWithGoogle = () => {
+function useSignInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   signInWithPopup(auth, provider) // use signInWithRedirect for mobile devices preferred
     .then((result) => {
@@ -129,7 +162,7 @@ const useSignInWithGoogle = () => {
     });
   //auth.signInWithPopup(provider);
   console.log("Login clicked!");
-}
+  }
 
 
 // ========================== SignOut ===========================
@@ -317,6 +350,7 @@ function ChatMessage(props) {
 
 export {SignIn, 
         SignOut, 
+        PostButton,
         post,
         read,
         auth, db};
