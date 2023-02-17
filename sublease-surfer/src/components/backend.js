@@ -12,6 +12,9 @@ import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {doc, collection, addDoc, getDocs, updateDoc} from "firebase/firestore"; 
 
+// import web app pages and variables
+import '../App.css'; //.. is used because App.css isn't in the components folder, it's in components' parent directory
+
 // ========================== initialize backend: Google Firebase ===========================
 
 // Import the functions you need from the SDKs you need
@@ -100,7 +103,7 @@ function SignIn()
       onClick={() =>{
         useSignInWithGoogle();
         navigate("/");
-      }}>Sign in with Google</button>
+      }}>Sign In with Google</button>
   );
 }
 

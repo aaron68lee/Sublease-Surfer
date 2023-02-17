@@ -15,10 +15,8 @@ function Frontpage()
         <div className="page-container">
             {<Navbar/>} {/* Doesn't Work */}
             <header className="App-header">
-                <p>Website Exists</p>
+                <p>Sublease Surfer</p>
                 <SignIn />
-                <button>Toggle Theme, NOT working! Don't Click</button>
-        
             </header>
         </div>
     );

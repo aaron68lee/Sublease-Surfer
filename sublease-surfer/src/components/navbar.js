@@ -23,7 +23,6 @@ function Navbar()
             <Link to='/frontpage' onClick={() => auth.signOut()}> Logout </Link>
             <Link to='/insert-page-here'> Create Post </Link>
             <Link to='/profile'> Edit Profile </Link>
-            
         </div>
         
     );
