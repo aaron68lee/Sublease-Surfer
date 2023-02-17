@@ -15,14 +15,17 @@ import Awards from './pages/awards';
 import Gallery from './pages/gallery';
 */
 
+// import web app pages and variables
+import '../App.css';
+
 function Navbar()
 {
     return (
-        <div>
-            <Link to='/feed'> Home </Link>
-            <Link to='/frontpage' onClick={() => auth.signOut()}> Logout </Link>
-            <Link to='/insert-page-here'> Create Post </Link>
-            <Link to='/profile'> Edit Profile </Link>
+        <div className='navbar'>
+            <Link to='/feed' className='navbutton'> Browse </Link>
+            <Link to='/insert-page-here' className='navbutton'> Add Listing </Link>
+            <Link to='/profile' className='navbutton'> Edit Profile </Link>
+            <Link to='/frontpage' className='navbutton' onClick={() => auth.signOut()}> Logout </Link>
         </div>
         
     );
