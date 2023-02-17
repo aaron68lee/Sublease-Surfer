@@ -17,11 +17,13 @@ import Gallery from './pages/gallery';
 
 function Navbar()
 {
+    let user = auth.currentUser;
     return (
         <div>
+            {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
             <Link to='/feed'> Home </Link>
             <Link to='/frontpage' onClick={() => auth.signOut()}> Logout </Link>
-            <Link to='/insert-page-here'> Create Post </Link>
+            <Link to='/posts'> Create Post </Link>
             <Link to='/profile'> Edit Profile </Link>
             
         </div>

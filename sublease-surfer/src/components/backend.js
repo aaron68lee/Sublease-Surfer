@@ -99,7 +99,7 @@ function SignIn()
     <button className="signIn" 
       onClick={() =>{
         useSignInWithGoogle();
-        navigate("/");
+        navigate("/feed");
       }}>Sign in with Google</button>
   );
 }

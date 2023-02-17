@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import './App.css';
 import Navbar from "./components/navbar.js";
-import {
-    SignIn, 
+import {SignIn, 
     SignOut, 
-    } from './components/backend';
-import {getSliderValue, PostField,} from './components/posts';
+    post,
+    read,
+    auth, db} from './components/backend';
+
+// displayed when user is NOT signed in
 
 function Frontpage()
 {
@@ -15,9 +17,10 @@ function Frontpage()
         <div className="page-container">
             {<Navbar/>} {/* Doesn't Work */}
             <header className="App-header">
-                <p>Website Exists</p>
+                <p>Welcome to Sublease Surfer!</p>
                 <SignIn />
-                <button>Toggle Theme, NOT working! Don't Click</button>
+                
+                {/*<button>Toggle Theme, NOT working! Don't Click</button>*/}
         
             </header>
         </div>
