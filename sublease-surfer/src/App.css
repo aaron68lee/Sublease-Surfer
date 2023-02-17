@@ -45,6 +45,15 @@
   border-color: #00b09b;
 }
 
+.navbar {
+  background-color: white;
+  min-height: 6vh;
+}
+
+.navbutton {
+  background-color: #00b09b;
+}
+
 .App-link {
   color: #00b09b;
 }
