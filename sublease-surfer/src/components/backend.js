@@ -38,23 +38,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore(); // db = firebase.firestore() for database access
 
-// ========================== Initialize Database Structure: ONLY RUN ONCE ===========================
-async function initializePost()
-{
-  try {
-    await setDoc(doc(db, "postings", "Posts"), 
-    {
-      uid: "",
-      username: "",
-      picture: "", // find way to upload file
-      title: "",
-      description: "hi", 
-    });
-  } catch(e) {
-    console.error("Error adding document: ", e); 
-  }
-}
-
 // write data to the database, db, creating a new sublease post for User === uid
 // ========================== Create Post ===========================
 async function post(picture, title, body) 
@@ -96,6 +79,7 @@ function PostButton(uid, username, picture, title, body)
     <button className="post" 
       onClick={() =>{
         post();
+        alert(uid);
         //initializePost();
         //post("pic", "title", Date.now().toString);
         navigate("/feed");
