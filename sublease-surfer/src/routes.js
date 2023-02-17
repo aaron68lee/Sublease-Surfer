@@ -43,9 +43,7 @@ function PrivateRoute({ component: Component, authed, ...rest }) {
 const Links = () => {
     return (
         <Routes>
-            <Route path="/" element={<Frontpage/>}></Route>
-            <Route path="/login" element={<SignIn/>} />
-            <Route path="/signout" element={<SignOut/>} />
+            <Route path="/frontpage" element={<Frontpage/>}></Route>
             <PrivateRoute path="/upload" element={<PostField/>} /> {/* Create a Post Page! */}
 
             {/* Pages that haven't been done */}

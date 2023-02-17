@@ -20,14 +20,15 @@ import '../App.css';
 
 function Navbar()
 {
+    let user = auth.currentUser;
     return (
         <div className='navbar'>
+            {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
             <Link to='/feed' className='navbutton'> Browse </Link>
             <Link to='/insert-page-here' className='navbutton'> Add Listing </Link>
             <Link to='/profile' className='navbutton'> Edit Profile </Link>
             <Link to='/frontpage' className='navbutton' onClick={() => auth.signOut()}> Logout </Link>
-        </div>
-        
+        </div>  
     );
 }
 
