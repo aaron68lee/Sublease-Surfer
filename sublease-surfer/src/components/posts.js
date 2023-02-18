@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageUploading from 'react-images-uploading';
 // import BACKEND packages
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
@@ -50,3 +51,6 @@ function getSliderValue()
 
 export {getSliderValue, 
         PostField,};
+
+
+        
