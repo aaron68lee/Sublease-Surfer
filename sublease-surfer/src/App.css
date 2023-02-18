@@ -86,3 +86,17 @@
   background: #e5e5ea;
   color: black;
 }
+
+.post-grid {     /* arbitrary styling for now no way to test it yet without actual posts and pullable collection from firebase */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  overflow-y: scroll; /* lets you scroll vertically if it runs out at the bottom */
+  max-height: 500px;
+}
+
+.post {
+  background-color: #fff;     /* arbitrary styling for now no way to test it yet without actual posts and pullable collection from firebase */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
