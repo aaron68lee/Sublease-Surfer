@@ -7,28 +7,36 @@ import {SignIn,
     SignOut, 
     PostButton,
     post,
-    read,
+    readPosts,
     auth, db} from './components/backend';
 
 // displayed when user is NOT signed in
 
 function Frontpage()
 {
-    const [input, setInput] = useState('');
+    const [picture, setPic] = useState('');
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
 
     const handleChange = event =>
     {
-        setInput(event.target.value);
+        setPic(event.target.value);
+        setTitle(event.target.value);
+        setBody(event.target.value);
     }
+
     return (
         <div className="page-container">
             <Navbar/>
             <header className="App-header">
                 <p>Sublease Surfer</p>
                 <SignIn />
-                <PostButton props={input}/>
-                <input type="text" onChange={handleChange} value={input}/>
-                <p>Input: {input}</p>
+                <PostButton picture={picture} title={title} body={body}/>
+                <button>Read Database</button>
+                <input type="text" onChange={(event) => {setPic(event.target.value)}} value={picture}/>
+                <input type="text" onChange={(event) => {setTitle(event.target.value)}}value={title}/>
+                <input type="text" onChange={(event) => {setBody(event.target.value)}} value={body}/>
+                <p>Input: {title}</p>
                 {/*<button>Toggle Theme, NOT working! Don't Click</button>*/}
         
             </header>

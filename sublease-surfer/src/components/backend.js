@@ -10,7 +10,7 @@ import 'firebase/compat/auth';
 import { GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
-import {doc, collection, addDoc, getDocs, updateDoc, setDoc} from "firebase/firestore"; 
+import {doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore"; 
 
 // import web app pages and variables
 import '../App.css'; //.. is used because App.css isn't in the components folder, it's in components' parent directory
@@ -39,10 +39,9 @@ const auth = firebase.auth();
 const db = firebase.firestore(); // db = firebase.firestore() for database access
 
 // write data to the database, db, creating a new sublease post for User === uid
-// ========================== Create Post ===========================
+// ========================== Write: Create Post ===========================
 async function post(picture, title, body) 
 {
-  alert('made post');
   
   const ref = collection(db, 'posts');
     try {
@@ -55,13 +54,17 @@ async function post(picture, title, body)
         description: body,
       });
       */
-        const docRef = await addDoc(collection(db, "Posts"), {
-          uid: auth.currentUser,
+     readPosts();
+     console.log(auth.currentUser);
+        const docRef = await addDoc(collection(db, "posts"), {
+          uid: auth.currentUser.uid,
           username: auth.currentUser.displayName,
           picture: picture, // find way to uplaod file
           title: title,
           description: body,
-        });
+        }).then(
+          alert("Post made"),
+        );
       
         console.log("Document written");
     } catch (e) {
@@ -70,16 +73,16 @@ async function post(picture, title, body)
     
 }
 
+// ========================== Post Button ===========================
 // post button component
-function PostButton(uid, username, picture, title, body) 
+function PostButton({picture, title, body}) // uid, username, picture, title, body 
 {
   const navigate = useNavigate();
   return (
     <>
     <button className="post" 
       onClick={() =>{
-        post();
-        alert(uid);
+        post(picture, title, body);
         //initializePost();
         //post("pic", "title", Date.now().toString);
         navigate("/feed");
@@ -100,12 +103,14 @@ async function deletePost(uid, username, picture, title, body)
 
 // read data from the database, db
 // ========================== Read ____ ===========================
-
-async function read() 
+// tags is an arrayof tag filters for querying criteria
+async function readPosts(tags) 
 {
-    const querySnapshot = await getDocs(collection(db, "users"));
+    const q = query(collection(db, "posts"), where("Price", ">", 3000)); // add conditional criteria?
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
+        console.log(doc.id, " => ", doc.data());
+        console.log(doc.get("Price"));
     });
 }
 
@@ -118,8 +123,28 @@ function SignIn()
   return (
     <button className="signIn" 
       onClick={() =>{
-        useSignInWithGoogle();
+        //useSignInWithGoogle();
         navigate("/feed");
+
+        const provider = new firebase.auth.GoogleAuthProvider();
+        signInWithPopup(auth, provider) // use signInWithRedirect for mobile devices preferred
+          .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // IdP data available using getAdditionalUserInfo(result)
+          }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            //alert("Sign In Error occurred.");
+          });
+
       }}>Sign in with Google</button>
   );
 }
@@ -132,7 +157,6 @@ function useSignInWithGoogle() {
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-      //alert(user);
       // IdP data available using getAdditionalUserInfo(result)
     }).catch((error) => {
       // Handle Errors here.
@@ -144,7 +168,6 @@ function useSignInWithGoogle() {
       const credential = GoogleAuthProvider.credentialFromError(error);
       //alert("Sign In Error occurred.");
     });
-  //auth.signInWithPopup(provider);
   console.log("Login clicked!");
   }
 
@@ -162,23 +185,7 @@ function SignOut()
 
 // ========================== Event Listeners ===========================
 // Bindings on load event listeners
-/*
-window.addEventListener('load', function() {
-  // Bind Sign in button.
-  signInButton.addEventListener('click', function() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-  });
 
-  // Bind Sign out button.
-  signOutButton.addEventListener('click', function() {
-    firebase.auth().signOut();
-  });
-
-  // Listen for auth state changes
-  //firebase.auth().onAuthStateChanged(onAuthStateChanged);
-});
-*/
 
 /**
  * Starts listening for new posts and populates posts lists.
@@ -336,5 +343,5 @@ export {SignIn,
         SignOut, 
         PostButton,
         post,
-        read,
+        readPosts,
         auth, db};
