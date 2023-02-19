@@ -52,6 +52,37 @@
 
 .navbutton {
   background-color: #00b09b;
+  color:white;
+  font-size: x-large;
+  font-weight: bolder;
+  padding-inline: 16px;
+  padding-block: 12px;
+  margin-inline: 8px;
+}
+
+/* unvisited link */
+a:link {
+  color: white;
+  text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #96c93d;
+}
+
+/* selected link */
+a:active {
+  color: white;
+  text-decoration: none;
 }
 
 .App-link {

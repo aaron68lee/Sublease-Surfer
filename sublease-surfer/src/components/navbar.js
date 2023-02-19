@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import {auth} from './backend';
 
 /* 
@@ -24,9 +23,9 @@ function Navbar()
     return (
         <div className='navbar'>
             {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
-            <Link to='/feed' className='navbutton'> Browse </Link>
-            <Link to='/insert-page-here' className='navbutton'> Add Listing </Link>
-            <Link to='/profile' className='navbutton'> Edit Profile </Link>
+            <Link to='/browse' className='navbutton'> Browse </Link>
+            <Link to='/add-listing' className='navbutton'> Add Listing </Link>
+            <Link to='/profile' className='navbutton'> Profile </Link>
             <Link to='/frontpage' className='navbutton' onClick={() => auth.signOut()}> Logout </Link>
         </div>  
     );
