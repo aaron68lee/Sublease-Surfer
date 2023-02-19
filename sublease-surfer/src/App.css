@@ -24,7 +24,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(60px + 3vmin);
+  font-size: calc(6vmin);
   /*text-shadow: 1px 1px 6px #00b09b; */
   font-weight:bolder;
   color: white;
@@ -43,6 +43,11 @@
   border-radius: 8px;
   background-color: white;
   border-color: #00b09b;
+}
+
+.signIn:hover {
+  border-color: #96c93d;
+  color:#96c93d;
 }
 
 .navbar {
