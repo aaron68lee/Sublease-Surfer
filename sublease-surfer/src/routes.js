@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom'; // <Routes> replaces <Switch> in dom version 6
 import Frontpage from './frontpage';
-import { PostField, getSliderValue } from './components/posts.js';
+import Homefeed from './components/homefeed.js';
+import Profile from '/.components/profile.js';
+import /*{ PostField, getSliderValue }*/ Posts from './components/posts.js';
 import { SignIn, SignOut, auth, db} from './components/backend.js';
 //import { CurrentUserProfile } from './components/profile.js';
 
@@ -40,18 +42,13 @@ function PrivateRoute({ component: Component, authed, ...rest }) {
 }
 
 
-const Links = () => {
+const Routes = () => {
     return (
         <Routes>
-            <Route path="/frontpage" element={<Frontpage/>}></Route>
-            <PrivateRoute path="/upload" element={<PostField/>} /> {/* Create a Post Page! */}
-
-            {/* Pages that haven't been done */}
-            {//<PrivateRoute path="/feed" element={<MainFeed/>} /> {/* Main Page of Postings */}
-            }
-            {//<PrivateRoute path="/profile" element={<EditProfile/>} /> {/* Edit Own Profile */}
-            }
-
+            <Route exact path="/frontpage" component={Frontpage}></Route>
+            <PrivateRoute path="/browse" component={Homefeed}> </PrivateRoute>
+            <PrivateRoute path="/add-listing" component={Posts}> </PrivateRoute>
+            <PrivateRoute path="/profile" element={Profile}> </PrivateRoute>
         </Routes>
     );
 };

@@ -35,3 +35,4 @@ function HomeFeed() {
   attributes are used to apply CSS styles to the elements. */
 }
 
+export default Homefeed;

@@ -29,8 +29,9 @@ function Frontpage()
         <div className="page-container">
             <Navbar/>
             <header className="App-header">
-                <p>Sublease Surfer</p>
+                <h1>Sublease Surfer</h1>
                 <SignIn />
+                
                 <PostButton picture={picture} title={title} body={body}/>
                 <button>Read Database</button>
                 <input type="text" onChange={(event) => {setPic(event.target.value)}} value={picture}/>
