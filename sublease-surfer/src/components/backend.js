@@ -43,6 +43,7 @@ const db = firebase.firestore(); // db = firebase.firestore() for database acces
 async function post(picture, title, body) 
 {
   
+  let user = auth.currentUser;
   const ref = collection(db, 'posts');
     try {
       /*
@@ -57,8 +58,8 @@ async function post(picture, title, body)
      readPosts();
      console.log(auth.currentUser);
         const docRef = await addDoc(collection(db, "posts"), {
-          uid: auth.currentUser.uid,
-          username: auth.currentUser.displayName,
+          uid: user ? user.uid : null,
+          username: user ? user.displayName : null,
           picture: picture, // find way to uplaod file
           title: title,
           description: body,

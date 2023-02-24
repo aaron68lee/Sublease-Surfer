@@ -1,117 +1,127 @@
+import React, { useState } from 'react';
+import { GoogleMap, Map, GoogleApiWrapper, InfoWindow, Marker, withScriptjs, withGoogleMap } from 'react-google-maps';
+import {useLoadScript, LoadScript, GoogleLoadScript} from '@react-google-maps/api';
+//import axios from 'axios';
 
-window.initMap = async () => {
-    const data = await getData()
-    console.log(data)
-  
-    // Create the map.
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: { lat: 31, lng: 112 },
-      mapTypeId: 'terrain',
-    })
-  
-  var heatMapData = [];
-  var circles = [];
-  
-    // Construct the circle for each value in citymap.
-    // Note: We scale the area of the circle based on the population.
-    for (var i = 0; i < data.length; i++) {
-      var lat = data[i].Lat;
-      var long = data[i].Long;
-      var numberOfPeople = data[i]['2/28/20'];
-  
-      // Add the circle for this city to the map.
-      var cityCircle = new google.maps.Circle({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35,
-        map: map,
-        center: {lat: Number(lat), lng: Number(long)},
-        radius: Math.pow(numberOfPeople, 1/8) * 100000,
-      })
-  
-      circles[i] = cityCircle;
-      
-      heatMapData[i] = [{
-        location: new google.maps.LatLng(10, 10), weight: 10
-        //location: new google.maps.LatLng(cityCircle.center), weight: 10   //{lat: Number(lat), lng: Number(long)}), weight: Math.sqrt(numberOfPeople)
-      }];
-  
-      console.log(heatMapData[i]);
-  
-      //if(numberOfPeople > 1000)
-          //document.getElementById("console").innerHTML = "Coronavirus Infectious Map"; 
-    }
-    ////////////////////////////////////////   MAP CONTROL CODE //////////////////////////////////////////////
-  
-  
-    var contentStringBackup = "Number Infected: " + "50" + "<br>"
-    "Number Dead:" + "<br>"
-    "Coordinates: (" + "100" + ", " + "200" + ")" + "<br>"
-    "";
-  
-    // var contentString = "Number Infected: " + this.radius/50 + "<br>"
-    // "Number Dead:" + "<br>"
-    // "Coordinates: (" + this.center.Lat + ", " + this.center.Long + ")" + "<br>"
-    // "";
-  
-  var infowindow = new google.maps.InfoWindow({
-    content: contentStringBackup
+const apiKey = 'AIzaSyBLe0m-ln0Fs3fHExT2G5LqkG4voSqwBhQ';
+
+function CustomMap() {
+  const [markers, setMarkers] = useState([]); // collection of all marker locations
+
+  const mapStyles = { // temp styling for map
+    height: "100vh",
+    width: "100%"
+  };
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: apiKey,
   });
-  
-  // var marker = new google.maps.Marker({
-  //   position: myLatLng,
-  //   map: map,
-  //   title: "City"
-  // });
-  
-  //var HeatmapLayer = new google.maps.HeatmapLayer();
-  
-  var heatmap =  new google.maps.visualization.HeatmapLayer({
-    data: heatMapData,
-    radius: 10,
-    map: map
-  });
-  
-  heatmap.setMap(map);
-  
-  google.maps.event.addListener(cityCircle, 'mouseOver',function(){
-    infowindow.open(map);
-    alert("hi");
-  });
-  
-  
-  var markers = [];
-  
-    //overlay.setMap(map)
-  function marker()
+
+
+  const handleMapClick = (event) => {
+    setMarkers(markers.concat({
+      position: event.latLng,
+    }));
+  };
+
+  if (!isLoaded)
+    return <div>...Loading...</div>
+  else
   {
-    for(var i = 0; i < data.length; i++){
-      var marker = new google.maps.Marker({
-        position: circles[i].center,
-        map: map,
-        title: Math.round(Math.pow(circles[i].radius/100000, 8)) + " infected \n" + circles[i].center
-      });
-      markers[markers.length] = marker;
+    return (
+      <LoadScript
+        googleMapsApiKey = {apiKey}>
+        <GoogleMap
+          defaultZoom={8}
+          defaultCenter={{ lat: -34.397, lng: 150.644 }}
+          mapContainerStyle={mapStyles}
+          onClick={handleMapClick}
+        >
+          {markers.map((marker, index) => (
+            <Marker 
+              key={index} 
+              position={marker.position} 
+              name = "seller name"
+              title = "post title"
+              content = "test content"
+            />
+          ))}
+        </GoogleMap>
+      </LoadScript>
+    );
+  }
+  
+};
+
+/*
+window.initMap = async () => {
+      //const data = await getData()
+      //console.log(data)
+    
+      // Create the map.
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: { lat: 31, lng: 112 },
+        mapTypeId: 'terrain',
+      })
+    
+    var circles = [];
+    
+    
+        // Add the circle for this city to the map.
+        var cityCircle = new google.maps.Circle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35,
+          map: map,
+          center: {lat: Number(lat), lng: Number(long)},
+          radius: Math.pow(numberOfPeople, 1/8) * 100000,
+        })
+    
+
+    var contentString = "Map Marker Popup Description Here";
+    
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString,
+    });
+    
+    // var marker = new google.maps.Marker({
+    //   position: myLatLng,
+    //   map: map,
+    //   title: "City"
+    // });
+    
+    google.maps.event.addListener(cityCircle, 'mouseOver',function(){
+      infowindow.open(map);
+      alert("hi");
+    });
+    
+    // ==================================== Aggregate All Posts on Single Map ==============================
+    var markers = [];
+    
+    
+    function marker()
+    {
       
     }
-  }
 
-  //marker();
+    //marker();
+    
+    var newCircle = new google.maps.Circle({
+      strokeColor: '#FFFFFF',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FFFFFF',
+      fillOpacity: 0.35,
+      map: map,
+      center: {lat: 10, lng: 10},
+      radius: 500
+    })
+    
+    console.log(newCircle);
   
-  var newCircle = new google.maps.Circle({
-    strokeColor: '#FFFFFF',
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: '#FFFFFF',
-    fillOpacity: 0.35,
-    map: map,
-    center: {lat: 10, lng: 10},
-    radius: 500
-  })
-  
-  console.log(newCircle);
- 
 }
+*/
+export default CustomMap;

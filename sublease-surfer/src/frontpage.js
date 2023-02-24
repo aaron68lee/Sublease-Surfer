@@ -3,6 +3,8 @@ import React, { Component, useState} from 'react';
 import { Link } from "react-router-dom";
 import './App.css';
 import Navbar from "./components/navbar.js";
+import CustomMap from './components/map.js';
+
 import {SignIn, 
     SignOut, 
     PostButton,
@@ -39,6 +41,8 @@ function Frontpage()
                 <input type="text" onChange={(event) => {setBody(event.target.value)}} value={body}/>
                 <p>Input: {title}</p>
                 {/*<button>Toggle Theme, NOT working! Don't Click</button>*/}
+
+                <CustomMap/>
         
             </header>
         </div>
