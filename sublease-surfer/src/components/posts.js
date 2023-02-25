@@ -18,13 +18,17 @@ import Navbar from '../components/navbar.js';
 // TODO: MAKE THIS A CLASS
 
 // Component for user to create new sublease posting / listing 
+function post()
+{
+
+}
 function PostField() // consider making user page its own class to use this.state.value and onChange function
 {
   
   return (
     <div>
       {/*Create Text Description Field*/}
-      <input defaultValue={"Full Address"} type = "text"></input><br></br>
+      <input defaultValue={"Full Address"} type = "text" onfocus= "this.value=''" ></input><br></br>
       <input defaultValue={"Your Name"} type = "text"></input> 
       <p>Start Date: </p> <input type = "date"></input> 
       <p>End Date: </p> <input type = "date"></input> <br></br>
@@ -34,9 +38,11 @@ function PostField() // consider making user page its own class to use this.stat
       <input type="range" min="0" max="4000" id="slide"/><br></br>
 
       <p>Sublease Price / month: {}</p>
-      <button onClick={alert("submit clicked")}>Submit Posting</button>
+      <button onClick={()=>alert("Post Submitted")}>Submit Posting</button><br></br> <br></br>
+      
     </div>
   // onClick={ TO DO - add posting data to database
+  //note that the alert was continuing to alert even inside onClick. Using arrow function so it shuts the fuck up
   )
 
 }

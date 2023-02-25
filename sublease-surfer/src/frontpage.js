@@ -29,8 +29,9 @@ function Frontpage()
 
     return (
         <div className="page-container">
-            <Navbar/>
+            
             <header className="App-header">
+
                 <h1>Sublease Surfer</h1>
                 <SignIn />
                 
@@ -39,7 +40,7 @@ function Frontpage()
                 <input type="text" onChange={(event) => {setPic(event.target.value)}} value={picture}/>
                 <input type="text" onChange={(event) => {setTitle(event.target.value)}}value={title}/>
                 <input type="text" onChange={(event) => {setBody(event.target.value)}} value={body}/>
-                <p>Input: {title}</p>
+                <p>Input: {picture}</p>
                 {/*<button>Toggle Theme, NOT working! Don't Click</button>*/}
 
                 <CustomMap/>

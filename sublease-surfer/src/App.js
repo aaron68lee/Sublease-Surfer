@@ -1,7 +1,7 @@
 
 // import FRONTEND packages
 import React, {useRef, useState, useEffect} from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom'; // <Routes> replaces <Switch> in dom version 6
+import { Router, Link, Routes, Route, Navigate, createBrowserRouter, RouterProvider } from 'react-router-dom'; // <Routes> replaces <Switch> in dom version 6
 
 // import BACKEND packages
 
@@ -16,12 +16,12 @@ import './App.css';
 import './themes.css';
 import Frontpage from './frontpage';
 //import Frontpage from './frontpage';
-//import { PostField } from './components/posts.js';
+import { PostField } from './components/posts.js';
 //import Links from './routes';
 
 // ================ FIX THESE FILES BEFORE IMPORTING ================ 
 //import './Login.js';
-//import './Navbar.js';
+import Navbar from './components/navbar';
 //import './Login.js';
 
 // importing backend functions and components
@@ -64,7 +64,19 @@ function App() {
 
   return (
     <div className='App'>
-        <Frontpage />
+     
+
+     <Navbar />
+        <Routes>
+          <Route path="/browse" element={<Frontpage />} />
+          <Route path="/add-listing" element={<PostField />} />
+          <Route path="/profile" element={<insert/>} />
+      
+        </Routes>
+      
+        
+        
+
     </div>
   )
 

@@ -86,8 +86,8 @@ function PostButton({picture, title, body}) // uid, username, picture, title, bo
         post(picture, title, body);
         //initializePost();
         //post("pic", "title", Date.now().toString);
-        navigate("/feed");
-      }}>Submit Posting</button>
+        navigate("/browse");
+      }}>Blow it up</button>
     </>
   );
 }
