@@ -84,10 +84,8 @@ function PostButton({picture, title, body}) // uid, username, picture, title, bo
     <button className="post" 
       onClick={() =>{
         post(picture, title, body);
-        //initializePost();
-        //post("pic", "title", Date.now().toString);
-        navigate("/browse");
-      }}>Blow it up</button>
+        //navigate("/browse");
+      }}>Submit Posting</button>
     </>
   );
 }
