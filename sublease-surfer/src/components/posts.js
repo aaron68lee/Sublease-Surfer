@@ -1,4 +1,5 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
+import { Component } from 'react';
 import ImageUploading from 'react-images-uploading';
 // import BACKEND packages
 import firebase from 'firebase/compat/app';
