@@ -31,10 +31,11 @@ function PostField() // consider making user page its own class to use this.stat
   const [body, setBody] = useState('');
   const [address, setAddress] = useState('');
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [contact, setContact] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
 
   const handleSubmit = event =>
   {
@@ -59,55 +60,108 @@ function PostField() // consider making user page its own class to use this.stat
       setBody('');
       setAddress('');
       setName('');
+      setDescription('');
       setStartDate('');
       setEndDate('');
       setContact('');
-      setPrice('');
+      setPrice(0);
   }
 
+    // Function to handle changes in the price input field and slider
+    const handlePriceChange = (event) => {
+      let newPrice = event.target.value;
+      // If the new price is less than 0, set it to 0
+      if (newPrice < 0) {
+        newPrice = 0;
+      }
+      // If the new price is greater than 5000, set it to 5000
+      else if (newPrice > 5000)
+      {
+        newPrice = 5000;
+      }
+      // Set the price state variable to the new price
+      setPrice(newPrice);
+    };  
+
+
+  // Render the form
   return (
     <div>
-      {/*Create Text Description Field*/}
-      <input onChange={(event) => {setAddress(event.target.value)}} defaultValue={"Full Address"} type = "text" onfocus= "this.value=''" ></input><br></br>
-      <input onChange={(event) => {setName(event.target.value)}} defaultValue={"Your Name"} type = "text"></input> 
-      <p>Start Date: </p> <input type = "date" onChange={(event) => {setStartDate(event.target.value)}} ></input> 
-      <p>End Date: </p> <input type = "date" onChange={(event) => {setEndDate(event.target.value)}}></input> <br></br>
-      <input onChange={(event) => {setBody(event.target.value)}} defaultValue={"Description"} type = "text"></input><br></br>
-      <input onChange={(event) => {setContact(event.target.value)}} defaultValue={"Contact Info: "} type = "text"></input><br></br>
-      {/*Create Price input slider*/}
-      <input onChange={(event) => {setPrice(event.target.value)}} type="range" min="0" max="4000" id="slide"/><br></br>
+      {/* Create input fields for the various form fields */}
+      <input
+        type='text'
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        placeholder='Full Address'
+      />
+      <br />
+      <input
+        type='text'
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder='Your Name'
+      />
+      <br />
+      <p>Start Date: </p>{' '}
+      <input
+        type='date'
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+      />
+      <br />
+      <p>End Date: </p>{' '}
+      <input
+        type='date'
+        value={endDate}
+        onChange={(e) => setEndDate(e.target.value)}
+      />
+      <br />
+      <textarea
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+        placeholder="Description"
+        style={{ width: '30%', height: '100px' }}
+      />
+      <br />
+      <input
+        type='text'
+        value={contact}
+        onChange={(e) => setContact(e.target.value)}
+        placeholder='Contact Info:'
+      />
+      <br />
+      {/* Create a price input slider */}
+      <input
+        type='range'
+        min='0'
+        max='5000'
+        id='slide'
+        value={price}
+        style={{ width: '90%', height: '50px' }} 
+        step="5"
+        onChange={handlePriceChange}
+      />
+      {/* Create a price input field */}
+      <br />
+      <input
+        type='number'
+        value={price}
+        onChange={handlePriceChange}
+        placeholder='Enter Exact Price Here'
+        style={{ width: '10%'}}
+      />
+      <br />
+      {/* Display the current price value */}
+      <p>Sublease Price / month: ${price}</p>
+      {/* Create a button to submit the form */}
 
-      <p>Sublease Price / month: {}</p>
-      <PostButton onClick={handleSubmit} picture={picture} title={title} body={body} details = {"a"}/><br></br>
-
-      <button onClick={handleSubmit}>Log message</button>
-
-      <br></br> <br></br>
-      
+      <button onClick={handleSubmit}>Submit Posting</button>
     </div>
   );
 }
+
 // Export the PostField component so it can be used in other files
 export { PostField };
-/*
-Overall, this code defines a React component called PostField. This component renders a form with input fields 
-for various information related to a sublease, including the address, start and end dates, description, contact 
-information, and price. Users can input this information into the form, and then submit it by clicking the "Submit Posting" button.
-
-When the button is clicked, the handleSubmit function is called. This function uses the addDoc function from the Firestore library 
-to add a new document to the "posts" collection in the Firestore database. This document contains the address, name, start date, end 
-date, description, contact information, and price that the user input into the form.
-
-The handlePriceChange function is called whenever the user changes the value of the price input field. This function checks whether 
-the new price value is less than 0 or greater than 5000, and if so, sets the price to 0 or 5000 respectively. The setPrice function 
-is then called to update the price state variable with the new price value.
-
-The component also includes a p tag that displays the current value of the price state variable, and an input field that allows users 
-to directly input the price value. The input field has a minimum value of 0 and a maximum value of 5000, and the handlePriceChange function 
-is called whenever the input value changes.
-
-Finally, the PostField component is exported so that it can be used in other files.
-*/
 
 
         
