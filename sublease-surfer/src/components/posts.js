@@ -129,17 +129,6 @@ function PostField() // consider making user page its own class to use this.stat
         placeholder='Contact Info:'
       />
       <br />
-      {/* Create a price input slider */}
-      <input
-        type='range'
-        min='0'
-        max='5000'
-        id='slide'
-        value={price}
-        style={{ width: '90%', height: '50px' }} 
-        step="5"
-        onChange={handlePriceChange}
-      />
       {/* Create a price input field */}
       <br />
       <input
