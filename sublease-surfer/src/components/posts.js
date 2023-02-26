@@ -93,6 +93,7 @@ function PostField() // consider making user page its own class to use this.stat
   return (
     <div>
       {/* Create input fields for the various form fields */}
+      <p>Add information about your listing here...</p>
       <input
         type='text'
         value={address}
@@ -107,25 +108,27 @@ function PostField() // consider making user page its own class to use this.stat
         placeholder='Your Name'
       />
       <br />
-      <p>Start Date: </p>{' '}
+      <span>Start Date:</span>{' '}
       <input
         type='date'
         value={startDate}
         onChange={(e) => setStartDate(e.target.value)}
+        style={{ width: '20%'}}
       />
       <br />
-      <p>End Date: </p>{' '}
+      <span>End Date:  </span>{' '}
       <input
         type='date'
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
+        style={{ width: '20%'}}
       />
       <br />
       <textarea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Description"
-        style={{ width: '30%', height: '100px' }}
+        //style={{ width: '30%', height: '100px' }}
       />
       <br />
             {/* Add image uploading function */}
@@ -146,14 +149,15 @@ function PostField() // consider making user page its own class to use this.stat
           // display images and allow removal
           <div className="upload__image-wrapper">
             <button
+              className='signIn'
               style={isDragging ? { color: "red" } : undefined}
               onClick={onImageUpload}
               {...dragProps}
             >
-              Click or Drop here
+              Click or Drop Images here
             </button>
             &nbsp;
-            <button onClick={onImageRemoveAll}>Remove all images</button>
+            <button className='signIn' onClick={onImageRemoveAll}>Remove all images</button>
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
                 <img src={image.data_url} alt="" width="500" />
@@ -186,7 +190,7 @@ function PostField() // consider making user page its own class to use this.stat
       <p>Sublease Price / month: ${price}</p>
       {/* Create a button to submit the form */}
 
-      <button onClick={handleSubmit}>Submit Posting</button>
+      <button className='signIn' onClick={handleSubmit}>Submit Posting</button>
     </div>
   );
 }
