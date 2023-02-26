@@ -28,7 +28,6 @@ function PostField() // consider making user page its own class to use this.stat
 
   const [picture, setPic] = useState('');
   const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
   const [address, setAddress] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -43,7 +42,7 @@ function PostField() // consider making user page its own class to use this.stat
       let postObj = {
         picture: picture,
         title: title,
-        body: body,
+        description: description,
         address: address,
         name: name,
         startDate: startDate,
@@ -57,7 +56,7 @@ function PostField() // consider making user page its own class to use this.stat
       // reset all post field values 
       setPic('');
       setTitle('');
-      setBody('');
+      setDescription('');
       setAddress('');
       setName('');
       setDescription('');

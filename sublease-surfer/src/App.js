@@ -11,27 +11,23 @@ import 'firebase/compat/auth';
 import {useAuthState, useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 
-// import web app pages and variables
+// import web app pages and components
 import './App.css';
 import './themes.css';
 import Frontpage from './frontpage';
-//import Frontpage from './frontpage';
+import HomeFeed from './components/homefeed.js';
+import Profile from './components/profile';
+import Navbar from './components/navbar';
+
 import { PostField } from './components/posts.js';
-//import Links from './routes';
 
 // ================ FIX THESE FILES BEFORE IMPORTING ================ 
-//import './Login.js';
-import Navbar from './components/navbar';
-//import './Login.js';
 
 // importing backend functions and components
 
 import {
-  SignIn, 
-  SignOut, 
-  post,
-  read,
   auth} from './components/backend';
+
 
 
 // ========================== Frontend Diplay Components' Functions ===========================
@@ -67,15 +63,14 @@ function App() {
      
 
      <Navbar />
+
+     {/* Add Page Routes Here to link to different component's pages */}
         <Routes>
-          <Route path="/browse" element={<Frontpage />} />
+          <Route path="/browse" element={<HomeFeed />} /> {/* Need to replace this with feed.js */}
           <Route path="/add-listing" element={<PostField />} />
-          <Route path="/profile" element={<insert/>} />
-      
-        </Routes>
-      
-        
-        
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/frontpage" element={<Frontpage/>} />
+        </Routes> 
 
     </div>
   )

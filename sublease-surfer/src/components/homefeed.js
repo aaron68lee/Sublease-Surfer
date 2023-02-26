@@ -18,7 +18,9 @@ function HomeFeed() {
 
 
   return (
+    
     <div className='post-grid'>
+      <p>Browse Posts</p>
       {posts && posts.map(post => (
         <div className='post' key={post.id}>
           <h2>{post.title}</h2>
@@ -35,4 +37,4 @@ function HomeFeed() {
   attributes are used to apply CSS styles to the elements. */
 }
 
-export default Homefeed;
+export default HomeFeed;

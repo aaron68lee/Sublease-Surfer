@@ -123,7 +123,7 @@ function SignIn()
     <button className="signIn" 
       onClick={() =>{
         //useSignInWithGoogle();
-        navigate("/feed");
+        navigate("/browse");
 
         const provider = new firebase.auth.GoogleAuthProvider();
         signInWithPopup(auth, provider) // use signInWithRedirect for mobile devices preferred
@@ -175,9 +175,14 @@ function useSignInWithGoogle() {
 // component displayed when user IS signed in 
 function SignOut()
 {
+  const navigate = useNavigate();
   return auth.currentUser && (
     <div>
-    <button className="signOut" onClick={() => auth.signOut()}>Sign Out</button>
+    <button className="signOut" onClick={() => {
+      navigate('/');
+      auth.signOut();
+      }}>Sign Out
+    </button>
     </div>
   )
 }
