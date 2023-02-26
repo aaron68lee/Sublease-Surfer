@@ -3,6 +3,8 @@ import { GoogleMap, Map, GoogleApiWrapper, InfoWindow, Marker, withScriptjs, wit
 import {useLoadScript, LoadScript, GoogleLoadScript} from '@react-google-maps/api';
 //import axios from 'axios';
 
+//<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY"></script>
+
 const apiKey = 'AIzaSyBLe0m-ln0Fs3fHExT2G5LqkG4voSqwBhQ';
 
 function CustomMap() {
@@ -10,13 +12,15 @@ function CustomMap() {
 
   const mapStyles = { // temp styling for map
     height: "100vh",
-    width: "100%"
+    width: "100%",
+    zoomControlOptions: {
+      //position: google.maps.ControlPosition.RIGHT_CENTER,
+    },
   };
 
-  const { isLoaded } = useLoadScript({
+  const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: apiKey,
   });
-
 
   const handleMapClick = (event) => {
     setMarkers(markers.concat({
@@ -24,10 +28,33 @@ function CustomMap() {
     }));
   };
 
+  // some internal error in loading map with API key
+  if (loadError)
+    return <div>Map cannot be loaded.</div>;
+
   if (!isLoaded)
-    return <div>...Loading...</div>
+    return <div>...Loading in progress...</div>
   else
   {
+    /*
+    const onLoad = React.useCallback(
+      
+      return (
+        <GoogleMap
+          defaultZoom={8}
+          defaultCenter={{ lat: -34.397, lng: 150.644 }}
+          mapContainerStyle={mapStyles}
+          onClick={handleMapClick}
+        >
+        {
+          // additional map components
+        }
+        </GoogleMap>
+      );
+      
+    )*/
+    
+    /*
     return (
       <LoadScript
         googleMapsApiKey = {apiKey}>
@@ -37,6 +64,16 @@ function CustomMap() {
           mapContainerStyle={mapStyles}
           onClick={handleMapClick}
         >
+
+
+        <Marker
+          icon={{
+            url:"../../assets/img/carz.png",
+            anchor: new window.google.maps.Point(10, 10),
+            scaledSize: new window.google.maps.Size(20, 20)
+          }}
+        />
+
           {markers.map((marker, index) => (
             <Marker 
               key={index} 
@@ -44,13 +81,18 @@ function CustomMap() {
               name = "seller name"
               title = "post title"
               content = "test content"
+              icon={{
+                url:"../../assets/img/carz.png",
+                anchor: new window.google.maps.Point(10, 10),
+                scaledSize: new window.google.maps.Size(20, 20)
+              }}
             />
           ))}
         </GoogleMap>
       </LoadScript>
     );
+    */
   }
-  
 };
 
 /*

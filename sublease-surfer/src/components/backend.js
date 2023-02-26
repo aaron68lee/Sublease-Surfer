@@ -10,7 +10,7 @@ import 'firebase/compat/auth';
 import { GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
-import {doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore"; 
+import {orderBy, onSnapShot, limit, doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore"; 
 
 // import web app pages and variables
 import '../App.css'; //.. is used because App.css isn't in the components folder, it's in components' parent directory
@@ -39,22 +39,13 @@ const auth = firebase.auth();
 const db = firebase.firestore(); // db = firebase.firestore() for database access
 
 // write data to the database, db, creating a new sublease post for User === uid
-// ========================== Write: Create Post ===========================
+// ========================== Write: Create Post for Listing ===========================
 async function post(picture, title, body, address, name, startDate, endDate, contact, price) 
 {
   
   let user = auth.currentUser;
   const ref = collection(db, 'posts');
     try {
-      /*
-      db.collection('posts').add({
-        uid: auth.currentUser,
-        username: auth.currentUser.displayName,
-        picture: picture, // find way to uplaod file
-        title: title,
-        description: body,
-      });
-      */
      console.log(auth.currentUser);
 
         const docRef = await addDoc(collection(db, "posts"), {
@@ -111,12 +102,28 @@ async function deletePost(uid, username, picture, title, body)
 // tags is an arrayof tag filters for querying criteria
 async function readPosts(tags) 
 {
-    const q = query(collection(db, "posts"), where("Price", ">", 3000)); // add conditional criteria?
+    // get only latest 25 posts by creation date 
+    let maxPosts = 25;
+    const q = query(collection(db, "posts"), orderBy("creationDate", "desc"), limit(maxPosts));
+    //const [posts] = useCollectionData(q, { idField: "id" }); // listen for changes in the database as new posts get added
     const querySnapshot = await getDocs(q);
+    /*
     querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
-        console.log(doc.get("Price"));
+        //console.log(doc.get("price"));
     });
+    */
+      /*
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        console.log(doc.get("price"));
+      });
+    });
+
+  return unsubscribe;
+    */
+   return querySnapshot;
 }
 
 // component displayed when user NOT signed in 
