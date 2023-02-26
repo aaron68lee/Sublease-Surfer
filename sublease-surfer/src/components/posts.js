@@ -93,6 +93,7 @@ function PostField() // consider making user page its own class to use this.stat
   return (
     <div>
       {/* Create input fields for the various form fields */}
+      <p>Add information about your listing here...</p>
       <input
         type='text'
         value={address}
@@ -107,25 +108,27 @@ function PostField() // consider making user page its own class to use this.stat
         placeholder='Your Name'
       />
       <br />
-      <p>Start Date: </p>{' '}
+      <span>Start Date:</span>{' '}
       <input
         type='date'
         value={startDate}
         onChange={(e) => setStartDate(e.target.value)}
+        style={{ width: '20%'}}
       />
       <br />
-      <p>End Date: </p>{' '}
+      <span>End Date:  </span>{' '}
       <input
         type='date'
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
+        style={{ width: '20%'}}
       />
       <br />
       <textarea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Description"
-        style={{ width: '30%', height: '100px' }}
+        //style={{ width: '30%', height: '100px' }}
       />
       <br />
             {/* Add image uploading function */}
@@ -144,24 +147,27 @@ function PostField() // consider making user page its own class to use this.stat
           dragProps,
         }) => (
           // display images and allow removal
-          <div className="upload__image-wrapper">
+          <div>
             <button
+              className="upload__image-wrapper"
               style={isDragging ? { color: "red" } : undefined}
               onClick={onImageUpload}
               {...dragProps}
             >
-              Click or Drop here
+              [Click or Drop Images here]
             </button>
             &nbsp;
-            <button onClick={onImageRemoveAll}>Remove all images</button>
-            {imageList.map((image, index) => (
-              <div key={index} className="image-item">
-                <img src={image.data_url} alt="" width="500" />
-                <div className="image-item__btn-wrapper">
-                  <button onClick={() => removeImage(index)}>Remove</button>
+            <div>
+              <button className='remove' onClick={onImageRemoveAll}>Remove all images</button>
+              {imageList.map((image, index) => (
+                <div key={index} className="image-item">
+                  <img src={image.data_url} alt="" width="500" />
+                  <div className="image-item__btn-wrapper">
+                    <button className='remove' onClick={() => removeImage(index)}> X </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </ImageUploading>
@@ -174,19 +180,19 @@ function PostField() // consider making user page its own class to use this.stat
       <br />
       {/* Create a price input field */}
       <br />
+      {/* Display the current price value */}
+      <span>Sublease Price / month: $</span>
       <input
         type='number'
         value={price}
         onChange={handlePriceChange}
         placeholder='Enter Exact Price Here'
-        style={{ width: '10%'}}
+        style={{ width: '16%'}}
       />
       <br />
-      {/* Display the current price value */}
-      <p>Sublease Price / month: ${price}</p>
-      {/* Create a button to submit the form */}
 
-      <button onClick={handleSubmit}>Submit Posting</button>
+      {/* Create a button to submit the form */}
+      <button className='signIn' onClick={handleSubmit}>Submit Posting</button>
     </div>
   );
 }

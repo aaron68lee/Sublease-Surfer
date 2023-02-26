@@ -4,9 +4,11 @@ import { db, readPosts } from '../components/backend.js';
 import {orderBy, onSnapshot, limit, doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore";
 
 function HomeFeed() {
-  /* This ABOVE block gets a reference to the posts collection in the Firebase database, 
-  and creates a query to retrieve the 25 most recent posts, sorted in descending order by their createdAt field. */
 
+  //const [posts] = useCollectionData(query, { idField: 'id' });
+  const [searchTerm, setSearchTerm] = useState('');
+  const [priceLow, setPriceLow] = useState('');
+  const [priceHigh, setPriceHigh] = useState('');
   const [tags, setTags] = useState([]);
   const [posts, setPosts] = useState([]);
 
@@ -38,17 +40,6 @@ function HomeFeed() {
     return unsubscribe;
   }, [tags]);
 
-  /* 
-  // snapshots don't work
-  querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      //console.log(doc.get("price"));
-  });
-  */
-
-  // This ABOVE LINE uses the useCollectionData hook from the react-firebase-hooks package to listen for changes to the 
-  // posts collection. The idField option specifies that the id field should be used as the unique identifier for each post.
-
   console.log("Posts: " + JSON.stringify(q));
   console.log("Num Posts: " + posts.length); // add this line to check the value of the posts array
     
@@ -56,12 +47,61 @@ function HomeFeed() {
     return <div>...Loading Posts...</div>;
   }
 
+  const handlePriceLowChange = (e) => {
+    if (e.target.value === '') {
+      setPriceLow('');
+    } else {
+      const value = parseInt(e.target.value);
+      if (!isNaN(value) && value >= 0) {
+        setPriceLow(value);
+      }
+    }
+  };
+
+  const handlePriceHighChange = (e) => {
+    if (e.target.value === '') {
+      setPriceHigh('');
+    } else {
+      const value = parseInt(e.target.value);
+      if (!isNaN(value) && value >= 0) {
+        setPriceHigh(value);
+      }
+    }
+  };
+
+  const filteredPosts = posts && posts.filter(post =>
+    post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.contact.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (priceLow === '' || post.price >= priceLow) &&
+    (priceHigh === '' || post.price <= priceHigh)
+  );
+
   return (
     <div className='post-grid'>
+      <div className='search-container'>
+        <input type='text'
+          placeholder='Search'
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <input type='number'
+          placeholder='Low'
+          value={priceLow}
+          onChange={handlePriceLowChange}
+        />
+        <input type='number'
+          placeholder='High'
+          value={priceHigh}
+          onChange={handlePriceHighChange}
+        />
+      </div>
+  
       <p>Browse Posts</p>
- 
-      {posts.map((post) => (
-        <div className="post" key={post.id}>
+  
+      {filteredPosts && filteredPosts.map(post => (
+        <div className='post' key={post.id}>
           <h2>Owner: {post.name}</h2>
           <img src={post.picture} alt="post image" />
           <p>Address: {post.address}</p>
@@ -71,23 +111,10 @@ function HomeFeed() {
           <p>Contact: {post.contact}</p>
         </div>
       ))}
-
-      {/*}
-      {posts && posts.map(post => (
-
-        <div className='post' key={post.id}>
-          <h2>Owner: {post.name}</h2>
-          <img src={post.picture} alt='post image' />
-          <p>Address: {post.address}</p>
-          <p>Details: {post.description}</p> 
-          <p>Dates: {post.startDate} to {post.endDate}</p> 
-          <p>Price: {post.price}</p>
-          <p>Contact: {post.contact}</p>
-        </div>
-      ))} */}
-      
+  
     </div>
   );
+  
 }
 
 export default HomeFeed;
