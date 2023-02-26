@@ -18,7 +18,7 @@ import Navbar from '../components/navbar.js';
 function PostField() // consider making user page its own class to use this.state.value and onChange function
 {
 
-  const [picture, setPic] = useState('');
+  const [pictures, setPictures] = useState('');
   const [title, setTitle] = useState('');
   const [address, setAddress] = useState('');
   const [name, setName] = useState('');
@@ -28,11 +28,22 @@ function PostField() // consider making user page its own class to use this.stat
   const [contact, setContact] = useState('');
   const [price, setPrice] = useState(0);
 
+  // Handle image uploading
+  const onChange = (imageList, addUpdateIndex) => {
+    setPictures(imageList);
+  };
+
+  const removeImage = (index) => {
+    const newPictures = [...pictures];
+    newPictures.splice(index, 1);
+    setPictures(newPictures);
+  };
+
   const handleSubmit = event =>
   {
       // Add this new post to the database
       let postObj = {
-        picture: picture,
+        picture: pictures,
         title: title,
         description: description,
         address: address,
@@ -46,7 +57,7 @@ function PostField() // consider making user page its own class to use this.stat
       console.log("Post this Object: \n" + JSON.stringify(postObj));
 
       // reset all post field values 
-      setPic('');
+      setPictures('');
       setTitle('');
       setDescription('');
       setAddress('');
@@ -57,7 +68,7 @@ function PostField() // consider making user page its own class to use this.stat
       setContact('');
       setPrice(0);
 
-      post(picture, title, description, address, name, startDate, endDate, contact, price);
+      post(pictures, title, description, address, name, startDate, endDate, contact, price);
       //alert("Post Submitted");
   }
 
@@ -117,6 +128,43 @@ function PostField() // consider making user page its own class to use this.stat
         style={{ width: '30%', height: '100px' }}
       />
       <br />
+            {/* Add image uploading function */}
+            <ImageUploading
+        multiple
+        value={pictures}
+        onChange={onChange}
+        maxNumber={10}
+        dataURLKey="data_url"
+      >
+        {({
+          onImageUpload,
+          onImageRemoveAll,
+          imageList,
+          isDragging,
+          dragProps,
+        }) => (
+          // display images and allow removal
+          <div className="upload__image-wrapper">
+            <button
+              style={isDragging ? { color: "red" } : undefined}
+              onClick={onImageUpload}
+              {...dragProps}
+            >
+              Click or Drop here
+            </button>
+            &nbsp;
+            <button onClick={onImageRemoveAll}>Remove all images</button>
+            {imageList.map((image, index) => (
+              <div key={index} className="image-item">
+                <img src={image.data_url} alt="" width="500" />
+                <div className="image-item__btn-wrapper">
+                  <button onClick={() => removeImage(index)}>Remove</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ImageUploading>
       <input
         type='text'
         value={contact}
