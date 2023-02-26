@@ -178,18 +178,18 @@ function PostField() // consider making user page its own class to use this.stat
       <br />
       {/* Create a price input field */}
       <br />
+      {/* Display the current price value */}
+      <span>Sublease Price / month: $</span>
       <input
         type='number'
         value={price}
         onChange={handlePriceChange}
         placeholder='Enter Exact Price Here'
-        style={{ width: '10%'}}
+        style={{ width: '16%'}}
       />
       <br />
-      {/* Display the current price value */}
-      <p>Sublease Price / month: ${price}</p>
-      {/* Create a button to submit the form */}
 
+      {/* Create a button to submit the form */}
       <button className='signIn' onClick={handleSubmit}>Submit Posting</button>
     </div>
   );

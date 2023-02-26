@@ -46,7 +46,7 @@
   /*border-radius: 16px;*/
   padding: 12px;
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: 15px;
   background-color: white;
   border-color: #00b09b;
   margin: 20px;
@@ -130,6 +130,7 @@ p {
   }
 }
 
+::-webkit-datetime-edit { color:#96c93d; padding: 0 0.3em; }
 
 input {
   resize: vertical;
@@ -143,6 +144,9 @@ input {
   height:40px;
   width: 40%;
   text-align:left;
+  color:#00b09b;
+  font-weight: bold;
+  font-size: medium;
 }
 
 input::placeholder {
@@ -167,6 +171,7 @@ textarea {
   height:150px;
   margin-inline: 20px;
   margin-top: 10px;
+  font-size: medium;
 }
 
 textarea::placeholder {
