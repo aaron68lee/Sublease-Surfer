@@ -80,6 +80,31 @@ async function post(picture, title, body, address, name, startDate, endDate, con
     
 }
 
+// ========================== Write: Create Profile ===========================
+async function postProfile(picture, name, bio, contact) 
+{
+  
+  let user = auth.currentUser;
+  const ref = collection(db, 'users');
+    try {
+        const docRef = await addDoc(collection(db, "users"), {
+          uid: user ? user.uid : null,
+          username: user ? user.displayName : null,
+          picture: picture, // find way to uplaod file with url?
+          name: name, //Can be different than username associated with login
+          contact: contact,
+          bio: bio,
+        }).then(
+          alert("Profile Edited"),
+        );
+      
+        console.log("Profile Document written");
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+    
+}
+
 // ========================== Post Button ===========================
 // post button component
 function PostButton({picture, title, body}) // uid, username, picture, title, body 
