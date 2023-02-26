@@ -12,17 +12,8 @@ import {doc, collection, addDoc, getDocs, updateDoc} from "firebase/firestore";
 
 import { Link } from 'react-router-dom';
 
-import { SignIn, SignOut, auth, db, PostButton} from '../components/backend.js';
+import {auth, db, PostButton, post} from '../components/backend.js';
 import Navbar from '../components/navbar.js';
-
-
-// TODO: MAKE THIS A CLASS
-
-// Component for user to create new sublease posting / listing 
-function post()
-{
-
-}
 
 function PostField() // consider making user page its own class to use this.state.value and onChange function
 {
@@ -65,6 +56,9 @@ function PostField() // consider making user page its own class to use this.stat
       setEndDate('');
       setContact('');
       setPrice(0);
+
+      post(picture, title, description, address, name, startDate, endDate, contact, price);
+      //alert("Post Submitted");
   }
 
     // Function to handle changes in the price input field and slider

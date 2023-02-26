@@ -40,7 +40,7 @@ const db = firebase.firestore(); // db = firebase.firestore() for database acces
 
 // write data to the database, db, creating a new sublease post for User === uid
 // ========================== Write: Create Post ===========================
-async function post(picture, title, body) 
+async function post(picture, title, body, address, name, startDate, endDate, contact, price) 
 {
   
   let user = auth.currentUser;
@@ -55,14 +55,20 @@ async function post(picture, title, body)
         description: body,
       });
       */
-     readPosts();
      console.log(auth.currentUser);
+     
         const docRef = await addDoc(collection(db, "posts"), {
           uid: user ? user.uid : null,
           username: user ? user.displayName : null,
-          picture: picture, // find way to uplaod file
+          picture: picture, // find way to uplaod file with url?
           title: title,
           description: body,
+          address: address,
+          name: name,
+          startDate: startDate,
+          endDate: endDate,
+          contact: contact,
+          price: price,
         }).then(
           alert("Post made"),
         );

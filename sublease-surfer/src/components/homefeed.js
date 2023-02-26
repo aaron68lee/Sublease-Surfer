@@ -24,8 +24,14 @@ function HomeFeed() {
       {posts && posts.map(post => (
         <div className='post' key={post.id}>
           <h2>{post.title}</h2>
-          <p>{post.content}</p>
           <img src={post.imageUrl} alt='post image' />
+          <p>{post.address}</p>
+          {/* <p>Details: {post.descrption}</p> */}
+          <p>Owner: {post.name}</p>
+          <p>Dates: {post.startDate} to  {post.endDate}</p> 
+          <p>Price: {post.price}</p>
+          <p>Contact: {post.contact}</p>
+          
         </div>
       ))}
     </div>
