@@ -194,7 +194,7 @@ textarea::placeholder {
   border-color: white;
   border-style: dashed;
   border:2;
-  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  box-shadow:4px 4px 10px rgba(0,0,0,0.20);
   height:150px;
   margin-inline: 20px;
   margin-top: 10px;
