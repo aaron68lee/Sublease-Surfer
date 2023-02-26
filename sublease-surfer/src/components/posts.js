@@ -22,6 +22,7 @@ function post()
 {
 
 }
+
 function PostField() // consider making user page its own class to use this.state.value and onChange function
 {
 
