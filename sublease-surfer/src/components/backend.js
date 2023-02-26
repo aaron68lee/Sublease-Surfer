@@ -378,4 +378,5 @@ export {SignIn,
         PostButton,
         post,
         readPosts,
+        postProfile,
         auth, db};

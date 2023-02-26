@@ -113,7 +113,7 @@ function PostField() // consider making user page its own class to use this.stat
         type='date'
         value={startDate}
         onChange={(e) => setStartDate(e.target.value)}
-        style={{ width: '20%'}}
+        style={{ width: '20%', color: '#96c93d'}}
       />
       <br />
       <span>End Date:  </span>{' '}
@@ -121,7 +121,7 @@ function PostField() // consider making user page its own class to use this.stat
         type='date'
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
-        style={{ width: '20%'}}
+        style={{ width: '20%', color: '#96c93d'}}
       />
       <br />
       <textarea
@@ -163,7 +163,7 @@ function PostField() // consider making user page its own class to use this.stat
                 <div key={index} className="image-item">
                   <img src={image.data_url} alt="" width="500" />
                   <div className="image-item__btn-wrapper">
-                    <button className='remove' onClick={() => removeImage(index)}> X </button>
+                    <button className='remove' onClick={() => removeImage(index)}> Remove image </button>
                   </div>
                 </div>
               ))}
