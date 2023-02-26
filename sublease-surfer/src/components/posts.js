@@ -147,25 +147,27 @@ function PostField() // consider making user page its own class to use this.stat
           dragProps,
         }) => (
           // display images and allow removal
-          <div className="upload__image-wrapper">
+          <div>
             <button
-              className='signIn'
+              className="upload__image-wrapper"
               style={isDragging ? { color: "red" } : undefined}
               onClick={onImageUpload}
               {...dragProps}
             >
-              Click or Drop Images here
+              [Click or Drop Images here]
             </button>
             &nbsp;
-            <button className='signIn' onClick={onImageRemoveAll}>Remove all images</button>
-            {imageList.map((image, index) => (
-              <div key={index} className="image-item">
-                <img src={image.data_url} alt="" width="500" />
-                <div className="image-item__btn-wrapper">
-                  <button onClick={() => removeImage(index)}>Remove</button>
+            <div>
+              <button className='remove' onClick={onImageRemoveAll}>Remove all images</button>
+              {imageList.map((image, index) => (
+                <div key={index} className="image-item">
+                  <img src={image.data_url} alt="" width="500" />
+                  <div className="image-item__btn-wrapper">
+                    <button className='remove' onClick={() => removeImage(index)}> X </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </ImageUploading>
