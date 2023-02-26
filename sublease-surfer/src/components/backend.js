@@ -56,7 +56,7 @@ async function post(picture, title, body, address, name, startDate, endDate, con
       });
       */
      console.log(auth.currentUser);
-     
+
         const docRef = await addDoc(collection(db, "posts"), {
           uid: user ? user.uid : null,
           username: user ? user.displayName : null,
@@ -129,8 +129,6 @@ function SignIn()
     <button className="signIn" 
       onClick={() =>{
         //useSignInWithGoogle();
-        navigate("/browse");
-
         const provider = new firebase.auth.GoogleAuthProvider();
         signInWithPopup(auth, provider) // use signInWithRedirect for mobile devices preferred
           .then((result) => {
@@ -138,6 +136,7 @@ function SignIn()
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
+            navigate("/browse");
             // IdP data available using getAdditionalUserInfo(result)
           }).catch((error) => {
             // Handle Errors here.

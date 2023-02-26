@@ -8,7 +8,7 @@ import { Router, Link, Routes, Route, Navigate, createBrowserRouter, RouterProvi
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
-import {useAuthState, useSignInWithGoogle} from 'react-firebase-hooks/auth';
+import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 
 // import web app pages and components
@@ -60,9 +60,8 @@ function App() {
 
   return (
     <div className='App'>
-     
 
-     <Navbar />
+     {user ? <Navbar /> : <></>}
 
      {/* Add Page Routes Here to link to different component's pages */}
         <Routes>

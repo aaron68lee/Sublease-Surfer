@@ -23,11 +23,10 @@ function HomeFeed() {
       <p>Browse Posts</p>
       {posts && posts.map(post => (
         <div className='post' key={post.id}>
-          <h2>{post.title}</h2>
-          <img src={post.imageUrl} alt='post image' />
-          <p>{post.address}</p>
+          <h2>Owner: {post.name}</h2>
+          <img src={post.picture} alt='post image' />
+          <p>Address: {post.address}</p>
           {/* <p>Details: {post.descrption}</p> */}
-          <p>Owner: {post.name}</p>
           <p>Dates: {post.startDate} to  {post.endDate}</p> 
           <p>Price: {post.price}</p>
           <p>Contact: {post.contact}</p>
