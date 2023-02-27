@@ -84,11 +84,10 @@ function Profile()
               onClick={onImageUpload}
               {...dragProps}
             >
-              Click or Drop here
+              Click or Drop your Profile Picture here
             </button>
             &nbsp;
             <br/>
-            <button className='remove' onClick={onImageRemoveAll}>Remove all images</button>
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
                 <img src={image.data_url} alt="" width="500" />
