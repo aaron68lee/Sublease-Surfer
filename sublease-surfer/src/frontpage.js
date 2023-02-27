@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './App.css';
-import CustomMap from './components/map.js';
+import CustomMap, { decodeLocations } from './components/map.js';
 
 import {SignIn} from './components/backend';
 
@@ -10,7 +10,7 @@ import {SignIn} from './components/backend';
 function Frontpage()
 {
     return (
-        <div className="page-container">
+        <div text-align="center" className="page-container">
             
             <header className="App-header">
 

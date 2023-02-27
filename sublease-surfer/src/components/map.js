@@ -1,169 +1,129 @@
-import React, { useState } from 'react';
-import { GoogleMap, Map, GoogleApiWrapper, InfoWindow, Marker, withScriptjs, withGoogleMap } from 'react-google-maps';
+import React, { useState, Component } from 'react';
+import { GoogleMap, Map, GoogleApiWrapper, InfoWindow, Marker, withScriptjs, withGoogleMap } from 'google-maps-react';
 import {useLoadScript, LoadScript, GoogleLoadScript} from '@react-google-maps/api';
+import {decodeLocations} from './backend.js';
 //import axios from 'axios';
 
 //<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY"></script>
 
 const apiKey = 'AIzaSyBLe0m-ln0Fs3fHExT2G5LqkG4voSqwBhQ';
 
-function CustomMap() {
-  const [markers, setMarkers] = useState([]); // collection of all marker locations
-
-  const mapStyles = { // temp styling for map
-    height: "100vh",
-    width: "100%",
-    zoomControlOptions: {
-      //position: google.maps.ControlPosition.RIGHT_CENTER,
-    },
-  };
-
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: apiKey,
-  });
-
-  const handleMapClick = (event) => {
-    setMarkers(markers.concat({
-      position: event.latLng,
-    }));
-  };
-
-  // some internal error in loading map with API key
-  if (loadError)
-    return <div>Map cannot be loaded.</div>;
-
-  if (!isLoaded)
-    return <div>...Loading in progress...</div>
-  else
-  {
-    /*
-    const onLoad = React.useCallback(
-      
-      return (
-        <GoogleMap
-          defaultZoom={8}
-          defaultCenter={{ lat: -34.397, lng: 150.644 }}
-          mapContainerStyle={mapStyles}
-          onClick={handleMapClick}
-        >
-        {
-          // additional map components
-        }
-        </GoogleMap>
-      );
-      
-    )*/
-    
-    /*
-    return (
-      <LoadScript
-        googleMapsApiKey = {apiKey}>
-        <GoogleMap
-          defaultZoom={8}
-          defaultCenter={{ lat: -34.397, lng: 150.644 }}
-          mapContainerStyle={mapStyles}
-          onClick={handleMapClick}
-        >
-
-
-        <Marker
-          icon={{
-            url:"../../assets/img/carz.png",
-            anchor: new window.google.maps.Point(10, 10),
-            scaledSize: new window.google.maps.Size(20, 20)
-          }}
-        />
-
-          {markers.map((marker, index) => (
-            <Marker 
-              key={index} 
-              position={marker.position} 
-              name = "seller name"
-              title = "post title"
-              content = "test content"
-              icon={{
-                url:"../../assets/img/carz.png",
-                anchor: new window.google.maps.Point(10, 10),
-                scaledSize: new window.google.maps.Size(20, 20)
-              }}
-            />
-          ))}
-        </GoogleMap>
-      </LoadScript>
-    );
-    */
-  }
-};
-
-/*
-window.initMap = async () => {
-      //const data = await getData()
-      //console.log(data)
-    
-      // Create the map.
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: { lat: 31, lng: 112 },
-        mapTypeId: 'terrain',
-      })
-    
-    var circles = [];
-    
-    
-        // Add the circle for this city to the map.
-        var cityCircle = new google.maps.Circle({
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35,
-          map: map,
-          center: {lat: Number(lat), lng: Number(long)},
-          radius: Math.pow(numberOfPeople, 1/8) * 100000,
-        })
-    
-
-    var contentString = "Map Marker Popup Description Here";
-    
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString,
-    });
-    
-    // var marker = new google.maps.Marker({
-    //   position: myLatLng,
-    //   map: map,
-    //   title: "City"
-    // });
-    
-    google.maps.event.addListener(cityCircle, 'mouseOver',function(){
-      infowindow.open(map);
-      alert("hi");
-    });
-    
-    // ==================================== Aggregate All Posts on Single Map ==============================
-    var markers = [];
-    
-    
-    function marker()
-    {
-      
-    }
-
-    //marker();
-    
-    var newCircle = new google.maps.Circle({
-      strokeColor: '#FFFFFF',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FFFFFF',
-      fillOpacity: 0.35,
-      map: map,
-      center: {lat: 10, lng: 10},
-      radius: 500
-    })
-    
-    console.log(newCircle);
-  
+const style = {
+  width: '100%',
+  height: '100%'
 }
-*/
-export default CustomMap;
+
+// ========================== Custom Map Component ===========================
+
+export class CustomMap extends Component{
+
+  // initialize object constructor
+  constructor(props)
+  {
+    super(props);
+    
+    this.state = {
+      count: 0,
+      bounds: 
+      {
+        lat: 10,
+        lng: 10
+      },
+
+      locations:
+      [
+        {
+          name: "Location 1",
+          location: { 
+            lat: 37.778519, 
+            lng: -122.40564
+          },
+        },
+        {
+          name: "Location 2",
+          location: { 
+            lat: 41.3917,
+            lng: 2.1649
+          },
+        },
+      ],
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  // marker onclick function
+  handleClick()
+  {
+    // hitbox includes full icon
+    alert("marker clicked")
+  };
+    
+  // auto resizes when new markers are added to map
+  resize()
+  {
+    var points = [
+      { lat: 42.02, lng: -77.01 },
+      { lat: 42.03, lng: -77.02 },
+      { lat: 41.03, lng: -77.04 },
+      { lat: 42.05, lng: -77.02 }
+    ]
+    var bounds = new this.props.google.maps.LatLngBounds();
+    for (var i = 0; i < points.length; i++) {
+      this.state.bounds = bounds.extend(points[i]);
+    }
+  }
+
+
+  // ========================== Render ===========================
+  render() {
+    return (
+      <Map 
+        google={this.props.google} 
+        zoom={14}
+        style={style}
+        /*
+        initialCenter={{
+          lat: this.state.locations[1].location.lat,
+          lng: this.state.locations[1].location.lng,
+        }}*/
+      >
+
+        <Marker 
+            onClick={this.handleClick}
+            location={this.state.locations[1]}    
+            //key={index} 
+            //position={marker.position} 
+            name="seller name"
+            title="post title"
+            content="test content"
+            
+            icon={{
+              url:"https://cdn.vox-cdn.com/thumbor/JCzDlDQzFM8CuSzG5smAE_dUwEI=/0x0:1220x813/1075x1075/filters:focal(513x310:707x504):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56773485/shutterstock_566476819.0.1505928130.jpg",
+              anchor: new window.google.maps.Point(0, 0),
+              scaledSize: new window.google.maps.Size(100, 100)
+            }}
+            
+        />
+        
+        <Marker
+            title={'The marker`s title will appear as a tooltip.'}
+            name={'SOMA'}
+            position={{lat: 37.778519, lng: -122.405640}} />
+        <Marker
+          name={'Dolores park'}
+          position={{lat: 37.759703, lng: -122.428093}} />
+        <Marker />
+        
+        <InfoWindow visible={true}>
+            <div>
+              <h1>Here is a place.</h1>
+            </div>
+        </InfoWindow>
+      </Map>
+    );
+  }
+}
+
+export default GoogleApiWrapper({
+  apiKey: apiKey
+})(CustomMap)

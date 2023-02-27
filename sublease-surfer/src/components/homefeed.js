@@ -16,7 +16,6 @@ function HomeFeed() {
 
   // query the database for posts
   let maxPosts = 25;
-  const q = query(collection(db, "posts"), limit(maxPosts));
   //const [posts] = useCollectionData(q, { idField: 'id' }); // listen for changes to the collection of posts
   //readPosts(tags); // debug purposes to read posts
 

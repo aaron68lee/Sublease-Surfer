@@ -1,5 +1,5 @@
 // import FRONTEND packages
-import React, {useRef, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,6 +37,40 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore(); // db = firebase.firestore() for database access
+
+// ========================== Geodecode Location from Street Address ===========================
+
+async function getLocationFromAddress(address) {
+  const apiKey = apiKey;
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  if (data.status !== 'OK') {
+    throw new Error(`Geocoding error: ${data.status}`);
+  }
+  const result = data.results[0];
+  const location = result.geometry.location;
+  return {
+    lat: location.lat,
+    lng: location.lng,
+  };
+}
+
+async function decodeLocations()
+{
+  
+  const q = query(collection(db, "posts"));
+  const querySnapshot = await getDocs(q);
+    
+  querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+      console.log("Price: " + doc.get("price"));
+  });
+
+  const location = await getLocationFromAddress('1600 Amphitheatre Parkway, Mountain View, CA');
+  console.log(location);
+}
+
 
 // write data to the database, db, creating a new sublease post for User === uid
 // ========================== Write: Create Post for Listing ===========================
@@ -94,22 +128,6 @@ async function postProfile(picture, name, bio, contact)
         console.error("Error adding document: ", e);
     }
     
-}
-
-// ========================== Post Button ===========================
-// post button component
-function PostButton({picture, title, body}) // uid, username, picture, title, body 
-{
-  const navigate = useNavigate();
-  return (
-    <>
-    <button className="post" 
-      onClick={() =>{
-        post(picture, title, body);
-        //navigate("/browse");
-      }}>Submit Posting</button>
-    </>
-  );
 }
 
 // ========================== Delete Post ===========================
@@ -224,166 +242,11 @@ function SignOut()
   )
 }
 
-// ========================== Event Listeners ===========================
-// Bindings on load event listeners
-
-
-/**
- * Starts listening for new posts and populates posts lists.
- */
-// ========================== Database Querying ===========================
-/*
-function startDatabaseQueries() {
-  var myUserId = firebase.auth().currentUser.uid;
-  var topUserPostsRef = firebase.database().ref('user-posts/' + myUserId).orderByChild('starCount');
-  var recentPostsRef = firebase.database().ref('posts').limitToLast(100);
-  var userPostsRef = firebase.database().ref('user-posts/' + myUserId);
-
-  var fetchPosts = function(postsRef, sectionElement) {
-    postsRef.on('child_added', function(data) {
-      var author = data.val().author || 'Anonymous';
-      var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-      containerElement.insertBefore(
-        createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
-        containerElement.firstChild);
-    });
-    postsRef.on('child_changed', function(data) {
-      var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-      var postElement = containerElement.getElementsByClassName('post-' + data.key)[0];
-      postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = data.val().title;
-      postElement.getElementsByClassName('username')[0].innerText = data.val().author;
-      postElement.getElementsByClassName('text')[0].innerText = data.val().body;
-      postElement.getElementsByClassName('star-count')[0].innerText = data.val().starCount;
-    });
-    postsRef.on('child_removed', function(data) {
-      var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-      var post = containerElement.getElementsByClassName('post-' + data.key)[0];
-      post.parentElement.removeChild(post);
-    });
-  };
-
-  // Fetching and displaying all posts of each sections.
-  fetchPosts(topUserPostsRef, topUserPostsSection);
-  fetchPosts(recentPostsRef, recentPostsSection);
-  fetchPosts(userPostsRef, userPostsSection);
-
-  // Keep track of all Firebase refs we are listening to.
-  listeningFirebaseRefs.push(topUserPostsRef);
-  listeningFirebaseRefs.push(recentPostsRef);
-  listeningFirebaseRefs.push(userPostsRef);
-}
-
-// Cleanups the UI and removes all Firebase listeners.
- 
-// ========================== UI Cleanup ===========================
-function cleanupUi() {
-  // Remove all previously displayed posts.
-  topUserPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
-  recentPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
-  userPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
-
-  // Stop all currently listening Firebase listeners.
-  listeningFirebaseRefs.forEach(function(ref) {
-    ref.off();
-  });
-  listeningFirebaseRefs = [];
-}
-*/
-
-// ========================== Test Functions ===========================
-
-/**
- * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
- */
-/*
-function onAuthStateChanged(user) {
-  // We ignore token refresh events.
-  if (user && currentUID === user.uid) {
-    return;
-  }
-
-  cleanupUi();
-  if (user) {
-    currentUID = user.uid;
-    splashPage.style.display = 'none';
-    writeUserData(user.uid, user.displayName, user.email, user.photoURL);
-    startDatabaseQueries();
-  } else {
-    // Set currentUID to null.
-    currentUID = null;
-    // Display the splash page where you can sign-in.
-    splashPage.style.display = '';
-  }
-}
-
-// Chatroom Functionality 
-function ChatRoom()
-{
-  const dummy = useRef();
-  const messagesRef = db.collection('messages');
-  const query = messagesRef.orderBy('createdAt').limit(25);
-
-  const [messages] = useCollectionData(query, {idField: 'id'}); // use React Hooks to detect component change and re-render()
-
-  const [formValue, setFormValue] = useState('');
-
-
-  const sendMessage = async (e) => {
-    e.preventDefault();
-
-    const { uid, photoURL } = auth.currentUser;
-
-    // this object HAS TO MATCH backend collection object type with SAME FIELDS
-    await messagesRef.add({
-      text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      uid,
-      photoURL
-    })
-
-    setFormValue('');
-    dummy.current.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  return (<>
-    <main>
-
-      {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-
-      <span ref={dummy}></span>
-
-    </main>
-
-    <form onSubmit={sendMessage}>
-
-      <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
-
-      <button type="submit" disabled={!formValue}>🕊️</button>
-
-    </form>
-  </>)
-
-}
-
-// Chat message component logic
-function ChatMessage(props) {
-  const { text, uid, photoURL } = props.message;
-
-  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
-
-  return (<>
-    <div className={`message ${messageClass}`}>
-      <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
-      <p>{text}</p>
-    </div>
-  </>)
-}
-*/
-
 export {SignIn, 
-        SignOut, 
-        PostButton,
+        SignOut,
         post,
         readPosts,
         postProfile,
+        getLocationFromAddress,
+        decodeLocations,
         auth, db};
