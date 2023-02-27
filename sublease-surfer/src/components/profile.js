@@ -47,24 +47,17 @@ function Profile()
     return (
     <div>
       {/* Create input fields for the various form fields */}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <p> Edit your profile...</p>
       <textarea
         value={bio}
         onChange={e => setBio(e.target.value)}
-        placeholder="Insert a biography"
-        style={{ width: '20%', height: '100px' }}
+        placeholder="About you..."
       />
       <br />
       <textarea
         value={contact}
         onChange={e => setContact(e.target.value)}
-        placeholder="Contact info:"
-        style={{ width: '20%', height: '50px' }}
+        placeholder="Contact info..."
       />
       <br />
 
@@ -84,8 +77,9 @@ function Profile()
           dragProps,
         }) => (
           // display images and allow removal
-          <div className="upload__image-wrapper">
+          <div>
             <button
+              className="upload__image-wrapper"
               style={isDragging ? { color: "red" } : undefined}
               onClick={onImageUpload}
               {...dragProps}
@@ -93,12 +87,13 @@ function Profile()
               Click or Drop here
             </button>
             &nbsp;
-            <button onClick={onImageRemoveAll}>Remove all images</button>
+            <br/>
+            <button className='remove' onClick={onImageRemoveAll}>Remove all images</button>
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
                 <img src={image.data_url} alt="" width="500" />
                 <div className="image-item__btn-wrapper">
-                  <button onClick={() => removeImage(index)}>Remove</button>
+                  <button className='remove' onClick={() => removeImage(index)}>Remove</button>
                 </div>
               </div>
             ))}
@@ -108,7 +103,7 @@ function Profile()
       
       {/* Create a button to submit the form */}
 
-      <button onClick={handleSubmit}>Save Profile</button>
+      <button className='signIn' onClick={handleSubmit}>Save Profile</button>
     </div>
   );
 }
