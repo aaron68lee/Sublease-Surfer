@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, readPosts } from '../components/backend.js';
+import { Link } from 'react-router-dom';
 import {orderBy, onSnapshot, limit, doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore";
 
 function HomeFeed() {
@@ -108,14 +109,18 @@ function HomeFeed() {
         <div className='post' key = {post.id}>
           <h2>Owner: {post.name}</h2>
           <img src={post.picture} alt="post image" />
-          <p>Address: {post.address}</p>
-          <p>Details: {post.description}</p>
-          <p>Dates: {post.startDate} to {post.endDate}</p>
-          <p>Price: {post.price}</p>
-          <p>Contact: {post.contact}</p>
+          <ul>
+            <li>Address: {post.address}</li>
+            <li>Details: {post.description}</li>
+            <li>Dates: {post.startDate} to {post.endDate}</li>
+            <li>Price: {post.price}</li>
+            <li>Contact: {post.contact}</li>
+          </ul>
+          <Link to="/profile">{post.name}'s Profile</Link>
+          
         </div>
       ))}
-  
+ 
     </div>
   );
   
