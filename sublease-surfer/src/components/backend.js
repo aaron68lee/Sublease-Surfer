@@ -10,7 +10,7 @@ import 'firebase/compat/auth';
 import { GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
-import {orderBy, onSnapShot, limit, doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore"; 
+import {orderBy, onSnapshot, limit, doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore"; 
 
 // import web app pages and variables
 import '../App.css'; //.. is used because App.css isn't in the components folder, it's in components' parent directory
@@ -129,26 +129,26 @@ async function readPosts(tags)
 {
     // get only latest 25 posts by creation date 
     let maxPosts = 25;
-    const q = query(collection(db, "posts"), orderBy("creationDate", "desc"), limit(maxPosts));
+    const q = query(collection(db, "posts"), limit(maxPosts)); //orderBy("creationDate", "desc")) implement later
     //const [posts] = useCollectionData(q, { idField: "id" }); // listen for changes in the database as new posts get added
     const querySnapshot = await getDocs(q);
-    /*
+    
+    
     querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
-        //console.log(doc.get("price"));
+        console.log("Price: " + doc.get("price"));
     });
-    */
-      /*
-  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    
+    /*
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
-        console.log(doc.get("price"));
+        console.log("Price: " + doc.get("price"));
       });
     });
-
-  return unsubscribe;
+    return unsubscribe;
     */
-   return querySnapshot;
+    //return querySnapshot;
 }
 
 // component displayed when user NOT signed in 

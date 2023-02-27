@@ -6,47 +6,47 @@ import {orderBy, onSnapshot, limit, doc, collection, addDoc, getDocs, updateDoc,
 function HomeFeed() {
 
   //const [posts] = useCollectionData(query, { idField: 'id' });
+  // useState for dynamic field data regarding posts and search terms
   const [searchTerm, setSearchTerm] = useState('');
   const [priceLow, setPriceLow] = useState('');
   const [priceHigh, setPriceHigh] = useState('');
   const [tags, setTags] = useState([]);
   const [posts, setPosts] = useState([]);
 
+  // query the database for posts
   let maxPosts = 25;
-  const q = query(collection(db, "posts"), orderBy("creationDate", "desc"), limit(maxPosts));
+  const q = query(collection(db, "posts"), limit(maxPosts));
   //const [posts] = useCollectionData(q, { idField: 'id' }); // listen for changes to the collection of posts
-  const querySnapshot = readPosts(tags);
+  //readPosts(tags); // debug purposes to read posts
+
   
   useEffect(() => {
     const q = query(
       collection(db, 'posts'),
-      orderBy('creationDate', 'desc'),
+      //orderBy('creationDate', 'desc'),
       limit(25),
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      if(tags.length == 0)
-      {
-        const filteredPosts = querySnapshot.docs
+      //if(tags.length == 0)
+        const postdata = querySnapshot.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }))
         .filter((post) => tags.every((tag) => post.tags.includes(tag)));
-        setPosts(filteredPosts);
-      }
-      else {
-        const filteredPosts = querySnapshot.docs
-        .map((doc) => ({ ...doc.data(), id: doc.id }))
-        setPosts(filteredPosts); 
-      }
+        setPosts(postdata);
     });
     return unsubscribe;
   }, [tags]);
 
-  console.log("Posts: " + JSON.stringify(q));
-  console.log("Num Posts: " + posts.length); // add this line to check the value of the posts array
-    
-  if (!posts) {
+  // debug stuff
+  //console.log("Posts: " + JSON.stringify(q));
+  //console.log("Num Posts: " + posts.length); // add this line to check the value of the posts array
+
+  // posts do not exist then return loading screen
+  
+  if (posts.length == 0) {
     return <div>...Loading Posts...</div>;
   }
 
+  // useState for search query for users
   const handlePriceLowChange = (e) => {
     if (e.target.value === '') {
       setPriceLow('');
@@ -68,15 +68,18 @@ function HomeFeed() {
       }
     }
   };
-
+  
+  
   const filteredPosts = posts && posts.filter(post =>
     post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.contact.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (priceLow === '' || post.price >= priceLow) &&
-    (priceHigh === '' || post.price <= priceHigh)
+    post.contact.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    ((priceLow === '' || post.price >= priceLow) &&
+    (priceHigh === '' || post.price <= priceHigh))
   );
+  
+  //alert("Posts: " + filteredPosts.length + "\n" + JSON.stringify(filteredPosts));
 
   return (
     <div className='post-grid'>
@@ -99,9 +102,10 @@ function HomeFeed() {
       </div>
   
       <p>Browse Posts</p>
-  
+
+      {/* Make Post component for every post in filteredPosts */}
       {filteredPosts && filteredPosts.map(post => (
-        <div className='post' key={post.id}>
+        <div className='post' key = {post.id}>
           <h2>Owner: {post.name}</h2>
           <img src={post.picture} alt="post image" />
           <p>Address: {post.address}</p>
