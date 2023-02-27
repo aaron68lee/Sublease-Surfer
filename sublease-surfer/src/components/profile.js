@@ -66,7 +66,7 @@ function Profile()
         multiple
         value={pictures}
         onChange={onChange}
-        maxNumber={10}
+        maxNumber={1}
         dataURLKey="data_url"
       >
         {({

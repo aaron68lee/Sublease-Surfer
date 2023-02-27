@@ -13,8 +13,11 @@ function Frontpage()
         <div text-align="center" className="page-container">
             
             <header className="App-header">
-
-                <h1>Sublease Surfer</h1>
+                <div className='App-title'>
+                 <h1>Sublease Surfer</h1>
+                <h1>Sublease Surfer</h1>   
+                </div>
+                
                 <SignIn />
                 <p>Interactive Map</p>
                 <CustomMap/>
