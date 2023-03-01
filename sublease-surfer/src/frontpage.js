@@ -19,10 +19,13 @@ function Frontpage()
                 </div>
                 
                 <SignIn />
-                <p>Interactive Map</p>
-                <CustomMap/>
+                {/*<p>Interactive Map</p> */}
+                {/*<CustomMap/>*/}
         
             </header>
+            <footer>
+                <p>A web application made at UCLA for CS35L by Aaron, Ethan, Jason, Kenzie, and Michael. </p>
+            </footer>
         </div>
     );
 }

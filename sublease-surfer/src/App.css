@@ -22,15 +22,21 @@ value in frontpage.js. */
 
 .App-title{
   position: relative;
+  background-color: rgba(255, 255, 255, 0.20);
+  box-shadow:4px 4px 10px rgba(0,0,0,0.20);
+  border-radius: 100px;
+  padding-inline: 80px;
+  margin-block: 20px;
 }
 
 .App-title :nth-child(1){
   position: absolute;
   color: transparent;
-  -webkit-text-stroke: 2px #03a9f4;
+  -webkit-text-stroke: 10px white;
+  -webkit-text-fill-color: white;
 }
 .App-title :nth-child(2){
-  color: #03a9f4;
+  color: #00b09b;
   animation: animate 3s ease-in-out infinite;
 }
 
@@ -58,7 +64,7 @@ value in frontpage.js. */
   background: -webkit-linear-gradient(to right, #96c93d, #00b09b);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #96c93d, #00b09b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,9 +85,9 @@ value in frontpage.js. */
   /*border-radius: 16px;*/
   padding: 12px;
   border: 2px solid transparent;
-  border-radius: 15px;
+  border-radius: 20px;
   background-color: white;
-  border-color: #00b09b;
+  /*border-color: #00b09b;*/
   margin: 20px;
 }
 
@@ -250,6 +256,11 @@ button {
   border-color: white;
   background-color: #00b09b;
   box-shadow:4px 4px 10px rgba(0,0,0,0.20);
+}
+
+footer{
+  font-size: 2vh;
+  padding: 1vh;
 }
 
 .remove {

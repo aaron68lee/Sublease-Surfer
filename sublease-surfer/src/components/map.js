@@ -9,8 +9,10 @@ import {decodeLocations} from './backend.js';
 const apiKey = 'AIzaSyBLe0m-ln0Fs3fHExT2G5LqkG4voSqwBhQ';
 
 const style = {
+  
   width: '100%',
   height: '100%'
+
 }
 
 // ========================== Custom Map Component ===========================
@@ -73,7 +75,7 @@ export class CustomMap extends Component{
     }
   }
 
-
+  
   // ========================== Render ===========================
   render() {
     return (
