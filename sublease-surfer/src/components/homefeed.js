@@ -1,18 +1,26 @@
 import React, {useState, useEffect} from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, readPosts } from '../components/backend.js';
 import { Link } from 'react-router-dom';
 import {orderBy, onSnapshot, limit, doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore";
+import ExpandedView from './expandedView.js';
 
 function HomeFeed() {
 
   //const [posts] = useCollectionData(query, { idField: 'id' });
   // useState for dynamic field data regarding posts and search terms
+  const [expandedPost, setExpandedPost] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [priceLow, setPriceLow] = useState('');
   const [priceHigh, setPriceHigh] = useState('');
   const [tags, setTags] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
 
   // query the database for posts
   let maxPosts = 25;
@@ -58,6 +66,7 @@ function HomeFeed() {
     }
   };
 
+
   const handlePriceHighChange = (e) => {
     if (e.target.value === '') {
       setPriceHigh('');
@@ -71,13 +80,14 @@ function HomeFeed() {
   
   
   const filteredPosts = posts && posts.filter(post =>
-    post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.contact.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    ((priceLow === '' || post.price >= priceLow) &&
-    (priceHigh === '' || post.price <= priceHigh))
+    post.contact.toLowerCase().includes(searchTerm.toLowerCase())) &&
+    (priceLow === '' || post.price >= parseInt(priceLow)) &&
+    (priceHigh === '' || post.price <= parseInt(priceHigh))
   );
+  
   
   //alert("Posts: " + filteredPosts.length + "\n" + JSON.stringify(filteredPosts));
 
@@ -100,29 +110,44 @@ function HomeFeed() {
           onChange={handlePriceHighChange}
         />
       </div>
-  
       <p>Browse Posts</p>
-
-      {/* Make Post component for every post in filteredPosts */}
       {filteredPosts && filteredPosts.map(post => (
-        <div className='post' key = {post.id}>
-          <h2>Owner: {post.name}</h2>
-          <img src={post.picture} alt="post image" />
-          <ul>
-            <li>Address: {post.address}</li>
-            <li>Details: {post.description}</li>
-            <li>Dates: {post.startDate} to {post.endDate}</li>
-            <li>Price: {post.price}</li>
-            <li>Contact: {post.contact}</li>
-          </ul>
-          <Link to="/profile">{post.name}'s Profile</Link>
-          
-        </div>
-      ))}
- 
-    </div>
-  );
+  <div className='post' key={post.id} onClick={() => {
+    handleShowModal();
+    setExpandedPost(post);
+  }}>
+    <h2>Owner: {post.name}</h2>
+    <img src={post.picture} alt="post image" />
+    <ul>
+      <li>Address: {post.address}</li>
+      <li>Details: {post.description}</li>
+      <li>Dates: {post.startDate} to {post.endDate}</li>
+      <li>Price: {post.price}</li>
+      <li>Contact: {post.contact}</li>
+    </ul>
+    <Link to="/profile">{post.name}'s Profile</Link>
+  </div>
   
+))}
+
+<Modal show={showModal} onHide={handleCloseModal}>
+  <Modal.Header closeButton>
+    <Modal.Title>Post Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+  <ExpandedView post={expandedPost} />
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleCloseModal}>
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
+
+</div>
+    
+);
+
 }
 
 export default HomeFeed;

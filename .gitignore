@@ -28,3 +28,4 @@ yarn-error.log*
 package-lock.json
 sublease-surfer/package-lock.json
 sublease-surfer/package.json
+package-lock.json
