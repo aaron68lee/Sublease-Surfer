@@ -2,12 +2,22 @@
   text-align: center;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background: #00b09b;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #96c93d, #00b09b);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #96c93d, #00b09b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(#96c93d, #00b09b);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(#96c93d, #00b09b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: white;
   font-size: calc(3vmin);
   font-weight: bold;
-  min-width: 600px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  width: 100%;
 }
 
 .App-logo {
@@ -22,17 +32,13 @@ value in frontpage.js. */
 
 .App-title{
   position: relative;
-  background-color: rgba(255, 255, 255, 0.20);
-  box-shadow:4px 4px 10px rgba(0,0,0,0.20);
-  border-radius: 100px;
-  padding-inline: 80px;
-  margin-block: 20px;
+  font-size:10vh;
 }
 
 .App-title :nth-child(1){
   position: absolute;
   color: transparent;
-  -webkit-text-stroke: 10px white;
+  -webkit-text-stroke: 5px white;
   -webkit-text-fill-color: white;
 }
 .App-title :nth-child(2){
@@ -59,36 +65,19 @@ value in frontpage.js. */
   }
 }
 
-.App-header {
-  background: #00b09b;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #96c93d, #00b09b);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #96c93d, #00b09b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(6vmin);
-  /*text-shadow: 1px 1px 6px #00b09b; */
-  font-weight:bolder;
-  color: white;
-}
-
 .signIn {
   justify-content: center;
-  min-height: 6vh;
-  min-width: 4vh;
+  min-height: 8vh;
+  min-width: 10vh;
   color: #00b09b;
-  font-size: calc(12px + 1vmin);
+  font-size: calc(20px + 1vmin);
   font-weight: bold;
   /*border-radius: 16px;*/
-  padding: 12px;
+  padding: 20px;
   border: 2px solid transparent;
   border-radius: 20px;
   background-color: white;
   /*border-color: #00b09b;*/
-  margin: 20px;
 }
 
 .signIn:hover {
@@ -259,8 +248,12 @@ button {
 }
 
 footer{
+  bottom: 0;
   font-size: 2vh;
-  padding: 1vh;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3rem;            /* Footer height */
 }
 
 .remove {

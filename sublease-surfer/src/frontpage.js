@@ -16,15 +16,13 @@ function Frontpage()
                 <div className='App-title'>
                  <h1>Sublease Surfer</h1>
                 <h1>Sublease Surfer</h1>   
-                </div>
-                
+                </div>                
                 <SignIn />
-                {/*<p>Interactive Map</p> */}
-                {/*<CustomMap/>*/}
         
             </header>
+
             <footer>
-                <p>A web application made at UCLA for CS35L by Aaron, Ethan, Jason, Kenzie, and Michael. </p>
+                <p>A web application made at UCLA for CS35L by Aaron, Ethan, Jason, Kenzie, and Michael. 🏄‍♂️ </p>
             </footer>
         </div>
     );
