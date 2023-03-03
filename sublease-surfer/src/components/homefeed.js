@@ -92,62 +92,59 @@ function HomeFeed() {
   //alert("Posts: " + filteredPosts.length + "\n" + JSON.stringify(filteredPosts));
 
   return (
-    <div className='post-grid'>
+    <div>
       <div className='search-container'>
-        <input type='text'
+        <input className = 'search-filter'
+          type='text'
           placeholder='Search'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <input type='number'
+        <input className = 'search-filter'
+          type='number'
           placeholder='Low'
           value={priceLow}
           onChange={handlePriceLowChange}
         />
-        <input type='number'
+        <input className = 'search-filter'
+          type='number'
           placeholder='High'
           value={priceHigh}
           onChange={handlePriceHighChange}
         />
       </div>
-      <p>Browse Posts</p>
-      {filteredPosts && filteredPosts.map(post => (
-  <div className='post' key={post.id} onClick={() => {
-    handleShowModal();
-    setExpandedPost(post);
-  }}>
-    <h2>Owner: {post.name}</h2>
-    <img src={post.picture} alt="post image" />
-    <ul>
-      <li>Address: {post.address}</li>
-      <li>Details: {post.description}</li>
-      <li>Dates: {post.startDate} to {post.endDate}</li>
-      <li>Price: {post.price}</li>
-      <li>Contact: {post.contact}</li>
-    </ul>
-    <Link to="/profile">{post.name}'s Profile</Link>
+      <div className='post-grid'>
+      {filteredPosts && filteredPosts.map
+      (post => (
+        <div className='post' key={post.id} onClick={() => {
+          handleShowModal();
+          setExpandedPost(post);
+        }}>
+          <h2>{post.address}</h2>
+          <h2> Walking Distance</h2>
+          <img src={post.picture} alt="post image" />
+          <h2>${post.price}</h2>
+          <br/>
+        </div>
+      ))}
+      </div>
+
+    <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal.Header closeButton>
+        <Modal.Title>Post Details</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <ExpandedView post={expandedPost} />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+
   </div>
-  
-))}
-
-<Modal show={showModal} onHide={handleCloseModal}>
-  <Modal.Header closeButton>
-    <Modal.Title>Post Details</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-  <ExpandedView post={expandedPost} />
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={handleCloseModal}>
-      Close
-    </Button>
-  </Modal.Footer>
-</Modal>
-
-</div>
-    
-);
-
+  );
 }
 
 export default HomeFeed;

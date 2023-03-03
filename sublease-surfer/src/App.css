@@ -22,15 +22,7 @@
   width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-/*A fun little thing for all of you who worked so hard 
-on this project. If you want to remove it, please 
-comment this code and delete the second 'Sublease Surfer' 
-value in frontpage.js. */
+/**************************** FRONT PAGE APP TITLE ******************************/
 
 .App-title{
   position: relative;
@@ -66,7 +58,7 @@ value in frontpage.js. */
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+/**************************** FRONT PAGE SIGNIN ******************************/
 .signIn {
   justify-content: center;
   min-height: 8vh;
@@ -86,6 +78,8 @@ value in frontpage.js. */
   border-color: #96c93d;
   color:#96c93d;
 }
+
+/**************************** NAVIGATION BAR ******************************/
 
 .navbar {
   background-color: white;
@@ -129,45 +123,9 @@ a:active {
   text-decoration: none;
 }
 
-p {
-  padding: 2px;
-  text-shadow:4px 4px 10px rgba(0,0,0,0.20);
-}
-
-span {
-  text-shadow:4px 4px 10px rgba(0,0,0,0.20);
-}
-
-/*FORM-RELATED STYLINGS-------------------------------------------------------*/
-/* Setting up columns and rows */
-* {
-  box-sizing: border-box;
-}
-
-/* Create two equal columns that floats next to each other*/
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-  margin: 10px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 60%;
-  }
-}
+/**************************** USER INPUT FIELDS ******************************/
 
 ::-webkit-datetime-edit { color:#96c93d; padding: 0 0.3em; }
-
 
 input {
   resize: vertical;
@@ -194,9 +152,8 @@ input::placeholder {
 
 }
 
-body {
-  margin:20px;
-  background-color: #fafafa;
+.search-filter {
+  width: 20%;
 }
 
 textarea {
@@ -237,6 +194,22 @@ textarea::placeholder {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/**************************** BASIC CSS ******************************/
+
+p {
+  padding: 2px;
+  text-shadow:4px 4px 10px rgba(0,0,0,0.20);
+}
+
+span {
+  text-shadow:4px 4px 10px rgba(0,0,0,0.20);
+}
+
+body {
+  margin:20px;
+  background-color: #fafafa;
+}
+
 button {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   padding: 8px;
@@ -269,24 +242,7 @@ footer{
   background-color: #ff3d00;
 }
 
-.message {
-  display: flex;
-  align-items: center;
-}
-
-.sent {
-  flex-direction: row-reverse;
-}
-
-.sent p {
-  color: white;
-  background: #00b09b;
-  align-self: flex-end;
-}
-.received p {
-  background: #e5e5ea;
-  color: black;
-}
+/**************************** HOMEFEED ******************************/
 
 .post-grid {     /* arbitrary styling for now no way to test it yet without actual posts and pullable collection from firebase */
   display: grid;
@@ -294,10 +250,24 @@ footer{
   gap: 20px;
   overflow-y: scroll; /* lets you scroll vertically if it runs out at the bottom */
   max-height: 500px;
+  margin-inline: 40px;
 }
 
 .post {
-  background-color: #fff;     /* arbitrary styling for now no way to test it yet without actual posts and pullable collection from firebase */
+  background-color: #fff;
+  border-radius: 50px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color:#00b09b;
   padding: 20px;
+  font-size: small;
+  text-align: left;
+}
+
+.profilelink {
+  border-color: #00b09b;
+  background-color: #00b09b;
+  border-radius: 15px;
+  padding-block: 10px;
+  padding-inline: 20px;
+  margin: 5px;
 }
