@@ -122,9 +122,8 @@ function HomeFeed() {
         }}>
           <h2>{post.address}</h2>
           <h2> Walking Distance</h2>
-          <img src={post.picture} alt="post image" />
-          <h2>${post.price}</h2>
-          <br/>
+          <img src={post.picture} alt="post image" className='main-listing-image'/>
+          <h1 className='price'>${post.price}</h1>
         </div>
       ))}
       </div>
