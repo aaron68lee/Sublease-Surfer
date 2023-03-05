@@ -12,8 +12,10 @@ import {doc, collection, addDoc, getDocs, updateDoc} from "firebase/firestore";
 
 import { Link } from 'react-router-dom';
 
-import {auth, db, PostButton, post} from '../components/backend.js';
+import {auth, post, calculateDistance} from '../components/backend.js';
 import Navbar from '../components/navbar.js';
+
+const campus = "308 Westwood Plaza";
 
 function PostField() // consider making user page its own class to use this.state.value and onChange function
 {
@@ -54,7 +56,8 @@ function PostField() // consider making user page its own class to use this.stat
         price: price,
       };
 
-      console.log("Post this Object: \n" + JSON.stringify(postObj));
+
+      //console.log("Post this Object: \n" + JSON.stringify(postObj));
 
       // reset all post field values 
       setPictures('');
@@ -68,7 +71,10 @@ function PostField() // consider making user page its own class to use this.stat
       setContact('');
       setPrice(0);
 
-      post(pictures, title, description, address, name, startDate, endDate, contact, price);
+      // calculate distance to campus
+      const distance = calculateDistance(address, campus);
+
+      post(pictures, title, description, address, name, startDate, endDate, contact, price, distance);
       //alert("Post Submitted");
   }
 

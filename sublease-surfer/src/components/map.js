@@ -54,21 +54,28 @@ export class CustomMap extends Component{
   }
 
   // marker onclick function
-  async handleClick()
+  async handleClick(index) // index keeps track of which marker i
   {
     // hitbox includes full icon
-    alert("marker clicked")
+    alert("Marker Clicked")
+    console.log("HELLO")
+    //decodeLocations();
+    /*
+    const distance = await calculateDistance("1600 Amphitheatre Parkway, Mountain View, CA", "1 Infinite Loop, Cupertino, CA");
+    console.log(`Distance: ${distance} meters`);
+    */
+
+    /*
     let location = await getLocationFromAddress("330 De Neve Drive", apiKey)
       .then((location) => {
-        alert(location);
-        console.log(location);
+        //console.log(location);
       })
       .catch((error) => {
         console.error(error);
       });
-
+    */
   };
-    
+  
   // auto resizes when new markers are added to map
   resize()
   {
@@ -84,14 +91,28 @@ export class CustomMap extends Component{
     }
   }
 
+  // ========================== Load Locations ===========================
+  async getLocations()
+  {
+    //this.setState({locations: decodeLocations()});
+    
+  }
  
   // ========================== Render ===========================
   render() {
-    this.resize();
-    const markers = this.state.locations.map((location, index) => (
+    // set map bounds and load locations of all posts from database
+    //this.resize()    
+    //this.getLocations();
+    /*
+    const places = this.state.locations.map((location, index) => {
+      console.log("Location: " + index + " " + location.location);
+    });
+    */
+    /*const markers = this.state.locations.map((location, index) => (
+      //console.log("Location: " + index + " " + location.location),
       <Marker
         key={index}
-        onClick={this.handleClick}
+        onClick={this.handleClick()}
         position={location.location}
         title="post title"
         content="test content"
@@ -102,6 +123,7 @@ export class CustomMap extends Component{
         }}
       />
     ));
+    */
 
     return (
         <Map 
@@ -115,7 +137,20 @@ export class CustomMap extends Component{
           }}*/
         >
 
-        {markers}
+        {this.state.locations.map((location, index) => (
+      <Marker
+        key={index}
+        onClick={this.handleClick()}
+        position={location.location}
+        title="post title"
+        content="test content"
+        icon={{
+          url:"https://cdn.vox-cdn.com/thumbor/JCzDlDQzFM8CuSzG5smAE_dUwEI=/0x0:1220x813/1075x1075/filters:focal(513x310:707x504):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56773485/shutterstock_566476819.0.1505928130.jpg",
+          anchor: new window.google.maps.Point(size/2, size/2),
+          scaledSize: new window.google.maps.Size(size, size)
+        }}
+      />
+        ))};
     
         
         {/*}
@@ -142,3 +177,7 @@ export class CustomMap extends Component{
 export default GoogleApiWrapper({
   apiKey: apiKey
 })(CustomMap)
+
+export {
+  apiKey,
+}

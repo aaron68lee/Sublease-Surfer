@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
+import apiKey from './map.js';
 import { GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
@@ -41,8 +42,8 @@ const db = firebase.firestore(); // db = firebase.firestore() for database acces
 // ========================== Geodecode Location from Street Address ===========================
 
 async function getLocationFromAddress(address, mapApiKey) {
-  const apiKey = mapApiKey;
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+  const MAPKEY = mapApiKey;
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${MAPKEY}`;
   const response = await fetch(url);
   const data = await response.json();
   if (data.status !== 'OK') {
@@ -61,21 +62,60 @@ async function decodeLocations()
   
   const q = query(collection(db, "posts"));
   const querySnapshot = await getDocs(q);
-    
+  const locations = [];
+
   querySnapshot.forEach((doc) => {
-      let address = address == '' ? '330 De Neve Drive' : doc.get('address');
-      const location = getLocationFromAddress(address);
-      console.log(location);
-      console.log(doc.id, " => ", doc.data());
-      console.log("Price: " + doc.get("price"));
+      const address = doc.get('address');
+      //let address = (address == '') ? '330 De Neve Drive' : doc.get('address');
+      const location = (address == '') ? '330 De Neve Drive' : getLocationFromAddress(address, apiKey)
+        .then(() => {
+          locations.push(location);
+          console.log(location);
+        })
+        .catch((error) => {
+          console.error(error);
+        });; // map api key is global const FIX security implementation later
+      //console.log(location);
+      //console.log(doc.id, " => ", doc.data());
+      //console.log("Price: " + doc.get("price"));
   });
+  return locations;
   
+}
+
+// ========================== Calculate Distance ===========================
+// given origin and destination as string addresses
+// `origin` and `destination` should be strings representing the addresses or lat/long coordinates of the two locations.
+async function calculateDistance(origin, destination) {
+  // Load the Google Maps API and get a DistanceMatrixService instance.
+  const { google } = window;
+  const service = new google.maps.DistanceMatrixService();
+  
+  // Call the Distance Matrix API to get the distance between the two locations.
+  const { rows } = await new Promise(resolve => service.getDistanceMatrix({
+    origins: [origin],
+    destinations: [destination],
+    travelMode: google.maps.TravelMode.DRIVING,
+    unitSystem: google.maps.UnitSystem.IMPERIAL,
+    avoidHighways: false,
+    avoidTolls: false,
+    callback: (response, status) => resolve(response)
+  }));
+  
+  // Parse the distance from the Distance Matrix API response.
+  const { elements } = rows[0];
+  if (elements[0].status === "OK") {
+    const { value } = elements[0].distance;
+    return value * 0.00062137119; // convert meters to miles
+  } else {
+    throw new Error(`Unable to calculate distance: ${elements[0].status}`);
+  }
 }
 
 
 // write data to the database, db, creating a new sublease post for User === uid
 // ========================== Write: Create Post for Listing ===========================
-async function post(picture, title, body, address, name, startDate, endDate, contact, price) 
+async function post(picture, title, body, address, name, startDate, endDate, contact, price, distance) 
 {
   
   let user = auth.currentUser;
@@ -95,6 +135,7 @@ async function post(picture, title, body, address, name, startDate, endDate, con
           endDate: endDate,
           contact: contact,
           price: price,
+          distance, distance
         }).then(
           alert("Post made"),
         );
@@ -250,4 +291,5 @@ export {SignIn,
         postProfile,
         getLocationFromAddress,
         decodeLocations,
+        calculateDistance,
         auth, db};
