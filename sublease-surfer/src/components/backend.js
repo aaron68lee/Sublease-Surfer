@@ -40,8 +40,8 @@ const db = firebase.firestore(); // db = firebase.firestore() for database acces
 
 // ========================== Geodecode Location from Street Address ===========================
 
-async function getLocationFromAddress(address) {
-  const apiKey = apiKey;
+async function getLocationFromAddress(address, mapApiKey) {
+  const apiKey = mapApiKey;
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
   const response = await fetch(url);
   const data = await response.json();
