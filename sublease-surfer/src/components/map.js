@@ -7,7 +7,7 @@ import {decodeLocations} from './backend.js';
 //<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY"></script>
 
 const apiKey = 'AIzaSyBLe0m-ln0Fs3fHExT2G5LqkG4voSqwBhQ';
-
+const size = 100;
 const style = {
   
   width: '100%',
@@ -101,12 +101,13 @@ export class CustomMap extends Component{
             
             icon={{
               url:"https://cdn.vox-cdn.com/thumbor/JCzDlDQzFM8CuSzG5smAE_dUwEI=/0x0:1220x813/1075x1075/filters:focal(513x310:707x504):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56773485/shutterstock_566476819.0.1505928130.jpg",
-              anchor: new window.google.maps.Point(0, 0),
-              scaledSize: new window.google.maps.Size(100, 100)
+              anchor: new window.google.maps.Point(size/2, size/2),
+              scaledSize: new window.google.maps.Size(size, size)
             }}
             
         />
         
+        {/*}
         <Marker
             title={'The marker`s title will appear as a tooltip.'}
             name={'SOMA'}
@@ -115,7 +116,8 @@ export class CustomMap extends Component{
           name={'Dolores park'}
           position={{lat: 37.759703, lng: -122.428093}} />
         <Marker />
-        
+          */}
+          
         <InfoWindow visible={true}>
             <div>
               <h1>Here is a place.</h1>

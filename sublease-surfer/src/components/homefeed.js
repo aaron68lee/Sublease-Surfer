@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, readPosts } from '../components/backend.js';
 import { Link } from 'react-router-dom';
-import {orderBy, onSnapshot, limit, doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore";
+import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
 import ExpandedView from './expandedView.js';
 
 function HomeFeed() {
@@ -78,7 +78,7 @@ function HomeFeed() {
     }
   };
   
-  
+  // filter posts based on price and search terms
   const filteredPosts = posts && posts.filter(post =>
     (post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -63,12 +63,13 @@ async function decodeLocations()
   const querySnapshot = await getDocs(q);
     
   querySnapshot.forEach((doc) => {
+      let address = address == '' ? '330 De Neve Drive' : doc.get('address');
+      const location = getLocationFromAddress(address);
+      console.log(location);
       console.log(doc.id, " => ", doc.data());
       console.log("Price: " + doc.get("price"));
   });
-
-  const location = await getLocationFromAddress('1600 Amphitheatre Parkway, Mountain View, CA');
-  console.log(location);
+  
 }
 
 
