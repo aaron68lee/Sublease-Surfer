@@ -23,6 +23,7 @@ function Navbar()
     return (
         <div className='navbar'>
             {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
+            <Link to='/' className='navbutton'> Home </Link>
             <Link to='/browse' className='navbutton'> Browse </Link>
             <Link to='/add-listing' className='navbutton'> Add Listing </Link>
             <Link to='/profile' className='navbutton'> Profile </Link>

@@ -14,7 +14,7 @@ import {useCollectionData} from 'react-firebase-hooks/firestore';
 // import web app pages and components
 import './App.css';
 import './themes.css';
-import Frontpage from './frontpage';
+import Frontpage from './components/frontpage';
 import HomeFeed from './components/homefeed.js';
 import Profile from './components/profile';
 import Navbar from './components/navbar';

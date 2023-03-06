@@ -1,9 +1,9 @@
 
 import React from 'react';
-import './App.css';
-import CustomMap, { decodeLocations } from './components/map.js';
+import '../App.css';
+import CustomMap, { decodeLocations } from './map.js';
 
-import {SignIn} from './components/backend';
+import {SignIn} from './backend';
 
 // displayed when user is NOT signed in
 
