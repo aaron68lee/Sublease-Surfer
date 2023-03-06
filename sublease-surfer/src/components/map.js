@@ -1,14 +1,15 @@
 import React, {Component } from 'react';
 import { GoogleMap, Map, GoogleApiWrapper, InfoWindow, Marker, withScriptjs, withGoogleMap } from 'google-maps-react';
 //import {useLoadScript, LoadScript, GoogleLoadScript} from '@react-google-maps/api';
-import {decodeLocations, calculateDistance} from './backend.js';
+import {decodeLocations, getLocationFromAddress, calculateDistance} from './backend.js';
 
 
 const apiKey = 'AIzaSyBLe0m-ln0Fs3fHExT2G5LqkG4voSqwBhQ';
-const size = 100;
+const size = 25;
 const style = {
   width: '100%',
-  height: '100%'
+  height: '100%',
+  textalign: 'center',
 }
 
 const campusCoord = {
@@ -25,48 +26,48 @@ export class CustomMap extends Component{
   constructor(props)
   {
     super(props);
-    
+    this.map = React.createRef(); // reference to map instance
+
     this.state = {
       count: 0,
       bounds: 
-      {
-        lat: 10,
-        lng: 10
-      },
+        {
+          lat: 10,
+          lng: 10
+        },
 
-      locations:
-      
-      [
-        {
-          name: "Location 1",
-          location: { 
-            lat: 37.778519, 
-            lng: -122.40564
+      locations:  // some garbage initial location will be overwritten
+        [
+          {
+            name: "Location 1",
+            location: { 
+              lat: 37.778519, 
+              lng: -122.40564
+            },
           },
-        },
-        {
-          name: "Location 3",
-          location: { 
-            lat: 39.778519, 
-            lng: -123.40564
-          },
-        },
-        {
-          name: "Location 2",
-          location: { 
-            lat: 41.3917,
-            lng: -125.1649
-          },
-        },
-      ],
+        ],
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   // function automatically called once CustomMap comnponent is mounted  (BUILT IN)
   async componentDidMount() {
-    const locations = await this.getLocations();
-    this.setState({ locations: locations });
+    if (this.props.multipleMarkers) // multiple markers
+    {
+      const locations = await this.getLocations();
+      this.setState({ locations: locations });
+    }
+    else // single marker for post
+    { 
+      const locations = await getLocationFromAddress(this.props.address, apiKey);
+      console.log(locations);
+      const postAddress = this.props.address;
+      const location = [{address: postAddress, location: locations}]
+      this.setState({ 
+        locations: location
+      });
+      
+    }
   }
 
   // called when component state changes for LOCATION field: resizes the map to include all markers
@@ -81,9 +82,27 @@ export class CustomMap extends Component{
   {
     // hitbox includes full icon
     alert("Marker Clicked")
-    //decodeLocations();
     
-    const distance = await calculateDistance(this.state.locations[index].address, campusAddress);
+    const location = this.state.locations[index];
+    const { google } = window;
+    const position = location.location;
+    let map = document.getElementById("map");
+    // Create a new info window
+   
+
+    const infowindow = new google.maps.InfoWindow({
+      content:
+        <div>
+          <h3>Address: {location.address}</h3>
+          <p>Distance to Campus: {location.distance}</p>
+        </div>
+    });
+    
+    // Set the position of the info window and open it
+    infowindow.setPosition(position);
+    infowindow.open(map);
+
+    const distance = await calculateDistance(location.address, campusAddress);
     console.log(`Distance: ${distance} miles`);
     
   };
@@ -112,46 +131,38 @@ export class CustomMap extends Component{
   render() {
     // set map bounds and load locations of all posts from database
     //this.resize()    
-    console.log("ALL LOCATIONS: " + JSON.stringify(this.state.locations));
+    //console.log("ALL LOCATIONS: " + JSON.stringify(this.state.locations));
 
     const markers = this.state.locations.map((location, index) => (
-      console.log("Location: " + index + " " + JSON.stringify(location)),
+      //console.log("Location: " + index + " " + JSON.stringify(location)),
       <Marker
         key={index}
         onClick={() => this.handleClick(index)}
         position={location.location}
         title="post title"
         content="test content"
-        /*
+        
+        /* // can change post icon picture 
         icon={{
           url:"https://cdn.vox-cdn.com/thumbor/JCzDlDQzFM8CuSzG5smAE_dUwEI=/0x0:1220x813/1075x1075/filters:focal(513x310:707x504):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56773485/shutterstock_566476819.0.1505928130.jpg",
           anchor: new window.google.maps.Point(size/2, size/2),
           scaledSize: new window.google.maps.Size(size, size)
-        }}*/
+        }}
+        */
       />
-    ));
+    )); 
+      
     
-
     return (
         <Map 
           google={this.props.google} 
           zoom={14}
           style={style}
           initialCenter={campusCoord} // an obj of coords
+          id="map"
         >
    
         {markers}
-
-        {/*
-        <Marker
-            title={'The marker`s title will appear as a tooltip.'}
-            name={'SOMA'}
-            position={{lat: 37.778519, lng: -122.405640}} />
-        <Marker
-          name={'Dolores park'}
-          position={{lat: 37.759703, lng: -122.428093}} />
-        <Marker />
-          */}
 
         <InfoWindow visible={true}>
             <div>
