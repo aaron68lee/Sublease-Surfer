@@ -13,20 +13,20 @@ A [demo]() video will be linked later.
 
 
 ## About
-<!-- With the proliferation of a competitive housing situation in Westwood locally and beyond UCLA, Sublease Surfer aims to alleviate this issue. We aim to connect customers and subletter endpoints with everyday members of the community, so that students can more easily find housing in a college environment! -->
+With the proliferation of a competitive housing situation in Westwood locally and beyond UCLA, Sublease Surfer aims to alleviate this issue. We aim to connect customers and subletter endpoints with everyday members of the community, so that students can more easily find housing in a college environment!
 
 ## Screenshots
-<!-- The Front Page:
+The Front Page:
 ![Home Page](./sublease-surfer/assets/frontpage.png)
 Add Listing Page:
 ![Posting Page](./sublease-surfer/assets/add-listing.png)
 The Edit Profile Page:
 ![Edit Profile Page](./sublease-surfer/assets/edit-profile.png)
 The page aggregating all posts
-![Browse Page](./sublease-surfer/assets/browse.png) -->
+![Browse Page](./sublease-surfer/assets/browse.png)
 
 ## Quick-start
-<!-- 1. Clone this repo by running `git clone https://github.com/aaron68lee/Sublease-Surfer.git`
+1. Clone this repo by running `git clone https://github.com/aaron68lee/Sublease-Surfer.git`
 2. Install necessary dependencies:
    * `npm install react-google-maps`
    * `npm install react-router-dom`
@@ -37,19 +37,19 @@ The page aggregating all posts
 3. If installing fails due to dependency conflicts, pass `--force`.
 4. Start the frontend: `cd ../frontend; npm start`
 5. If `npm start` doesn't work, edit `package.json` react start-scripts with flag `"start": "react-scripts --openssl-legacy-provider-start"`
-6. Visit the website at [localhost:3000](localhost:3000) -->
+6. Visit the website at [localhost:3000](localhost:3000)
 
 
 #### Misc Info:
-<!-- * Frontend by default is hosted at [localhost:3000](http://localhost:3000) -->
+* Frontend by default is hosted at [localhost:3000](http://localhost:3000)
 
 ## Git How-to Guide:
 #### Cloning A Repo:
-<!-- 1. `cd` into the folder you want to clone (aka download) this repo to
-2. Run the command `git clone https://github.com/aaron68lee/Sublease-Surfer` (Note that you will need git installed on your machine) -->
+1. `cd` into the folder you want to clone (aka download) this repo to
+2. Run the command `git clone https://github.com/aaron68lee/Sublease-Surfer` (Note that you will need git installed on your machine)
 
 #### Adding Contributions:
-<!-- 1. Make a branch. To make a branch, run `git branch [NAME OF THE BRANCH]`
+1. Make a branch. To make a branch, run `git branch [NAME OF THE BRANCH]`
 2. Type your code/contributions
 3. Once your done, you want to `stage` your changes, by running `git add [FILES THAT YOU WANT TO ADD]`
 4. Make a commit: `git commit -m [DESCRIPTION OF YOUR CHANGES]`
@@ -57,17 +57,16 @@ The page aggregating all posts
 6. Go to [GitHub](https://github.com/aaron68lee/Sublease-Surfer) and open a Pull Request.
 7. Wait for a code review, and if everything looks good, we'll see your contributions onto the main branch!
 
-Thanks for the help! -->
+Thanks for the help!
 
 #### Useful commands
-<!-- * Add every file: `git add -A`
+* Add every file: `git add -A`
 * Switch between branches: `git checkout [NAME OF THE BRANCH]`
 * Get updates from the server: `git pull`
 * List branches: `git branch`
-* [For other commands, reference here](https://git-scm.com/doc) -->
+* [For other commands, reference here](https://git-scm.com/doc)
 
 ## Special Thanks
-<!-- * TAs
-   * Professor Eggert
- -->
+* TAs
+* Professor Eggert
 
