@@ -18,8 +18,9 @@ function Frontpage()
                 <h1>Sublease Surfer</h1>   
                 </div>                
                 <SignIn />
-                <CustomMap/>
-        
+                <div text-align="center" width="100%">
+                    <CustomMap multipleMarkers = {true} address="308 Westwood Plaza"/>
+                </div>
             </header>
 
             <footer>
