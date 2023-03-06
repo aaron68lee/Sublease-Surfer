@@ -17,13 +17,14 @@ With the proliferation of a competitive housing situation in Westwood locally an
 
 ## Screenshots
 The Front Page:
-![Home Page](./sublease-surfer/assets/frontpage.png)
+![Home Page](./sublease-surfer/assets/frontpage2.png)
 Add Listing Page:
 ![Posting Page](./sublease-surfer/assets/add-listing.png)
 The Edit Profile Page:
 ![Edit Profile Page](./sublease-surfer/assets/edit-profile.png)
 The page aggregating all posts
 ![Browse Page](./sublease-surfer/assets/browse.png)
+![Map with Postings](./sublease-surfer/assets/postmap.png)
 
 ## Quick-start
 1. Clone this repo by running `git clone https://github.com/aaron68lee/Sublease-Surfer.git`
