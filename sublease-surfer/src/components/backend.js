@@ -39,9 +39,10 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore(); // db = firebase.firestore() for database access
 
+
 // ========================== Geodecode Location from Street Address ===========================
 
-async function getLocationFromAddress(address, mapApiKey) {
+async function getLocationFromAddress(address, mapApiKey = apiKey) {
   const MAPKEY = mapApiKey;
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${MAPKEY}`;
   const response = await fetch(url);
@@ -57,30 +58,41 @@ async function getLocationFromAddress(address, mapApiKey) {
   };
 }
 
-async function decodeLocations()
+async function decodeLocations(apiKey)
 {
   
   const q = query(collection(db, "posts"));
   const querySnapshot = await getDocs(q);
   const locations = [];
+  const dummyAddress = "No. 221, Sec 2, Zhi Shan Rd, Shilin District, Taipei City, Taiwan 111"; // dummy if address is empty field for edge case
 
-  querySnapshot.forEach((doc) => {
-      const address = doc.get('address');
-      //let address = (address == '') ? '330 De Neve Drive' : doc.get('address');
-      const location = (address == '') ? '330 De Neve Drive' : getLocationFromAddress(address, apiKey)
-        .then(() => {
-          locations.push(location);
-          console.log(location);
-        })
-        .catch((error) => {
-          console.error(error);
-        });; // map api key is global const FIX security implementation later
+  for (const doc of querySnapshot.docs) {
+    let address = doc.get('address');
+    address = (address.length <= 1) ? dummyAddress : address; // need some way of testing for invalid addresses
+    const location = await getLocationFromAddress(address, apiKey);
+    locations.push(location);
+  }
+
+  //console.log("Decoded Locations: " + JSON.stringify(locations));
+  return locations;
+
+  /*
+  querySnapshot.forEach(async (doc) => {
+      let address = doc.get('address');
+      address = (address.length <= 1) ? dummyAddress : address; // need some way of testing for invalid addresses
+      //console.log("Address: " + address + " len: " + address.length);
+      const location = await getLocationFromAddress(address, apiKey);
+      //console.log("Location: " + JSON.stringify(location));
+      locations.push(location);
+      console.log("LOC: " + JSON.stringify(locations))
+      
       //console.log(location);
       //console.log(doc.id, " => ", doc.data());
       //console.log("Price: " + doc.get("price"));
   });
+  console.log("Decoded Locations: " + JSON.stringify(locations));
   return locations;
-  
+  */
 }
 
 // ========================== Calculate Distance ===========================
