@@ -80,8 +80,6 @@ export class CustomMap extends Component{
   // marker onclick function
   async handleClick(index) // index keeps track of which marker i
   {
-    // hitbox includes full icon
-    alert("Marker Clicked")
     
     const location = this.state.locations[index];
     const { google } = window;
@@ -104,6 +102,8 @@ export class CustomMap extends Component{
 
     const distance = await calculateDistance(location.address, campusAddress);
     console.log(`Distance: ${distance} miles`);
+    // hitbox includes full icon
+    alert("Address: " + location.address + "\nDistance to campus: " + distance + " miles");
     
   };
   
