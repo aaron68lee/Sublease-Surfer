@@ -7,7 +7,7 @@ import { PostField } from './components/posts';
 //import { BrowserRouter, Router, Link, Routes, Route, Navigate, createBrowserRouter, RouterProvider } from 'react-router-dom'; // <Routes> replaces <Switch> in dom version 6
 //import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
-
+//import 'bootstrap/dist/css/bootstrap.min.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   

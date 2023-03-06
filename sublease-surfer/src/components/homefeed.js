@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
 import { campusAddress } from './map.js';
 import ExpandedView from './expandedView.js';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 function HomeFeed() {
 
   //const [posts] = useCollectionData(query, { idField: 'id' });
@@ -140,13 +140,15 @@ function HomeFeed() {
         </div>
       ))}
       </div>
-
+   
+  
     <Modal show={showModal} onHide={handleCloseModal}>
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>Post Details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <ExpandedView post={expandedPost} />
+        
+       This is the expanded view!
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseModal}>
@@ -154,7 +156,7 @@ function HomeFeed() {
         </Button>
       </Modal.Footer>
     </Modal>
-
+    
   </div>
   );
 }

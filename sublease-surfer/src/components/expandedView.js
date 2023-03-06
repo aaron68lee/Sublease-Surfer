@@ -2,38 +2,29 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 function ExpandedView(props){ //, name, picture, address, description, startDate, endDate, price, contact ) {
-  const { name, picture, address, description, startDate, endDate, price, contact } = props.post;
+  //const { name, picture, address, description, startDate, endDate, price, contact } = props.post;
+  
+  //onsole.log(props);
 
   // posting fields
-  /*
-  name = props.name;
-  picture = props.picture;
-  address = props.address;
-  description = props.description;
-  startDate = props.startDate;
-  endDate = props.endDate;
-  price = props.price;
-  contact = props.contact;
-  */
-  /*
-  // posting fields
-  name = post.name;
-  picture = post.picture;
-  address = post.address;
-  description = post.description;
-  startDate = post.startDate;
-  endDate = post.endDate;
-  price = post.price;
-  contact = post.contact;
-  */
-
+  
+  const name = props.post.name;
+  const picture = props.post.picture;
+  const address = props.post.address;
+  const description = props.post.description;
+  const startDate = props.post.startDate;
+  const endDate = props.post.endDate;
+  const price = props.post.price;
+  const contact = props.post.contact;
+  console.log(address)
   
   return (
-   
+    
     <Modal show={props.showModal} onHide={props.handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Owner: {name}</Modal.Title>
       </Modal.Header>
+      
       <Modal.Body>
         <img src={picture} alt='post image' />
         <p>Address: {address}</p>
