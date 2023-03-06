@@ -18,10 +18,11 @@ function Frontpage()
                 <h1>Sublease Surfer</h1>   
                 </div>                
                 <SignIn />
-                <div text-align="center" width="100%">
+            </header>
+
+            <div text-align="center" width="100%">
                     <CustomMap multipleMarkers = {true} address="308 Westwood Plaza"/>
                 </div>
-            </header>
 
             <footer>
                 <p>A web application made at UCLA for CS35L by Aaron, Ethan, Jason, Kenzie, and Michael. 🏄‍♂️ </p>
