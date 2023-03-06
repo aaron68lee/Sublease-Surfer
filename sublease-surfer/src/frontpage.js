@@ -15,7 +15,7 @@ function Frontpage()
             <header className="App-header">
                 <div className='App-title'>
                  <h1>Sublease Surfer</h1>
-                <h1>Sublease Surfer</h1>   
+                 <h1>Sublease Surfer</h1>   
                 </div>                
                 <SignIn />
                 <CustomMap/>
