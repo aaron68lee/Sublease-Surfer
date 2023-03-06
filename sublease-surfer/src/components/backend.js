@@ -70,29 +70,15 @@ async function decodeLocations(apiKey)
     let address = doc.get('address');
     address = (address.length <= 1) ? dummyAddress : address; // need some way of testing for invalid addresses
     const location = await getLocationFromAddress(address, apiKey);
-    locations.push(location);
+    locations.push({
+      address,
+      location
+    });
   }
 
   //console.log("Decoded Locations: " + JSON.stringify(locations));
   return locations;
-
-  /*
-  querySnapshot.forEach(async (doc) => {
-      let address = doc.get('address');
-      address = (address.length <= 1) ? dummyAddress : address; // need some way of testing for invalid addresses
-      //console.log("Address: " + address + " len: " + address.length);
-      const location = await getLocationFromAddress(address, apiKey);
-      //console.log("Location: " + JSON.stringify(location));
-      locations.push(location);
-      console.log("LOC: " + JSON.stringify(locations))
-      
-      //console.log(location);
-      //console.log(doc.id, " => ", doc.data());
-      //console.log("Price: " + doc.get("price"));
-  });
-  console.log("Decoded Locations: " + JSON.stringify(locations));
-  return locations;
-  */
+  //console.log(doc.id, " => ", doc.data());
 }
 
 // ========================== Calculate Distance ===========================
@@ -103,22 +89,25 @@ async function calculateDistance(origin, destination) {
   const { google } = window;
   const service = new google.maps.DistanceMatrixService();
   
+  // if the function uses coord object parameters
+  //const origin = new google.maps.LatLng(coord1.lat, coord1.lng);
+  //const destination = new google.maps.LatLng(coord2.lat, coord2.lng);
+
   // Call the Distance Matrix API to get the distance between the two locations.
-  const { rows } = await new Promise(resolve => service.getDistanceMatrix({
+  const { rows } = await service.getDistanceMatrix({
     origins: [origin],
     destinations: [destination],
-    travelMode: google.maps.TravelMode.DRIVING,
+    travelMode: google.maps.TravelMode.WALKING, // walking transportation mode
     unitSystem: google.maps.UnitSystem.IMPERIAL,
     avoidHighways: false,
-    avoidTolls: false,
-    callback: (response, status) => resolve(response)
-  }));
-  
+    avoidTolls: false
+  });
+
   // Parse the distance from the Distance Matrix API response.
   const { elements } = rows[0];
   if (elements[0].status === "OK") {
     const { value } = elements[0].distance;
-    return value * 0.00062137119; // convert meters to miles
+    return (value * 0.00062137119).toFixed(2); // convert meters to miles rounded to 2 decimal places
   } else {
     throw new Error(`Unable to calculate distance: ${elements[0].status}`);
   }

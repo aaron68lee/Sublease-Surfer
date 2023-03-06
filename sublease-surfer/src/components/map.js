@@ -1,7 +1,7 @@
-import React, { useState, Component } from 'react';
+import React, {Component } from 'react';
 import { GoogleMap, Map, GoogleApiWrapper, InfoWindow, Marker, withScriptjs, withGoogleMap } from 'google-maps-react';
-import {useLoadScript, LoadScript, GoogleLoadScript} from '@react-google-maps/api';
-import {decodeLocations, getLocationFromAddress} from './backend.js';
+//import {useLoadScript, LoadScript, GoogleLoadScript} from '@react-google-maps/api';
+import {decodeLocations, calculateDistance} from './backend.js';
 
 
 const apiKey = 'AIzaSyBLe0m-ln0Fs3fHExT2G5LqkG4voSqwBhQ';
@@ -15,6 +15,7 @@ const campusCoord = {
   lat: 34.070366,
   lng: -118.44411,
 }
+const campusAddress = "308 Westwood Plaza";
 
 // ========================== Custom Map Component ===========================
 
@@ -80,12 +81,11 @@ export class CustomMap extends Component{
   {
     // hitbox includes full icon
     alert("Marker Clicked")
-    console.log("HELLO")
     //decodeLocations();
-    /*
-    const distance = await calculateDistance("1600 Amphitheatre Parkway, Mountain View, CA", "1 Infinite Loop, Cupertino, CA");
-    console.log(`Distance: ${distance} meters`);
-    */
+    
+    const distance = await calculateDistance(this.state.locations[index].address, campusAddress);
+    console.log(`Distance: ${distance} miles`);
+    
   };
   
   // auto resizes when new markers are added to map
@@ -103,7 +103,7 @@ export class CustomMap extends Component{
   async getLocations()
   {
     const locations = await decodeLocations(apiKey);
-    console.log("Decoded Locations: " + JSON.stringify(locations));
+    //console.log("Decoded Locations: " + JSON.stringify(locations));
     this.setState({locations: locations});
     return locations;
   }
@@ -112,12 +112,6 @@ export class CustomMap extends Component{
   render() {
     // set map bounds and load locations of all posts from database
     //this.resize()    
-    
-    /*
-    const places = this.state.locations.map((location, index) => {
-      console.log("Location: " + index + " " + location.location);
-    });
-    */
     console.log("ALL LOCATIONS: " + JSON.stringify(this.state.locations));
 
     const markers = this.state.locations.map((location, index) => (
@@ -125,7 +119,7 @@ export class CustomMap extends Component{
       <Marker
         key={index}
         onClick={() => this.handleClick(index)}
-        position={location}
+        position={location.location}
         title="post title"
         content="test content"
         /*
