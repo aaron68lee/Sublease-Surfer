@@ -122,11 +122,11 @@ export class CustomMap extends Component{
   async getLocations()
   {
     const locations = await decodeLocations(apiKey);
-    //console.log("Decoded Locations: " + JSON.stringify(locations));
+    console.log("Decoded Locations: " + JSON.stringify(locations));
     this.setState({locations: locations});
     return locations;
   }
- 
+
   // ========================== Render ===========================
   render() {
     // set map bounds and load locations of all posts from database

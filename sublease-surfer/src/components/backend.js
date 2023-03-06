@@ -70,6 +70,7 @@ async function decodeLocations(apiKey)
     let address = doc.get('address');
     address = (address.length <= 1) ? dummyAddress : address; // need some way of testing for invalid addresses
     const location = await getLocationFromAddress(address, apiKey);
+    console.log('HERE ' + JSON.stringify(location));
     locations.push({
       address,
       location
