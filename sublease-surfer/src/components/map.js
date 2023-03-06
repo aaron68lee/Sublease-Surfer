@@ -180,4 +180,5 @@ export default GoogleApiWrapper({
 
 export {
   apiKey,
+  campusAddress,
 }

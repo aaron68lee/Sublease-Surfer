@@ -74,7 +74,7 @@ function PostField() // consider making user page its own class to use this.stat
       // calculate distance to campus
       const distance = calculateDistance(address, campus);
 
-      post(pictures, title, description, address, name, startDate, endDate, contact, price, distance);
+      post(pictures, title, description, address, name, startDate, endDate, contact, price, 12345);
       //alert("Post Submitted");
   }
 

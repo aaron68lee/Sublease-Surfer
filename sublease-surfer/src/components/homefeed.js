@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db, readPosts } from '../components/backend.js';
+import { calculateDistance, db, readPosts } from '../components/backend.js';
 import { Link } from 'react-router-dom';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
+import { campusAddress } from './map.js';
 import ExpandedView from './expandedView.js';
 
 function HomeFeed() {
@@ -21,13 +22,26 @@ function HomeFeed() {
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
-
-  // query the database for posts
   let maxPosts = 25;
-  //const [posts] = useCollectionData(q, { idField: 'id' }); // listen for changes to the collection of posts
-  //readPosts(tags); // debug purposes to read posts
 
-  
+  /* // use Effect to asynch update the walking distance from returned promise not necessary anymore
+  const [walkingDistance, setWalkingDistance] = useState(null); 
+  useEffect(() => {
+    async function fetchWalkingDistance() {
+      if (true)
+      {
+        console.log("ADDRESS: " + address)
+        const distance = await calculateDistance(address, campusAddress);
+        setWalkingDistance(distance);
+        console.log('DISTANCE: ' + distance)
+      }
+      
+    }
+    fetchWalkingDistance();
+  }, [address, campusAddress]);
+  */
+
+  // use effect to query database and update post values
   useEffect(() => {
     const q = query(
       collection(db, 'posts'),
@@ -88,7 +102,6 @@ function HomeFeed() {
     (priceHigh === '' || post.price <= parseInt(priceHigh))
   );
   
-  
   //alert("Posts: " + filteredPosts.length + "\n" + JSON.stringify(filteredPosts));
 
   return (
@@ -121,7 +134,7 @@ function HomeFeed() {
           setExpandedPost(post);
         }}>
           <h2>{post.address}</h2>
-          <h2> Walking Distance </h2>
+          <h2> Walking Distance: {(post.distance !== null) ? (post.distance) + " miles" : ""} </h2>
           <img src={post.picture} alt="post image" className='main-listing-image'/>
           <h1 className='price'>${post.price}</h1>
         </div>
