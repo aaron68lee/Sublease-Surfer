@@ -22,12 +22,14 @@ function Navbar()
     let user = auth.currentUser;
     return (
         <div className='navbar'>
-            {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
+            {user ? <p className='displayname'>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
+            <div>
             <Link to='/' className='navbutton'> Home </Link>
             <Link to='/browse' className='navbutton'> Browse </Link>
             <Link to='/add-listing' className='navbutton'> Add Listing </Link>
             <Link to='/profile' className='navbutton'> Profile </Link>
             <Link to='/frontpage' className='navbutton' onClick={() => auth.signOut()}> Logout </Link>
+            </div>
         </div>  
     );
 }
