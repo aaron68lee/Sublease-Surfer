@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {auth, removeAllEntries} from './backend';
 
 // import web app pages and variables
-import '../App.css';
+import '../styles/App.css';
 
 function Navbar()
 {
@@ -16,11 +16,11 @@ function Navbar()
                 <>
                 <button color="red" onClick={() => {
                     if (window.confirm("Confirm purge of all posts?"))
-                        removeAllEntries();
+                        removeAllEntries('posts');
                 }}>Delete All Posts</button>
                 <button color="red" onClick={() => {
                     if (window.confirm("Confirm purge of all profiles?"))
-                        removeAllEntries();
+                        removeAllEntries('users');
                 }}>Delete All Profiles</button>
                 </>
             : <p></p>}

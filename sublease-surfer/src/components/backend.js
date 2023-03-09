@@ -14,7 +14,7 @@ import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {orderBy, onSnapshot, limit, doc, collection, addDoc, getDocs, updateDoc, setDoc, query, where} from "firebase/firestore"; 
 
 // import web app pages and variables
-import '../App.css'; //.. is used because App.css isn't in the components folder, it's in components' parent directory
+import '../styles/App.css'; //.. is used because App.css isn't in the components folder, it's in components' parent directory
 
 // ========================== initialize backend: Google Firebase ===========================
 
@@ -188,6 +188,11 @@ async function deletePost(uid, username, picture, title, body)
 // type can be: {posts, users}
 // delete all entires of docType type in the database
 async function removeAllEntries(type) {
+  if (!type) {
+    console.error('No collection name provided.');
+    alert('No collection name provided.');
+    return;
+  }
   const postsRef = collection(db, type);
   const querySnapshot = await getDocs(postsRef);
   const batch = db.batch();
@@ -196,6 +201,7 @@ async function removeAllEntries(type) {
   });
   await batch.commit();
   console.log('All ' + type + ' deleted successfully.');
+  alert('All ' + type + ' deleted successfully.');
 }
 
 // read data from the database, db

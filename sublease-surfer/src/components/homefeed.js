@@ -3,10 +3,15 @@ import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db } from '../components/backend.js';
 import { Link } from 'react-router-dom';
+import {TrackingProvider, TrackingContext} from '@vrbo/react-event-tracking';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
 import { campusAddress } from './map.js';
 import ExpandedView from './expandedView.js';
+
+// import styling
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/pictureScroll.css';
+
 
 function HomeFeed() {
 
@@ -20,7 +25,11 @@ function HomeFeed() {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    //alert("state before: " + showModal); 
+    setShowModal(false)
+  };
+
   const handleShowModal = () => setShowModal(true);
 
   let maxPosts = 25;
@@ -142,22 +151,37 @@ function HomeFeed() {
       ))}
       </div>
    
-  
-    <Modal show={showModal} onHide={handleCloseModal}>
-      <Modal.Header>
-        <Modal.Title>Post Details</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        
-       This is the expanded view!
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseModal}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    {/* Only show the expanded view if post has been clicked*/}
+    {/*}
+    <TrackingProvider show={showModal} onClick={() => handleCloseModal()}>  
+      {!showModal ? <ExpandedView post = {expandedPost}/> : <></>}
+    </TrackingProvider>
+    */}
     
+    {showModal ? 
+    <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal.Header closeButton>
+          <Modal.Title>Owner: {expandedPost.name}</Modal.Title>
+        </Modal.Header>
+        
+        <Modal.Body>
+          <img src={expandedPost.picture} alt='post image' />
+          <p>Address: {expandedPost.address}</p>
+          <p>Details: {expandedPost.description}</p>
+          <p>Dates: {expandedPost.startDate} to {expandedPost.endDate}</p>
+          <p>Price: ${expandedPost.price}</p>
+          <p>Contact: {expandedPost.contact}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+    </Modal>
+    :
+    <></>
+    }
+      
   </div>
   );
 }

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import '../App.css';
+import '../styles/App.css';
 import CustomMap, { decodeLocations } from './map.js';
 
 import {SignIn} from './backend';

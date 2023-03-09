@@ -12,8 +12,8 @@ import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 
 // import web app pages and components
-import './App.css';
-import './themes.css';
+import './styles/App.css';
+import './styles/themes.css';
 import Frontpage from './components/frontpage';
 import HomeFeed from './components/homefeed.js';
 import Profile from './components/profile';
@@ -43,7 +43,7 @@ function App() {
   /*
   // Toggle dark / light mode TODO: CREATE TOGGLE ELEMENT UI/UX
   const [theme, setTheme] = useState('light');
-        
+  
   const toggleTheme = () => {
       if (theme === 'light') {
         setTheme('dark');
