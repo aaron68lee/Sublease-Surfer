@@ -27,7 +27,6 @@
 
 .App-title{
   position: relative;
-  font-size:10vh;
 }
 
 .App-title :nth-child(1){
@@ -63,13 +62,14 @@
 /**************************** FRONT PAGE SIGNIN ******************************/
 .signIn {
   justify-content: center;
-  min-height: 8vh;
-  min-width: 10vh;
+  min-height: 2vh;
+  min-width: 2vh;
   color: #00b09b;
-  font-size: calc(20px + 1vmin);
+  font-size: calc(15px + 1vmin);
   font-weight: bold;
   /*border-radius: 16px;*/
-  padding: 20px;
+  padding: 12px;
+  margin: 2vh;
   border: 2px solid transparent;
   border-radius: 20px;
   background-color: white;
@@ -108,6 +108,11 @@
   margin-inline: 8px;
   border-radius: 15px;
   box-shadow:4px 4px 10px rgba(0,0,0,0.20);
+}
+
+.displayname {
+  margin-left: 20px;
+  margin-top: 15px;
 }
 
 /* unvisited link */
@@ -165,6 +170,9 @@ input::placeholder {
 
 .search-filter {
   width: 20%;
+  margin-inline: 20px;
+  margin-block: 20px;
+  border-radius: 10px;
 }
 
 textarea {
@@ -270,12 +278,13 @@ footer{
   box-shadow:4px 4px 10px rgba(0,0,0,0.20);
   color: #324448;
   padding: 20px;
-  font-size: small;
+  font-size: x-small;
   text-align: left;
 }
 
 .post p{
   margin-left: 30px;
+  font-size: x-small;
 }
 
 .profilelink {

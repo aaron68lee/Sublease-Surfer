@@ -17,10 +17,13 @@ function Frontpage()
                  <h1>Sublease Surfer</h1>
                  <h1>Sublease Surfer</h1>   
                 </div>                
-                <SignIn />
-                <br/>
-                <br/>
             </header>
+
+            <SignIn />
+
+            <br/>
+            <br/>
+            <br/>
 
             <div text-align="center" className="CustomMap" width="800%">
                 <CustomMap multipleMarkers = {true} address="308 Westwood Plaza"/>
