@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {auth} from './backend';
+import {auth, removeAllEntries} from './backend';
 
 /* 
 
@@ -23,6 +23,18 @@ function Navbar()
     return (
         <div className='navbar'>
             {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
+            {user.uid == "wRcRifVMqVUuxGpiPyKMdYuFbjI3" ? 
+                <>
+                <button color="red" onClick={() => {
+                    if (window.confirm("Confirm purge of all posts?"))
+                        removeAllEntries();
+                }}>Delete All Posts</button>
+                <button color="red" onClick={() => {
+                    if (window.confirm("Confirm purge of all profiles?"))
+                        removeAllEntries();
+                }}>Delete All Profiles</button>
+                </>
+            : <p></p>}
             <Link to='/' className='navbutton'> Home </Link>
             <Link to='/browse' className='navbutton'> Browse </Link>
             <Link to='/add-listing' className='navbutton'> Add Listing </Link>

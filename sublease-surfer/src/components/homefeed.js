@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { calculateDistance, db, readPosts } from '../components/backend.js';
+import { db } from '../components/backend.js';
 import { Link } from 'react-router-dom';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
 import { campusAddress } from './map.js';
 import ExpandedView from './expandedView.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 function HomeFeed() {
 
   //const [posts] = useCollectionData(query, { idField: 'id' });

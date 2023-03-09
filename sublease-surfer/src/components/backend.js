@@ -58,6 +58,7 @@ async function getLocationFromAddress(address, mapApiKey = apiKey) {
   };
 }
 
+// calls getLocationFromAddress for each listing in the database and returns their coordinates
 async function decodeLocations(apiKey)
 {
   
@@ -184,6 +185,19 @@ async function deletePost(uid, username, picture, title, body)
     }
 }
 
+// type can be: {posts, users}
+// delete all entires of docType type in the database
+async function removeAllEntries(type) {
+  const postsRef = collection(db, type);
+  const querySnapshot = await getDocs(postsRef);
+  const batch = db.batch();
+  querySnapshot.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+  await batch.commit();
+  console.log('All ' + type + ' deleted successfully.');
+}
+
 // read data from the database, db
 // ========================== Read ____ ===========================
 // tags is an arrayof tag filters for querying criteria
@@ -294,4 +308,5 @@ export {SignIn,
         getLocationFromAddress,
         decodeLocations,
         calculateDistance,
+        removeAllEntries,
         auth, db};
