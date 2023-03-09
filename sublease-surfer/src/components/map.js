@@ -58,9 +58,9 @@ export class CustomMap extends Component{
       this.setState({ locations: locations });
     }
     else // single marker for post
-    { 
+    {
       const locations = await getLocationFromAddress(this.props.address, apiKey);
-      console.log(locations);
+      //console.log(locations);
       const postAddress = this.props.address;
       const location = [{address: postAddress, location: locations}]
       this.setState({ 
@@ -122,7 +122,7 @@ export class CustomMap extends Component{
   async getLocations()
   {
     const locations = await decodeLocations(apiKey);
-    console.log("Decoded Locations: " + JSON.stringify(locations));
+    //console.log("Decoded Locations: " + JSON.stringify(locations));
     this.setState({locations: locations});
     return locations;
   }

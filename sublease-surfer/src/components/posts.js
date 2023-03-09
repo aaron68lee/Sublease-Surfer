@@ -41,7 +41,7 @@ function PostField() // consider making user page its own class to use this.stat
     setPictures(newPictures);
   };
 
-  const handleSubmit = event =>
+  async function handleSubmit(event)
   {
       // Add this new post to the database
       let postObj = {
@@ -70,12 +70,15 @@ function PostField() // consider making user page its own class to use this.stat
       setEndDate('');
       setContact('');
       setPrice(0);
-
-      // calculate distance to campus
-      //const distance = calculateDistance(address, campus);
-      const distance = 12345;
-      post(pictures, title, description, address, name, startDate, endDate, contact, price, distance);
-      //alert("Post Submitted");
+      
+      try {
+        // calculate distance to campus and wait for Promise to be resolved
+        const distance = await calculateDistance(address, campus);
+        // submit post with these fields to backend
+        post(pictures, title, description, address, name, startDate, endDate, contact, price, distance); // will alert on success
+      } catch(error) {
+        console.error("Distance Calc Error: " + error);
+      }
   }
 
     // Function to handle changes in the price input field and slider

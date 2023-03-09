@@ -1,4 +1,3 @@
-// ================ FIX THIS FILE IMPORTANT ================ 
 
 import React from 'react';
 import { Link } from 'react-router-dom';
