@@ -17,7 +17,7 @@ import Navbar from '../components/navbar.js';
 
 const campus = "308 Westwood Plaza";
 
-async function PostField() // consider making user page its own class to use this.state.value and onChange function
+function PostField() // consider making user page its own class to use this.state.value and onChange function
 {
 
   const [pictures, setPictures] = useState('');
@@ -74,7 +74,7 @@ async function PostField() // consider making user page its own class to use thi
       // calculate distance to campus
       //const distance = calculateDistance(address, campus);
       const distance = 12345;
-      post(pictures, title, description, address, name, startDate, endDate, contact, price, distance); // alert called in post on success
+      post(pictures, title, description, address, name, startDate, endDate, contact, price, distance);
       //alert("Post Submitted");
   }
 
