@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {auth, removeAllEntries} from './backend';
+import {auth, removeAllEntries, calculateDistance} from './backend';
 
 // import web app pages and variables
 import '../styles/App.css';
@@ -9,6 +9,7 @@ import '../styles/App.css';
 function Navbar()
 {
     let user = auth.currentUser;
+
     return (
         <div className='navbar'>
             {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
@@ -22,6 +23,7 @@ function Navbar()
                     if (window.confirm("Confirm purge of all profiles?"))
                         removeAllEntries('users');
                 }}>Delete All Profiles</button>
+                {/*<button onClick={() => alert("Dist: " + getDist())}>Test Dist</button>*/}
                 </>
             : <p></p>}
             <Link to='/' className='navbutton'> Home </Link>

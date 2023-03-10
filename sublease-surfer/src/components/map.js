@@ -62,10 +62,12 @@ export class CustomMap extends Component{
       const locations = await getLocationFromAddress(this.props.address, apiKey);
       //console.log(locations);
       const postAddress = this.props.address;
+      //console.log("Prop address: " + postAddress);
       const location = [{address: postAddress, location: locations}]
       this.setState({ 
         locations: location
       });
+      //console.log("Prop single loc: " + JSON.stringify(this.state.locations[0].location));
       
     }
   }
@@ -101,6 +103,7 @@ export class CustomMap extends Component{
     infowindow.open(map);
 
     const distance = await calculateDistance(location.address, campusAddress);
+    
     console.log(`Distance: ${distance} miles`);
     // hitbox includes full icon
     alert("Address: " + location.address + "\nDistance to campus: " + distance + " miles");

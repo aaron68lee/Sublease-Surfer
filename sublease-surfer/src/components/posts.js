@@ -29,6 +29,7 @@ function PostField() // consider making user page its own class to use this.stat
   const [endDate, setEndDate] = useState('');
   const [contact, setContact] = useState('');
   const [price, setPrice] = useState(0);
+  const [imageUrl, setImageUrl] = useState('');
 
   // Handle image uploading
   const onChange = (imageList, addUpdateIndex) => {
@@ -70,14 +71,21 @@ function PostField() // consider making user page its own class to use this.stat
       setEndDate('');
       setContact('');
       setPrice(0);
+      setImageUrl('');
       
       try {
+        //alert("Address: " + address);
+        //alert("Campus Address: " + campus)
         // calculate distance to campus and wait for Promise to be resolved
         const distance = await calculateDistance(address, campus);
+        //const distance = await calculateDistance("330 De Neve Drive", "308 Westwood Plaza");
         // submit post with these fields to backend
-        post(pictures, title, description, address, name, startDate, endDate, contact, price, distance); // will alert on success
+        //distance = 12345;
+        alert("Distance: " + distance);
+        post(pictures, imageUrl, title, description, address, name, startDate, endDate, contact, price, distance); // will alert on success
       } catch(error) {
         console.error("Distance Calc Error: " + error);
+        alert("Invalid Address");
       }
   }
 
@@ -138,6 +146,13 @@ function PostField() // consider making user page its own class to use this.stat
         onChange={e => setDescription(e.target.value)}
         placeholder="Description"
         //style={{ width: '30%', height: '100px' }}
+      />
+      <br />
+      <input
+        type='text'
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
+        placeholder='Image URL'
       />
       <br />
             {/* Add image uploading function */}

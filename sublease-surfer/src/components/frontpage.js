@@ -23,10 +23,10 @@ function Frontpage()
 
             <br/>
             <br/>
-            <br/>
 
-            <div text-align="center" className="CustomMap" width="800%">
-                <CustomMap multipleMarkers = {true} address="308 Westwood Plaza"/>
+            <h2>UCLA Sublease Community</h2>
+            <div text-align="center" className="CustomMap" width="200%">
+                <CustomMap multipleMarkers = {true}/>
             </div>
 
             <br/>

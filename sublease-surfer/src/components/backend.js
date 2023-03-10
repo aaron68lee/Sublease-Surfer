@@ -71,7 +71,7 @@ async function decodeLocations(apiKey)
     let address = doc.get('address');
     address = (address.length <= 1) ? dummyAddress : address; // need some way of testing for invalid addresses
     const location = await getLocationFromAddress(address, apiKey);
-    console.log('HERE ' + JSON.stringify(location));
+    //console.log('HERE ' + JSON.stringify(location));
     locations.push({
       address,
       location
@@ -87,6 +87,7 @@ async function decodeLocations(apiKey)
 // given origin and destination as string addresses
 // `origin` and `destination` should be strings representing the addresses or lat/long coordinates of the two locations.
 async function calculateDistance(origin, destination) {
+  //alert("origin: " + origin + " ,dest: " + destination);
   // Load the Google Maps API and get a DistanceMatrixService instance.
   const { google } = window;
   const service = new google.maps.DistanceMatrixService();
@@ -96,6 +97,7 @@ async function calculateDistance(origin, destination) {
   //const destination = new google.maps.LatLng(coord2.lat, coord2.lng);
 
   // Call the Distance Matrix API to get the distance between the two locations.
+  //console.log("HERE");
   const { rows } = await service.getDistanceMatrix({
     origins: [origin],
     destinations: [destination],
@@ -111,14 +113,15 @@ async function calculateDistance(origin, destination) {
     const { value } = elements[0].distance;
     return (value * 0.00062137119).toFixed(2); // convert meters to miles rounded to 2 decimal places
   } else {
-    throw new Error(`Unable to calculate distance: ${elements[0].status}`);
+    console.log("Calc Distance Function Internal Error")
+    throw new Error(`Unable to calculate distance: ${elements[0].status}`);  
   }
 }
 
 
 // write data to the database, db, creating a new sublease post for User === uid
 // ========================== Write: Create Post for Listing ===========================
-async function post(picture, title, body, address, name, startDate, endDate, contact, price, distance) 
+async function post(picture, imageUrl, title, body, address, name, startDate, endDate, contact, price, distance) 
 {
   
   let user = auth.currentUser;
@@ -129,6 +132,7 @@ async function post(picture, title, body, address, name, startDate, endDate, con
         const docRef = await addDoc(collection(db, "posts"), {
           uid: user ? user.uid : null,
           username: user ? user.displayName : null,
+          imageUrl: imageUrl,
           picture: picture, // find way to uplaod file with url?
           title: title,
           description: body,
@@ -142,10 +146,12 @@ async function post(picture, title, body, address, name, startDate, endDate, con
         }).then(
           alert("Post made"),
         );
-      
-        console.log("Document written");
+     
+        console.log("Document written with ID: " + docRef.id);
+        return docRef.id;
     } catch (e) {
         console.error("Error adding document: ", e);
+        return null;
     }
     
 }
@@ -176,13 +182,14 @@ async function postProfile(picture, name, bio, contact)
 }
 
 // ========================== Delete Post ===========================
-async function deletePost(uid, username, picture, title, body) 
-{
-    try {
-        console.log("Post deleted");
-    } catch (e) {
-        console.error("Error deleting document: ", e);
-    }
+
+async function deletePost(docRefId) {
+  try {
+    await db.collection("posts").doc(docRefId).delete();
+    console.log("Post " + docRefId + " successfully deleted!");
+  } catch (error) {
+    console.error("Error removing post: ", error);
+  }
 }
 
 // type can be: {posts, users}
@@ -315,4 +322,5 @@ export {SignIn,
         decodeLocations,
         calculateDistance,
         removeAllEntries,
+        deletePost,
         auth, db};

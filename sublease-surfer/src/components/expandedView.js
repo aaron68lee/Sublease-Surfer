@@ -32,12 +32,12 @@ function ExpandedView(props){ //, name, picture, address, description, startDate
         </Modal.Header>
         
         <Modal.Body>
-          <div class="picture-scroller">
-            <div class="pictures">
+          <div className="picture-scroller">
+            <div className="pictures">
               <img src={picture} alt='post image' />
             </div>
-            <button class="scroll-button left">&lt;</button>
-            <button class="scroll-button right">&gt;</button>
+            <button className="scroll-button left">&lt;</button>
+            <button className="scroll-button right">&gt;</button>
           </div>
           <p>Address: {address}</p>
           <p>Details: {description}</p>

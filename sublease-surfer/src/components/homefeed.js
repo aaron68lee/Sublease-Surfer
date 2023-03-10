@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db } from '../components/backend.js';
+import { db, auth, deletePost } from '../components/backend.js';
 import { Link } from 'react-router-dom';
 import {TrackingProvider, TrackingContext} from '@vrbo/react-event-tracking';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
-import { campusAddress } from './map.js';
+import { CustomMap } from './map.js';
 import ExpandedView from './expandedView.js';
 
 // import styling
@@ -24,6 +24,7 @@ function HomeFeed() {
   const [tags, setTags] = useState([]);
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [deleted, setDeleted] = useState(false)
 
   const handleCloseModal = () => {
     //alert("state before: " + showModal); 
@@ -140,24 +141,33 @@ function HomeFeed() {
       {filteredPosts && filteredPosts.map
       (post => (
         <div className='post' key={post.id} onClick={() => {
+          
           handleShowModal();
           setExpandedPost(post);
         }}>
           <h2>{post.address}</h2>
           <h2> Walking Distance: {(post.distance !== null) ? (post.distance) + " miles" : ""} </h2>
-          <img src={post.picture} alt="post image" className='main-listing-image'/>
+          <img src={post.imageUrl} alt="post image" className='main-listing-image'/>
           <h1 className='price'>${post.price}</h1>
+          {/* Delete button only appears for user who made post*/}
+          {(auth.currentUser.uid == post.uid) ? <button onClick={() => {
+            //alert("Post id: " + post.id)
+            deletePost(post.id);
+            setDeleted(true);
+            }}>Delete Post</button> : <></>} 
+          {/*<CustomMap multipleMarkers = {false} address={post.address}/>*/} {/* REMOVE LATER PUT IN MODAL */}
         </div>
       ))}
       </div>
    
-    {/* Only show the expanded view if post has been clicked*/}
+    {/* DOESN'T WORK: Only show the expanded view if post has been clicked using Parent-Child state tracking*/}
     {/*}
     <TrackingProvider show={showModal} onClick={() => handleCloseModal()}>  
       {!showModal ? <ExpandedView post = {expandedPost}/> : <></>}
     </TrackingProvider>
     */}
     
+    {/* ================================== EXPANDED MODAL ========================================= */}
     {showModal ? 
     <Modal show={showModal} onHide={handleCloseModal}>
       <Modal.Header closeButton>
@@ -165,7 +175,15 @@ function HomeFeed() {
         </Modal.Header>
         
         <Modal.Body>
-          <img src={expandedPost.picture} alt='post image' />
+
+          <div class="picture-scroller">
+            <div class="pictures">
+              <img src={expandedPost.imageUrl} alt='post image' /> {/* ADD MORE PICS HERE FOR SCROLLING */}
+            </div>
+            <button class="scroll-button left">&lt;</button>
+            <button class="scroll-button right">&gt;</button>
+          </div>
+          {/*<CustomMap multipleMarkers = {false} address={expandedPost.address}/>*/}
           <p>Address: {expandedPost.address}</p>
           <p>Details: {expandedPost.description}</p>
           <p>Dates: {expandedPost.startDate} to {expandedPost.endDate}</p>
