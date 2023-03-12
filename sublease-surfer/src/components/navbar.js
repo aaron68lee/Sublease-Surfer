@@ -13,7 +13,7 @@ function Navbar()
     return (
         <div className='navbar'>
             {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
-            {user.uid == "wRcRifVMqVUuxGpiPyKMdYuFbjI3" ? 
+            {user.uid == "DELETEME_wRcRifVMqVUuxGpiPyKMdYuFbjI3" ? 
                 <>
                 <button color="red" onClick={() => {
                     if (window.confirm("Confirm purge of all posts?"))
