@@ -27,15 +27,20 @@
 
 .App-title{
   position: relative;
+  scale: 450%;
+  margin: 8vh;
+  margin-top: 10vh;
+  letter-spacing: 1px;
+  
 }
 
 .App-title :nth-child(1){
   position: absolute;
   color: transparent;
-  -webkit-text-stroke: 5px white;
+  -webkit-text-stroke: 2px white; /* This can be made bigger but it messes up the animation.*/
   -webkit-text-fill-color: white;
-  text-shadow:10px 15px 10px rgba(0,0,0,0.20);  
 }
+
 .App-title :nth-child(2){
   color: #00b09b;
   animation: animate 3s ease-in-out infinite;
@@ -59,13 +64,14 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
 /**************************** FRONT PAGE SIGNIN ******************************/
 .signIn {
   justify-content: center;
   min-height: 2vh;
   min-width: 2vh;
   color: #00b09b;
-  font-size: calc(15px + 1vmin);
+  font-size: calc(15px + 1.5vmin);
   font-weight: bold;
   /*border-radius: 16px;*/
   padding: 12px;
@@ -83,10 +89,14 @@
 
 .CustomMap {
   position: relative;
+  /*
   height: 500px;
-  width: 1000px;
-  justify-content: center;
-  margin-left: 15%;
+  width: 1000px;*/
+  height: 50vh;
+  width: 100vh;
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /**************************** NAVIGATION BAR ******************************/
@@ -218,6 +228,16 @@ textarea::placeholder {
 p {
   padding: 2px;
   text-shadow:4px 4px 10px rgba(0,0,0,0.20);
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  padding: 2px;
+  text-shadow:4px 4px 10px rgba(0,0,0,0.20);
+  font-weight: bolder;
 }
 
 span {

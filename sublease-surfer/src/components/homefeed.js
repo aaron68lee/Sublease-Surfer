@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, auth, deletePost } from '../components/backend.js';
 import { Link } from 'react-router-dom';
-import {TrackingProvider, TrackingContext} from '@vrbo/react-event-tracking';
+//import {TrackingProvider, TrackingContext} from '@vrbo/react-event-tracking';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
 import { CustomMap } from './map.js';
 import ExpandedView from './expandedView.js';
