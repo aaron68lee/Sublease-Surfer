@@ -300,11 +300,26 @@ footer{
   padding: 20px;
   font-size: x-small;
   text-align: left;
+  height: 350px;
+  width: 300px
 }
 
 .post p{
   margin-left: 30px;
   font-size: x-small;
+}
+
+.post h1{
+ padding: 1vh;
+}
+
+.post h3 {
+  font-size: 20px;
+}
+
+.post img {
+  border-radius: 15px;
+  margin-top: 15px;
 }
 
 .profilelink {
@@ -318,8 +333,8 @@ footer{
 
 .main-listing-image {
   display: block;
-  width:280px;
-  height:200px;
+  width:250px;
+  height:150px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;

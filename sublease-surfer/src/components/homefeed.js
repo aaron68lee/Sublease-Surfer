@@ -145,8 +145,8 @@ function HomeFeed() {
           handleShowModal();
           setExpandedPost(post);
         }}>
-          <h2>{post.address}</h2>
-          <h2> Walking Distance: {(post.distance !== null) ? (post.distance) + " miles" : ""} </h2>
+          <h3>{post.address}</h3>
+          <h3> Walking Distance: {(post.distance !== null) ? (post.distance) + " miles" : ""} </h3>
           <img src={post.imageUrl} alt="post image" className='main-listing-image'/>
           <h1 className='price'>${post.price}</h1>
           {/* Delete button only appears for user who made post*/}
