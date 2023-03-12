@@ -74,14 +74,9 @@ function PostField() // consider making user page its own class to use this.stat
       setImageUrl('');
       
       try {
-        //alert("Address: " + address);
-        //alert("Campus Address: " + campus)
         // calculate distance to campus and wait for Promise to be resolved
         const distance = await calculateDistance(address, campus);
-        //const distance = await calculateDistance("330 De Neve Drive", "308 Westwood Plaza");
         // submit post with these fields to backend
-        //distance = 12345;
-        alert("Distance: " + distance);
         post(pictures, imageUrl, title, description, address, name, startDate, endDate, contact, price, distance); // will alert on success
       } catch(error) {
         console.error("Distance Calc Error: " + error);
