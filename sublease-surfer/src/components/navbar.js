@@ -11,8 +11,9 @@ function Navbar()
     let user = auth.currentUser;
 
     return (
+        <div>
+                {user ? <p className='displayname'>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
         <div className='navbar'>
-            {user ? <p>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
             {user.uid == "DELETEME_wRcRifVMqVUuxGpiPyKMdYuFbjI3" ? 
                 <>
                 <button color="red" onClick={() => {
@@ -32,6 +33,7 @@ function Navbar()
             <Link to='/profile' className='navbutton'> Profile </Link>
             <Link to='/frontpage' className='navbutton' onClick={() => auth.signOut()}> Logout </Link>
         </div>  
+        </div>
     );
 }
 
