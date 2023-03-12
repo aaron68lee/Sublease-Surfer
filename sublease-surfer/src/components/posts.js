@@ -130,7 +130,7 @@ function PostField() // consider making user page its own class to use this.stat
         type='date'
         value={startDate}
         onChange={(e) => setStartDate(e.target.value)}
-        style={{ width: '20%', color: '#96c93d'}}
+        style={{color: '#96c93d'}}
       />
       <br />
       <span>End Date:  </span>{' '}
@@ -138,14 +138,14 @@ function PostField() // consider making user page its own class to use this.stat
         type='date'
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
-        style={{ width: '20%', color: '#96c93d'}}
+        style={{color: '#96c93d'}}
+        
       />
       <br />
       <textarea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Description"
-        //style={{ width: '30%', height: '100px' }}
       />
       <br />
       <input

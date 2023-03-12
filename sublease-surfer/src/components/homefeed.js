@@ -171,7 +171,7 @@ function HomeFeed() {
     {showModal ? 
     <Modal show={showModal} onHide={handleCloseModal}>
       <Modal.Header closeButton>
-          <Modal.Title>Owner: {expandedPost.name}</Modal.Title>
+          <Modal.Title>{expandedPost.address}</Modal.Title>
         </Modal.Header>
         
         <Modal.Body>
@@ -180,14 +180,15 @@ function HomeFeed() {
             <div class="pictures">
               <img src={expandedPost.imageUrl} alt='post image' /> {/* ADD MORE PICS HERE FOR SCROLLING */}
             </div>
-            <button class="scroll-button left">&lt;</button>
-            <button class="scroll-button right">&gt;</button>
+            {/*<button class="scroll-button left">&lt;</button>
+            <button class="scroll-button right">&gt;</button>*/}
           </div>
           {/*<CustomMap multipleMarkers = {false} address={expandedPost.address}/>*/}
-          <p>Address: {expandedPost.address}</p>
-          <p>Details: {expandedPost.description}</p>
-          <p>Dates: {expandedPost.startDate} to {expandedPost.endDate}</p>
+          <br/>
+          <p>{expandedPost.description}</p>
+          <p>Available: {expandedPost.startDate} to {expandedPost.endDate}</p>
           <p>Price: ${expandedPost.price}</p>
+          <p>Owner: {expandedPost.name}</p> {/*TODO: CHANGE TO A BUTTON*/}
           <p>Contact: {expandedPost.contact}</p>
         </Modal.Body>
         <Modal.Footer>

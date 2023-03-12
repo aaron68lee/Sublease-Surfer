@@ -16,7 +16,8 @@
     width: 300px;
     height: 300px;
     object-fit: cover;
-    margin-right: 10px;
+    margin: auto;
+    border-radius: 15px;
   }
   
   .scroll-button {
@@ -26,8 +27,8 @@
     width: 30px;
     height: 30px;
     border: none;
-    background-color: rgba(255, 255, 255, 0.5);
-    color: black;
+    border-radius: 15px;
+    color: white;
     font-size: 20px;
     cursor: pointer;
   }
