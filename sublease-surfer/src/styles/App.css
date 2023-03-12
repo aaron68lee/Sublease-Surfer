@@ -290,6 +290,7 @@ footer{
   color:white;
   border-color: white;
   background-color: #ff3d00;
+  font-size: 15px;
 }
 
 /**************************** HOMEFEED ******************************/
@@ -356,3 +357,4 @@ footer{
   font-size:30px;
   font: 'Roboto';
 }
+

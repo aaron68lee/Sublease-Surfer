@@ -125,7 +125,7 @@ function PostField() // consider making user page its own class to use this.stat
         placeholder='Your Name'
       />
       <br />
-      <span>Start Date:</span>{' '}
+      <p>Start Date:</p>{' '}
       <input
         type='date'
         value={startDate}
@@ -133,7 +133,7 @@ function PostField() // consider making user page its own class to use this.stat
         style={{color: '#96c93d'}}
       />
       <br />
-      <span>End Date:  </span>{' '}
+      <p>End Date:  </p>{' '}
       <input
         type='date'
         value={endDate}
@@ -141,6 +141,7 @@ function PostField() // consider making user page its own class to use this.stat
         style={{color: '#96c93d'}}
         
       />
+      <br />
       <br />
       <textarea
         value={description}
