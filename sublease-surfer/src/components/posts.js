@@ -156,7 +156,7 @@ function PostField() // consider making user page its own class to use this.stat
         placeholder='Image URL'
       />
       <br />
-            {/* Add image uploading function */}
+            {/* Add image uploading function
             <ImageUploading
         multiple
         value={pictures}
@@ -195,7 +195,7 @@ function PostField() // consider making user page its own class to use this.stat
             </div>
           </div>
         )}
-      </ImageUploading>
+      </ImageUploading> */}
       <input
         type='text'
         value={contact}
