@@ -18,13 +18,13 @@ function Frontpage()
                  <h1>Sublease Surfer</h1>   
                 </div>                
             </header>
-
+            <h2>A platform dedicated to subleasing apartments in the UCLA community.</h2>
             <SignIn />
 
             <br/>
             <br/>
 
-            <h2>UCLA Sublease Community</h2>
+            
             <div text-align="center" className="CustomMap" width="200%">
                 <CustomMap multipleMarkers = {true}/>
             </div>

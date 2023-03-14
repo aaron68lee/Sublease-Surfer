@@ -17,7 +17,8 @@ With the proliferation of a competitive housing situation in Westwood locally an
 
 ## Screenshots
 The Front Page:
-![Home Page](./sublease-surfer/assets/frontpage2.png)
+![Home Page](./sublease-surfer/assets/frontpage.png)
+[](./sublease-surfer/assets/map.png)
 Add Listing Page:
 ![Posting Page](./sublease-surfer/assets/add-listing.png)
 The Edit Profile Page:

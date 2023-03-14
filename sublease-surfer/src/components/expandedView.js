@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { CustomMap } from './map';
-import {TrackingTrigger} from '@vrbo/react-event-tracking';
+//import {TrackingTrigger} from '@vrbo/react-event-tracking';
 import '../styles/pictureScroll.css'
 
 //=============================== EXPANDED POST CURRENTLY OBSELETE ===========================================
@@ -26,7 +26,7 @@ function ExpandedView(props){ //, name, picture, address, description, startDate
   return (
       
       <Modal show={props.showModal} onHide={props.handleCloseModal} centered>
-        <TrackingTrigger event="modal-opened"/>
+        {/*<TrackingTrigger event="modal-opened"/>*/}
         <Modal.Header closeButton>
           <Modal.Title>Owner: {name}</Modal.Title>
         </Modal.Header>

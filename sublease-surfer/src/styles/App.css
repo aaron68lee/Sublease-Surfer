@@ -27,15 +27,20 @@
 
 .App-title{
   position: relative;
+  scale: 450%;
+  margin: 8vh;
+  margin-top: 10vh;
+  letter-spacing: 1px;
+  
 }
 
 .App-title :nth-child(1){
   position: absolute;
   color: transparent;
-  -webkit-text-stroke: 5px white;
+  -webkit-text-stroke: 2px white; /* This can be made bigger but it messes up the animation.*/
   -webkit-text-fill-color: white;
-  text-shadow:10px 15px 10px rgba(0,0,0,0.20);  
 }
+
 .App-title :nth-child(2){
   color: #00b09b;
   animation: animate 3s ease-in-out infinite;
@@ -59,13 +64,14 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
 /**************************** FRONT PAGE SIGNIN ******************************/
 .signIn {
   justify-content: center;
   min-height: 2vh;
   min-width: 2vh;
   color: #00b09b;
-  font-size: calc(15px + 1vmin);
+  font-size: calc(15px + 1.5vmin);
   font-weight: bold;
   /*border-radius: 16px;*/
   padding: 12px;
@@ -83,10 +89,14 @@
 
 .CustomMap {
   position: relative;
+  /*
   height: 500px;
-  width: 1000px;
-  justify-content: center;
-  margin-left: 15%;
+  width: 1000px;*/
+  height: 50vh;
+  width: 100vh;
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /**************************** NAVIGATION BAR ******************************/
@@ -95,7 +105,7 @@
   background-color: white;
   color:#00b09b;
   padding-bottom: 40px;
-  min-width: 600px;
+  /*min-width: 600px;*/
 }
 
 .navbutton {
@@ -103,16 +113,21 @@
   color:white;
   font-size: x-large;
   font-weight: bold;
-  padding-inline: 16px;
-  padding-block: 12px;
-  margin-inline: 8px;
+  padding-inline: 2vh;
+
+  margin-inline: 2vh;
+
   border-radius: 15px;
   box-shadow:4px 4px 10px rgba(0,0,0,0.20);
+  width: 200px;
+  height: 50px;
+  padding: 5px;
 }
 
 .displayname {
-  margin-left: 20px;
+  margin-left: 2vh;
   margin-top: 15px;
+  font-size: xx-large;
 }
 
 /* unvisited link */
@@ -142,13 +157,16 @@ a:active {
 
 /**************************** USER INPUT FIELDS ******************************/
 
-::-webkit-datetime-edit { color:#96c93d; padding: 0 0.3em; }
+::-webkit-datetime-edit { 
+  color:#96c93d; 
+  font-size: large;
+}
 
 input {
   resize: vertical;
   padding:15px;
   margin-inline: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 20px;
   border-radius:15px;
   border:0;
@@ -158,12 +176,12 @@ input {
   text-align:left;
   color:#00b09b;
   font-weight: bold;
-  font-size: medium;
-  
+  font-size: large;
 }
 
 input::placeholder {
   color: #96c93d;
+  font-size: large;
   font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, 'Roboto', Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
 }
@@ -173,6 +191,7 @@ input::placeholder {
   margin-inline: 20px;
   margin-block: 20px;
   border-radius: 10px;
+  font-size: 20px;
 }
 
 textarea {
@@ -184,12 +203,14 @@ textarea {
   box-shadow:4px 4px 10px rgba(0,0,0,0.20);
   height:150px;
   margin-inline: 20px;
-  margin-top: 10px;
-  font-size: medium;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: large;
 }
 
 textarea::placeholder {
   color: #96c93d;
+  font-size: large;
   font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, 'Roboto', Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
 }
@@ -218,6 +239,16 @@ textarea::placeholder {
 p {
   padding: 2px;
   text-shadow:4px 4px 10px rgba(0,0,0,0.20);
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  padding: 2px;
+  text-shadow:4px 4px 10px rgba(0,0,0,0.20);
+  font-weight: bolder;
 }
 
 span {
@@ -259,6 +290,7 @@ footer{
   color:white;
   border-color: white;
   background-color: #ff3d00;
+  font-size: 15px;
 }
 
 /**************************** HOMEFEED ******************************/
@@ -280,11 +312,26 @@ footer{
   padding: 20px;
   font-size: x-small;
   text-align: left;
+  height: 350px;
+  width: 300px
 }
 
 .post p{
   margin-left: 30px;
   font-size: x-small;
+}
+
+.post h1{
+ padding: 1vh;
+}
+
+.post h3 {
+  font-size: 20px;
+}
+
+.post img {
+  border-radius: 15px;
+  margin-top: 15px;
 }
 
 .profilelink {
@@ -298,8 +345,8 @@ footer{
 
 .main-listing-image {
   display: block;
-  width:280px;
-  height:200px;
+  width:250px;
+  height:150px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;

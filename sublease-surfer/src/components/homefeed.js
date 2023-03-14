@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, auth, deletePost } from '../components/backend.js';
 import { Link } from 'react-router-dom';
-import {TrackingProvider, TrackingContext} from '@vrbo/react-event-tracking';
+//import {TrackingProvider, TrackingContext} from '@vrbo/react-event-tracking';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
 import { CustomMap } from './map.js';
 import ExpandedView from './expandedView.js';
@@ -145,8 +145,8 @@ function HomeFeed() {
           handleShowModal();
           setExpandedPost(post);
         }}>
-          <h2>{post.address}</h2>
-          <h2> Walking Distance: {(post.distance !== null) ? (post.distance) + " miles" : ""} </h2>
+          <h3>{post.address}</h3>
+          <h3> Walking Distance: {(post.distance !== null) ? (post.distance) + " miles" : ""} </h3>
           <img src={post.imageUrl} alt="post image" className='main-listing-image'/>
           <h1 className='price'>${post.price}</h1>
           {/* Delete button only appears for user who made post*/}
@@ -171,7 +171,7 @@ function HomeFeed() {
     {showModal ? 
     <Modal show={showModal} onHide={handleCloseModal}>
       <Modal.Header closeButton>
-          <Modal.Title>Owner: {expandedPost.name}</Modal.Title>
+          <Modal.Title>{expandedPost.address}</Modal.Title>
         </Modal.Header>
         
         <Modal.Body>
@@ -180,13 +180,13 @@ function HomeFeed() {
             <div class="pictures">
               <img src={expandedPost.imageUrl} alt='post image' /> {/* ADD MORE PICS HERE FOR SCROLLING */}
             </div>
-            <button class="scroll-button left">&lt;</button>
-            <button class="scroll-button right">&gt;</button>
+            {/*<button class="scroll-button left">&lt;</button>
+            <button class="scroll-button right">&gt;</button>*/}
           </div>
           {/*<CustomMap multipleMarkers = {false} address={expandedPost.address}/>*/}
-          <p>Address: {expandedPost.address}</p>
-          <p>Details: {expandedPost.description}</p>
-          <p>Dates: {expandedPost.startDate} to {expandedPost.endDate}</p>
+          <br/>
+          <p>{expandedPost.description}</p>
+          <p>Available: {expandedPost.startDate} to {expandedPost.endDate}</p>
           <p>Price: ${expandedPost.price}</p>
           <p>Contact: {expandedPost.contact}</p>  
 

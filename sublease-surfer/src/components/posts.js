@@ -59,30 +59,30 @@ function PostField() // consider making user page its own class to use this.stat
 
 
       //console.log("Post this Object: \n" + JSON.stringify(postObj));
-
-      // reset all post field values 
-      setPictures('');
-      setTitle('');
-      setDescription('');
-      setAddress('');
-      setName('');
-      setDescription('');
-      setStartDate('');
-      setEndDate('');
-      setContact('');
-      setPrice(0);
-      setImageUrl('');
       
       try {
-        //alert("Address: " + address);
-        //alert("Campus Address: " + campus)
         // calculate distance to campus and wait for Promise to be resolved
         const distance = await calculateDistance(address, campus);
-        //const distance = await calculateDistance("330 De Neve Drive", "308 Westwood Plaza");
         // submit post with these fields to backend
-        //distance = 12345;
-        alert("Distance: " + distance);
-        post(pictures, imageUrl, title, description, address, name, startDate, endDate, contact, price, distance); // will alert on success
+        
+        try {
+          post(pictures, imageUrl, title, description, address, name, startDate, endDate, contact, price, distance); // will alert on success
+          // reset all post field values 
+          setPictures('');
+          setTitle('');
+          setDescription('');
+          setAddress('');
+          setName('');
+          setDescription('');
+          setStartDate('');
+          setEndDate('');
+          setContact('');
+          setPrice(0);
+          setImageUrl('');
+        } catch(e) {
+          console.error("One or more post fields invalid!" + e);
+          alert("One or more post fields invalid!");
+        }
       } catch(error) {
         console.error("Distance Calc Error: " + error);
         alert("Invalid Address");
@@ -125,27 +125,28 @@ function PostField() // consider making user page its own class to use this.stat
         placeholder='Your Name'
       />
       <br />
-      <span>Start Date:</span>{' '}
+      <p>Start Date:</p>{' '}
       <input
         type='date'
         value={startDate}
         onChange={(e) => setStartDate(e.target.value)}
-        style={{ width: '20%', color: '#96c93d'}}
+        style={{color: '#96c93d'}}
       />
       <br />
-      <span>End Date:  </span>{' '}
+      <p>End Date:  </p>{' '}
       <input
         type='date'
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
-        style={{ width: '20%', color: '#96c93d'}}
+        style={{color: '#96c93d'}}
+        
       />
+      <br />
       <br />
       <textarea
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Description"
-        //style={{ width: '30%', height: '100px' }}
       />
       <br />
       <input
