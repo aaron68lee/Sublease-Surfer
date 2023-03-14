@@ -23,14 +23,14 @@ function HomeFeed() {
   const [tags, setTags] = useState([]);
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [deleted, setDeleted] = useState(false)
 
-  const handleCloseModal = () => {
-    //alert("state before: " + showModal); 
-    setShowModal(false)
-  };
-
+  const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
+
+  const handleCloseProfile = () => setShowProfile(false);
+  const handleShowProfile = () => setShowProfile(true);
 
   let maxPosts = 25;
 
@@ -187,10 +187,25 @@ function HomeFeed() {
           <p>{expandedPost.description}</p>
           <p>Available: {expandedPost.startDate} to {expandedPost.endDate}</p>
           <p>Price: ${expandedPost.price}</p>
-          <p>Owner: {expandedPost.name}</p> {/*TODO: CHANGE TO A BUTTON*/}
-          <p>Contact: {expandedPost.contact}</p>
+          <p>Contact: {expandedPost.contact}</p>  
+
         </Modal.Body>
+
         <Modal.Footer>
+
+          {/* Nested modal */}
+          <Modal show={showProfile} onHide={handleCloseProfile}>
+            <Modal.Header closeButton>
+              <Modal.Title>User Profile</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Nested Modal Content</Modal.Body>
+          </Modal>
+
+          {/* Button to show profiles */}
+          <Button variant="primary" onClick={() => setShowProfile(true)}>
+           Open User Profile
+          </Button>   
+
           <Button variant='secondary' onClick={handleCloseModal}>
             Close
           </Button>

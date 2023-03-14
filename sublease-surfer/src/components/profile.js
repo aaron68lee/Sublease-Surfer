@@ -61,7 +61,7 @@ function Profile()
       />
       <br />
 
-    {/* Add image uploading function */}
+    {/* Add image uploading function
     <ImageUploading
         multiple
         value={pictures}
@@ -98,7 +98,7 @@ function Profile()
             ))}
           </div>
         )}
-      </ImageUploading>
+      </ImageUploading> */}
       
       {/* Create a button to submit the form */}
 
