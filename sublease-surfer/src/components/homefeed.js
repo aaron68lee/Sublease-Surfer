@@ -12,7 +12,6 @@ import ExpandedView from './expandedView.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/pictureScroll.css';
 
-
 function HomeFeed() {
 
   //const [posts] = useCollectionData(query, { idField: 'id' });
@@ -145,8 +144,8 @@ function HomeFeed() {
           handleShowModal();
           setExpandedPost(post);
         }}>
-          <h3>{post.address}</h3>
-          <h3> Walking Distance: {(post.distance !== null) ? (post.distance) + " miles" : ""} </h3>
+          <h2><img src= "./assets/address.png" alt="imgWalk" />{post.address}</h2>
+          <h2> <img src="./assets/walk.png" alt="imgAddress"/> {(post.distance !== null) ? (post.distance) + " miles" : ""} </h2>
           <img src={post.imageUrl} alt="post image" className='main-listing-image'/>
           <h1 className='price'>${post.price}</h1>
           {/* Delete button only appears for user who made post*/}
