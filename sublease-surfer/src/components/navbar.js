@@ -12,7 +12,7 @@ function Navbar()
 
     return (
         <div>
-                {user ? <p className='displayname'>Welcome: {auth.currentUser.displayName}</p> : <p></p>}
+            {user ? <p className='displayname'>Welcome {auth.currentUser.displayName} !</p> : <p></p>}
         <div className='navbar'>
             {user.uid == "DELETEME_wRcRifVMqVUuxGpiPyKMdYuFbjI3" ? 
                 <>

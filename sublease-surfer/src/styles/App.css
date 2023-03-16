@@ -125,9 +125,9 @@
 }
 
 .displayname {
-  margin-left: 2vh;
-  margin-top: 15px;
   font-size: xx-large;
+  background-color: white;
+  color: #324448;
 }
 
 /* unvisited link */
@@ -312,7 +312,7 @@ footer{
   padding: 20px;
   font-size: x-small;
   text-align: left;
-  height: 350px;
+  height: 400px;
   width: 300px
 }
 
@@ -323,6 +323,12 @@ footer{
 
 .post h1{
  padding: 1vh;
+}
+
+.post h2 {
+  font-size: 25px;
+  display: flex;
+  align-items: center;
 }
 
 .post h3 {
