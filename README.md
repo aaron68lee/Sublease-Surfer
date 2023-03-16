@@ -25,17 +25,32 @@ The Edit Profile Page:
 ![Edit Profile Page](./sublease-surfer/assets/edit-profile.png)
 The page aggregating all posts
 ![Browse Page](./sublease-surfer/assets/browse.png)
+Map of all current listings (shown with markers)
 ![Map with Postings](./sublease-surfer/assets/postmap.png)
 
 ## Quick-start
 1. Clone this repo by running `git clone https://github.com/aaron68lee/Sublease-Surfer.git`
 2. Install necessary dependencies:
    * `npm install react-google-maps`
-   * `npm install react-router-dom`
-   * `npm install react-bootstrap`
+   * `npm install --save-dev @testing-library/jest-dom`
+   * `npm install --save-dev @testing-library/react`
+   * `npm install --save-dev @testing-library/user-event`
+   * `npm install @vrbo/react-event-tracking`
+   * `npm install axios`
+   * `npm install bootstrap`
    * `npm install firebase`
+   * `npm install google-maps-react`
+   * `npm install react`
+   * `npm install react-bootstrap`
+   * `npm install react-bulma-components`
+   * `npm install react-dom`
    * `npm install react-firebase-hooks`
+   * `npm install react-google-maps`
+   * `npm install react-image`
    * `npm install react-images-uploading`
+   * `npm install react-router-dom`
+   * `npm install react-scripts`
+   * `npm install web-vitals`
 3. If installing fails due to dependency conflicts, pass `--force`.
 4. Start the frontend: `cd ../frontend; npm start`
 5. If `npm start` doesn't work, edit `package.json` react start-scripts with flag `"start": "react-scripts --openssl-legacy-provider-start"`
@@ -69,6 +84,6 @@ Thanks for the help!
 * [For other commands, reference here](https://git-scm.com/doc)
 
 ## Special Thanks
+* Professor Paul Eggert
 * TAs
-* Professor Eggert
 
