@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Component } from 'react';
 import ImageUploading from 'react-images-uploading';
+
 // import BACKEND packages
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
@@ -52,7 +53,6 @@ function PostField() // consider making user page its own class to use this.stat
         contact: contact,
         price: price,
       };
-
 
       //console.log("Post this Object: \n" + JSON.stringify(postObj));
       
@@ -152,12 +152,13 @@ function PostField() // consider making user page its own class to use this.stat
         placeholder='Image URL'
       />
       <br />
-            {/* Add image uploading function
-            <ImageUploading
+      
+      {/* Add image uploading function
+    <ImageUploading
         multiple
         value={pictures}
         onChange={onChange}
-        maxNumber={10}
+        maxNumber={1}
         dataURLKey="data_url"
       >
         {({
@@ -175,23 +176,22 @@ function PostField() // consider making user page its own class to use this.stat
               onClick={onImageUpload}
               {...dragProps}
             >
-              [Click or Drop Images here]
+              Click or Drop your Profile Picture here
             </button>
             &nbsp;
-            <div>
-              <button className='remove' onClick={onImageRemoveAll}>Remove all images</button>
-              {imageList.map((image, index) => (
-                <div key={index} className="image-item">
-                  <img src={image.data_url} alt="" width="500" />
-                  <div className="image-item__btn-wrapper">
-                    <button className='remove' onClick={() => removeImage(index)}> Remove image </button>
-                  </div>
+            <br/>
+            {imageList.map((image, index) => (
+              <div key={index} className="image-item">
+                <img src={image.data_url} alt="" width="500" />
+                <div className="image-item__btn-wrapper">
+                  <button className='remove' onClick={() => removeImage(index)}>Remove</button>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         )}
       </ImageUploading> */}
+
       <input
         type='text'
         value={contact}

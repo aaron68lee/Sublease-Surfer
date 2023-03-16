@@ -7,7 +7,7 @@ import { doc, QuerySnapshot } from 'firebase/firestore';
 function Profile()
 {
   //React hooks for profile  
-  const[loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [pictures, setPictures] = useState('');
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
@@ -71,8 +71,6 @@ function Profile()
         contact: contact,
       };
 
-      //console.log("Post this Object: \n" + JSON.stringify(profileObj));
-
       // reset all post field values 
       setPictures('');
       setName('');
@@ -82,9 +80,7 @@ function Profile()
     // CREATE A FUNCTION TO STORE PROFILES TO DB
     removePreviousProfiles(auth.currentUser.uid).then(() => {
       postProfile(pictures, name, bio, contact);
-    }); // (pictures, name, bio, contact);
-    
-    
+    });
   }
 
     // Render the form
@@ -104,10 +100,6 @@ function Profile()
         placeholder="Contact info..."
       />
       <br />
-      {/*profiles.length > 0 ? (
-        profiles.map((profile) => <div key={profile.key}>{profile.bio}</div>
-        )
-      ) : <h1>no profiles yet</h1>*/}
 
     {/* Add image uploading function
     <ImageUploading
@@ -149,9 +141,7 @@ function Profile()
       </ImageUploading> */}
       
       {/* Create a button to submit the form */}
-
       <button className='signIn' onClick={handleSubmit}>Save Profile</button>
-      
     </div>
   );
 }

@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db, auth, deletePost, post } from '../components/backend.js';
+import { db, auth, deletePost, getPostCreator, post } from '../components/backend.js';
 import { Link } from 'react-router-dom';
-//import {TrackingProvider, TrackingContext} from '@vrbo/react-event-tracking';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
 import { CustomMap } from './map.js';
 import ExpandedView from './expandedView.js';
@@ -12,9 +11,9 @@ import ExpandedView from './expandedView.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/pictureScroll.css';
 
+
 function HomeFeed() {
 
-  //const [posts] = useCollectionData(query, { idField: 'id' });
   // useState for dynamic field data regarding posts and search terms
   const [expandedPost, setExpandedPost] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,6 +23,7 @@ function HomeFeed() {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [profiles, setProfiles] = useState([]);
   const [currProfile, setCurrProfile] = useState([]);
   const [deleted, setDeleted] = useState(false);
 
@@ -35,28 +35,10 @@ function HomeFeed() {
 
   let maxPosts = 25;
 
-  /* // use Effect to asynch update the walking distance from returned promise not necessary anymore
-  const [walkingDistance, setWalkingDistance] = useState(null); 
-  useEffect(() => {
-    async function fetchWalkingDistance() {
-      if (true)
-      {
-        console.log("ADDRESS: " + address)
-        const distance = await calculateDistance(address, campusAddress);
-        setWalkingDistance(distance);
-        console.log('DISTANCE: ' + distance)
-      }
-      
-    }
-    fetchWalkingDistance();
-  }, [address, campusAddress]);
-  */
-
   // use effect to query database and update post values
   useEffect(() => {
     const q = query(
       collection(db, 'posts'),
-      //orderBy('creationDate', 'desc'),
       limit(25),
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -69,12 +51,37 @@ function HomeFeed() {
     return unsubscribe;
   }, [tags]);
 
-  // debug stuff
-  //console.log("Posts: " + JSON.stringify(q));
-  //console.log("Num Posts: " + posts.length); // add this line to check the value of the posts array
+
+  //useEffect hook to retrieve info about a person's post
+  useEffect(() => {
+    const getDatabaseData = [];
+    const user = db
+    .collection("users")
+    .onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        //console.log("Data: " + JSON.stringify(doc.data().uid));
+        if(doc.data().uid == expandedPost.uid) //(auth.currentUser.uid)
+        {
+          console.log("UID found: " + expandedPost.uid);
+          setCurrProfile(doc.data());
+        }
+        getDatabaseData.push({
+          ...doc.data(), //spread operator
+          key: doc.id,
+        });
+      });
+      //set profiles and finish loading when done
+      setProfiles(getDatabaseData);
+    });
+    // returns cleanup function
+    return () => user();
+  }, [expandedPost]); //empty dependencies array => useEffect only called
+
+  function getExpandedProfileHash() {
+    
+  }
 
   // posts do not exist then return loading screen
-  
   if (posts.length == 0) {
     return <div>...Loading Posts...</div>;
   }
@@ -90,7 +97,6 @@ function HomeFeed() {
       }
     }
   };
-
 
   const handlePriceHighChange = (e) => {
     if (e.target.value === '') {
@@ -113,7 +119,6 @@ function HomeFeed() {
     (priceHigh === '' || post.price <= parseInt(priceHigh))
   );
   
-  //alert("Posts: " + filteredPosts.length + "\n" + JSON.stringify(filteredPosts));
 
   return (
     <div>
@@ -140,31 +145,10 @@ function HomeFeed() {
       <div className='post-grid'>
       {filteredPosts && filteredPosts.map
       (post => (
-        <div className='post' key={post.id} onClick={() => {
+        <div className='post' key={post.id} onClick={async () => {
           handleShowModal();
           setExpandedPost(post);
-            // const creator = getInfoByCreatorUid(expandedPost.uid);
-            // console.log("Post id: " + expandedPost.uid)
-            // // console.log("Type(creator): " + typeof(creator));
-            // creator.then(
-            //   (value) => { console.log("Value: " + value); },
-            //   (reason) => { console.log("Reason: " + reason); } 
-            //   );
-
-            // setCurrProfile(creator);
-
-
-            console.log("Curr profile: " + JSON.stringify(currProfile))
-
-
-            //   async () => {
-        //   handleShowModal();
-        //   setExpandedPost(post);
-        //     const creator = await getInfoByCreatorUid(expandedPost.uid);
-        //     alert(creator);
-        //     setCurrProfile(creator);
-        //     console.log("Curr profile: " + JSON.stringify(currProfile))
-        // }}>
+          // setCurrProfile(currProfile)
         }}>
           <h2> {/*<img src= "./assets/address.png" alt="imgWalk" />*/} 📍{post.address}</h2>
           <h3> {/*<img src="./assets/walk.png" alt="imgAddress"/>*/} 🚶{(post.distance !== null) ? (post.distance) + " miles to UCLA" : ""} </h3>
@@ -181,12 +165,6 @@ function HomeFeed() {
       ))}
       </div>
    
-    {/* DOESN'T WORK: Only show the expanded view if post has been clicked using Parent-Child state tracking*/}
-    {/*}
-    <TrackingProvider show={showModal} onClick={() => handleCloseModal()}>  
-      {!showModal ? <ExpandedView post = {expandedPost}/> : <></>}
-    </TrackingProvider>
-    */}
     
     {/* ================================== EXPANDED MODAL ========================================= */}
     {showModal ? 
@@ -229,12 +207,20 @@ function HomeFeed() {
             {currProfile ? 
             <Modal.Body>
               Name: {currProfile.username}
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
               About them: {currProfile.bio}
-                <br></br>
-                  <br></br>
-                  <br></br>
-                <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
               Contact Info: {currProfile.contact}
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
             </Modal.Body>
             : <></>
             }
