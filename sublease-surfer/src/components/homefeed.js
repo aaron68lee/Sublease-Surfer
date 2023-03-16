@@ -187,7 +187,6 @@ function HomeFeed() {
             <CustomMap multipleMarkers = {false} address={expandedPost.address}/>
           </div>
           */}
-          <p>map 2</p>
          
           <br></br>
           <p>{expandedPost.description}</p>

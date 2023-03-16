@@ -87,9 +87,7 @@ async function decodeLocations(apiKey)
     });
   }
 
-  //console.log("Decoded Locations: " + JSON.stringify(locations));
   return locations;
-  //console.log(doc.id, " => ", doc.data());
 }
 
 // ========================== Calculate Distance ===========================
