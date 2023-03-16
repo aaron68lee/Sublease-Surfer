@@ -24,7 +24,7 @@ function Navbar()
                     if (window.confirm("Confirm purge of all profiles?"))
                         removeAllEntries('users');
                 }}>Delete All Profiles</button>
-                {/*<button onClick={() => alert("Dist: " + getDist())}>Test Dist</button>*/}
+
                 </>
             : <p></p>}
             <Link to='/' className='navbutton'> Home </Link>

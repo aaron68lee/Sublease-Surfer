@@ -1,6 +1,5 @@
 import React, {Component } from 'react';
 import { GoogleMap, Map, GoogleApiWrapper, InfoWindow, Marker, withScriptjs, withGoogleMap } from 'google-maps-react';
-//import {useLoadScript, LoadScript, GoogleLoadScript} from '@react-google-maps/api';
 import {decodeLocations, getLocationFromAddress, calculateDistance} from './backend.js';
 
 
@@ -167,11 +166,6 @@ export class CustomMap extends Component{
    
         {markers}
 
-        <InfoWindow visible={true}>
-            <div>
-              <h1>Here is a place.</h1>
-            </div>
-        </InfoWindow>
       </Map>
     );
   }

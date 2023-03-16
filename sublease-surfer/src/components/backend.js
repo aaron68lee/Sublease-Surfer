@@ -49,62 +49,6 @@ async function getPostCreator(postHash) {
   return creatorUid;
 }
 
-// NOT CURRENTLY WORKING// Creates a list with the bio and contact of a given post creator 
-// async function getInfoByCreatorUid(usersId) {
-
-//   // Get a reference to the path where the 'info' node is stored
-//   const userRef = await db.collection('users').get();
-//   let userObj = ["Name not found", "Bio not found", "Contact info not found"];
-
-//   const usersList = userRef.docs;
-//   // console.log("====INPUT====: " + usersId);
-
-//   // iterate through database
-//   usersList.forEach((document) => {
-
-//     const usersRef = db.collection('users').doc(document.id).get().then((doc) => 
-//     {
-//       const user = doc.data();
-//       // console.log("USER UID: " + user.uid); //JSON.stringify(doc));
-//       // console.log("usersId : " + usersId)
-//       if (true || String(usersId) == String(user.uid))
-//       {
-//         userObj = [user.username, user.bio, user.contact];
-//         console.log("User is: " + JSON.stringify(userObj));
-//         // return userObj;
-//       }
-//     })
-//     .catch((e) => {
-//       console.log("Error getting document: " + e);
-//     });
-//   });
-  
-  /*
-  const singleUserRef = await db.collection('users').doc("1Wk1EqOmG2O4Lekf7NTV").get();
-  // Extract the data from user given person's uid
-  const user = singleUserRef.data();
-  */
-//   console.log("User obj: " + (userObj[0]))
-  
-//   if (!userObj) 
-//     return "USER NOT FOUND";
-//   else return userObj;
-// }
-  
-// function getInfoByCreatorUid(uid) {
-
-//   // Get a reference to the path where the 'info' node is stored
-//   const userRef = db.collection('users').get();
-//   const usersList = userRef.docs;
-//   const userInfoList = []
-//   usersList.forEach((item) => {
-//     userInfoList.push(item.id)
-//   });
-
-//   return userInfoList;
-// }
-
-
 // ========================== Geodecode Location from Street Address ===========================
 
 async function getLocationFromAddress(address, mapApiKey = apiKey) {
@@ -143,9 +87,7 @@ async function decodeLocations(apiKey)
     });
   }
 
-  //console.log("Decoded Locations: " + JSON.stringify(locations));
   return locations;
-  //console.log(doc.id, " => ", doc.data());
 }
 
 // ========================== Calculate Distance ===========================
@@ -162,7 +104,7 @@ async function calculateDistance(origin, destination) {
   //const destination = new google.maps.LatLng(coord2.lat, coord2.lng);
 
   // Call the Distance Matrix API to get the distance between the two locations.
-  //console.log("HERE");
+
   const { rows } = await service.getDistanceMatrix({
     origins: [origin],
     destinations: [destination],
@@ -254,35 +196,14 @@ async function removePreviousProfiles(uid) //picture, name, bio, contact)
   try {
     const querySnapshot = await getDocs(query(usersRef, where('uid', '==', uid)));
 
-    //alert("Query: " + JSON.stringify(querySnapshot));
-
     querySnapshot.forEach((doc) => {
       // remove all instances of user with this id before updating user profile
       deleteProfile(doc.id);
-      //console.log("DOC ID: " + id)
-      // do something with the id
     });
   } catch (error) {
-    console.log("Removing nonexistent user failed: ", error);
+      console.log("Removing nonexistent user failed: ", error);
   }
   
-
-  // try {
-  //     const docRef = await addDoc(collection(db, "users"), {
-  //       uid: user ? user.uid : null,
-  //       username: user ? user.displayName : null,
-  //       picture: picture, // find way to uplaod file with url?
-  //       name: name, //Can be different than username associated with login
-  //       contact: contact,
-  //       bio: bio,
-  //     }).then(
-  //       alert("Profile Edited"),
-  //     );
-    
-  //     console.log("Profile Document written");
-  // } catch (e) {
-  //     console.error("Error adding document: ", e);
-  // }
 }
 
 // ========================== Delete Post ===========================
@@ -308,19 +229,6 @@ async function deleteProfile(docRefId) {
   }
 }
 
-// async function getProfileInfo(docRefId) {
-//   const usersRef = collection(db, 'users');
-//   const querySnapshot = await getDocs(usersRef).where(____.uid == docRefId.uid);
-//
-//   try {
-//     const userProfile = db.collection("users").doc(docRefId);
-//     console.log("Profile" + userProfile + "accessed!");
-//   } catch (error) {
-//     console.error("Profile doesn't exist", error);
-//   }
-// }
-
-// type can be: {posts, users}
 // delete all entires of docType type in the database
 async function removeAllEntries(type) {
   if (!type) {
@@ -356,16 +264,6 @@ async function readPosts(tags)
         console.log("Price: " + doc.get("price"));
     });
     
-    /*
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        console.log("Price: " + doc.get("price"));
-      });
-    });
-    return unsubscribe;
-    */
-    //return querySnapshot;
 }
 
 // component displayed when user NOT signed in 
@@ -451,5 +349,6 @@ export {SignIn,
         calculateDistance,
         removeAllEntries,
         deletePost,
+        getPostCreator,
         removePreviousProfiles,
         auth, db};

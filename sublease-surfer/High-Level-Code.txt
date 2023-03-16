@@ -1,6 +1,0 @@
-Website runs through App function
-
-App function
-1. Displays sign in page
-2. Has feature to change mode from light theme to dark theme
-3. 
