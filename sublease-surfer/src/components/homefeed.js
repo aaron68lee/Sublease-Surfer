@@ -182,11 +182,11 @@ function HomeFeed() {
             {/*<button class="scroll-button left">&lt;</button>
             <button class="scroll-button right">&gt;</button>*/}
           </div>
-          {
+          {/*
           <div text-align="center" className="CustomMap" width="200%">
             <CustomMap multipleMarkers = {false} address={expandedPost.address}/>
           </div>
-          }
+          */}
           <p>map 2</p>
          
           <br></br>
@@ -209,16 +209,10 @@ function HomeFeed() {
               Name: {currProfile.username}
               <br></br>
               <br></br>
-              <br></br>
-              <br></br>
               About them: {currProfile.bio}
               <br></br>
               <br></br>
-              <br></br>
-              <br></br>
               Contact Info: {currProfile.contact}
-              <br></br>
-              <br></br>
               <br></br>
               <br></br>
             </Modal.Body>
