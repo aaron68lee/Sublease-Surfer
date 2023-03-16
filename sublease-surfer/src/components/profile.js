@@ -13,6 +13,7 @@ function Profile()
   const [bio, setBio] = useState('');
   const [contact, setContact] = useState('');
   const [profiles, setProfiles] = useState([]);
+  const [currUser, setCurrUser] = useState(null);
 
   // Handle image uploading
   const onChange = (imageList, addUpdateIndex) => {
@@ -31,6 +32,15 @@ function Profile()
     .collection("users")
     .onSnapshot((querySnapshot) => {
       querySnapshot.forEach((doc) => {
+        //console.log("Data: " + JSON.stringify(doc.data().uid));
+        if(doc.data().uid == auth.currentUser.uid)
+        {
+          //console.log("I'M IN DATABASE");
+          setCurrUser(doc.data());
+          setBio(doc.data().bio);
+          setContact(doc.data().contact);
+        }
+        
         getDatabaseData.push({
           ...doc.data(), //spread operator
           key: doc.id,
@@ -47,7 +57,7 @@ function Profile()
 
   //Returns a different page if the firebase data is loading
   if (loading) {
-    return <h1>loading firebase data...</h1>;
+    return <h1>loading data...</h1>;
   }
 
 
@@ -61,7 +71,7 @@ function Profile()
         contact: contact,
       };
 
-      console.log("Post this Object: \n" + JSON.stringify(profileObj));
+      //console.log("Post this Object: \n" + JSON.stringify(profileObj));
 
       // reset all post field values 
       setPictures('');
@@ -70,9 +80,13 @@ function Profile()
       setContact('');
 
     // CREATE A FUNCTION TO STORE PROFILES TO DB
-    postProfile(pictures, name, bio, contact);
-    removePreviousProfiles(pictures, name, bio, contact);
-}
+    removePreviousProfiles(auth.currentUser.uid).then(() => {
+      postProfile(pictures, name, bio, contact);
+    }); // (pictures, name, bio, contact);
+    
+    
+  }
+
     // Render the form
     return (
     <div>
@@ -81,7 +95,7 @@ function Profile()
       <textarea
         value={bio}
         onChange={e => setBio(e.target.value)}
-        placeholder="About you..."
+        placeholder={"About you..."} //auth.currentUser ? auth.currentUser.uid : "About you..."}
       />
       <br />
       <textarea
@@ -90,10 +104,10 @@ function Profile()
         placeholder="Contact info..."
       />
       <br />
-      {profiles.length > 0 ? (
+      {/*profiles.length > 0 ? (
         profiles.map((profile) => <div key={profile.key}>{profile.bio}</div>
         )
-      ) : <h1>no profiles yet</h1>}
+      ) : <h1>no profiles yet</h1>*/}
 
     {/* Add image uploading function
     <ImageUploading
@@ -137,6 +151,7 @@ function Profile()
       {/* Create a button to submit the form */}
 
       <button className='signIn' onClick={handleSubmit}>Save Profile</button>
+      
     </div>
   );
 }

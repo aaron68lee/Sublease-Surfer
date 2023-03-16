@@ -196,7 +196,7 @@ function HomeFeed() {
         </Modal.Header>
         
         <Modal.Body>
-
+          <p>Owner: {expandedPost.name}</p>
           <div class="picture-scroller">
             <div class="pictures">
               <img src={expandedPost.imageUrl} alt='post image' /> {/* ADD MORE PICS HERE FOR SCROLLING */}
@@ -204,8 +204,14 @@ function HomeFeed() {
             {/*<button class="scroll-button left">&lt;</button>
             <button class="scroll-button right">&gt;</button>*/}
           </div>
-          {/*<CustomMap multipleMarkers = {false} address={expandedPost.address}/>*/}
-          <br/>
+          {
+          <div text-align="center" className="CustomMap" width="200%">
+            <CustomMap multipleMarkers = {false} address={expandedPost.address}/>
+          </div>
+          }
+          <p>map 2</p>
+         
+          <br></br>
           <p>{expandedPost.description}</p>
           <p>Available: {expandedPost.startDate} to {expandedPost.endDate}</p>
           <p>Price: ${expandedPost.price}</p>

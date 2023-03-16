@@ -100,7 +100,7 @@ export class CustomMap extends Component{
     
     // Set the position of the info window and open it
     infowindow.setPosition(position);
-    infowindow.open(map);
+    //infowindow.open(map); // doesn't work right now
 
     const distance = await calculateDistance(location.address, campusAddress);
     
@@ -110,7 +110,7 @@ export class CustomMap extends Component{
     
   };
   
-  // auto resizes when new markers are added to map
+  // auto resizes when new markers are added to map (not in use currently)
   resize()
   {
     const points = this.state.locations.map(location => location.location);

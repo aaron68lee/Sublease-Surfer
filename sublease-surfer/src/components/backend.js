@@ -246,11 +246,27 @@ async function postProfile(picture, name, bio, contact)
 }
 
 // ======================== Update Profile ==========================
-async function removePreviousProfiles(picture, name, bio, contact) 
+// remove profile with given user's uid
+async function removePreviousProfiles(uid) //picture, name, bio, contact) 
 {
   let user = auth.currentUser;
-  const ref = collection(db, 'users');
-  console.log("Ref: " + ref)
+  const usersRef = collection(db, 'users');
+  try {
+    const querySnapshot = await getDocs(query(usersRef, where('uid', '==', uid)));
+
+    //alert("Query: " + JSON.stringify(querySnapshot));
+
+    querySnapshot.forEach((doc) => {
+      // remove all instances of user with this id before updating user profile
+      deleteProfile(doc.id);
+      //console.log("DOC ID: " + id)
+      // do something with the id
+    });
+  } catch (error) {
+    console.log("Removing nonexistent user failed: ", error);
+  }
+  
+
   // try {
   //     const docRef = await addDoc(collection(db, "users"), {
   //       uid: user ? user.uid : null,
@@ -270,13 +286,25 @@ async function removePreviousProfiles(picture, name, bio, contact)
 }
 
 // ========================== Delete Post ===========================
-
+// delete post given its doc id
 async function deletePost(docRefId) {
   try {
     await db.collection("posts").doc(docRefId).delete();
     console.log("Post " + docRefId + " successfully deleted!");
   } catch (error) {
     console.error("Error removing post: ", error);
+  }
+}
+
+
+// ========================== Delete Profile ===========================
+// delete profile given its doc id
+async function deleteProfile(docRefId) {
+  try {
+    await db.collection("users").doc(docRefId).delete();
+    console.log("User " + docRefId + " successfully deleted!");
+  } catch (error) {
+    console.error("Error removing user: ", error);
   }
 }
 

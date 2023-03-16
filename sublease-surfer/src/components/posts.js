@@ -5,12 +5,8 @@ import ImageUploading from 'react-images-uploading';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
-import { GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth';
-import {useAuthState, useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import {doc, collection, addDoc, getDocs, updateDoc} from "firebase/firestore"; 
-
-import { Link } from 'react-router-dom';
 
 import {auth, post, calculateDistance} from '../components/backend.js';
 import Navbar from '../components/navbar.js';

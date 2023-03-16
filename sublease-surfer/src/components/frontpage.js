@@ -26,8 +26,12 @@ function Frontpage()
 
             
             <div text-align="center" className="CustomMap" width="200%">
-                <CustomMap multipleMarkers = {true}/>
+                <CustomMap multipleMarkers = {true}/>  
             </div>
+
+            {/*<div text-align="center" className="CustomMap" width="200%">
+            <CustomMap multipleMarkers = {false} address={"308 Westwood Plaza"}/>
+            </div>*/}
 
             <br/>
             <br/>
