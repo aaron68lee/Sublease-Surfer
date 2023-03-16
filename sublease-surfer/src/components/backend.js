@@ -38,6 +38,71 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore(); // db = firebase.firestore() for database access
+const collectionRef = db.collection('my-collection');
+
+// gets user id of a post given the post's hash
+async function getPostCreator(postHash) {
+  // Retrieve the post document from Firestore
+  const postDoc = await db.collection('posts').doc(postHash).get();
+  // Extract the UID of the post creator from the post document
+  const creatorUid = postDoc.data().uid;
+  return creatorUid;
+}
+
+// NOT CURRENTLY WORKING// Creates a list with the bio and contact of a given post creator 
+// async function getInfoByCreatorUid(usersId) {
+
+//   // Get a reference to the path where the 'info' node is stored
+//   const userRef = await db.collection('users').get();
+//   let userObj = ["Name not found", "Bio not found", "Contact info not found"];
+
+//   const usersList = userRef.docs;
+//   // console.log("====INPUT====: " + usersId);
+
+//   // iterate through database
+//   usersList.forEach((document) => {
+
+//     const usersRef = db.collection('users').doc(document.id).get().then((doc) => 
+//     {
+//       const user = doc.data();
+//       // console.log("USER UID: " + user.uid); //JSON.stringify(doc));
+//       // console.log("usersId : " + usersId)
+//       if (true || String(usersId) == String(user.uid))
+//       {
+//         userObj = [user.username, user.bio, user.contact];
+//         console.log("User is: " + JSON.stringify(userObj));
+//         // return userObj;
+//       }
+//     })
+//     .catch((e) => {
+//       console.log("Error getting document: " + e);
+//     });
+//   });
+  
+  /*
+  const singleUserRef = await db.collection('users').doc("1Wk1EqOmG2O4Lekf7NTV").get();
+  // Extract the data from user given person's uid
+  const user = singleUserRef.data();
+  */
+//   console.log("User obj: " + (userObj[0]))
+  
+//   if (!userObj) 
+//     return "USER NOT FOUND";
+//   else return userObj;
+// }
+  
+// function getInfoByCreatorUid(uid) {
+
+//   // Get a reference to the path where the 'info' node is stored
+//   const userRef = db.collection('users').get();
+//   const usersList = userRef.docs;
+//   const userInfoList = []
+//   usersList.forEach((item) => {
+//     userInfoList.push(item.id)
+//   });
+
+//   return userInfoList;
+// }
 
 
 // ========================== Geodecode Location from Street Address ===========================
@@ -178,7 +243,30 @@ async function postProfile(picture, name, bio, contact)
     } catch (e) {
         console.error("Error adding document: ", e);
     }
+}
+
+// ======================== Update Profile ==========================
+async function removePreviousProfiles(picture, name, bio, contact) 
+{
+  let user = auth.currentUser;
+  const ref = collection(db, 'users');
+  console.log("Ref: " + ref)
+  // try {
+  //     const docRef = await addDoc(collection(db, "users"), {
+  //       uid: user ? user.uid : null,
+  //       username: user ? user.displayName : null,
+  //       picture: picture, // find way to uplaod file with url?
+  //       name: name, //Can be different than username associated with login
+  //       contact: contact,
+  //       bio: bio,
+  //     }).then(
+  //       alert("Profile Edited"),
+  //     );
     
+  //     console.log("Profile Document written");
+  // } catch (e) {
+  //     console.error("Error adding document: ", e);
+  // }
 }
 
 // ========================== Delete Post ===========================
@@ -191,6 +279,18 @@ async function deletePost(docRefId) {
     console.error("Error removing post: ", error);
   }
 }
+
+// async function getProfileInfo(docRefId) {
+//   const usersRef = collection(db, 'users');
+//   const querySnapshot = await getDocs(usersRef).where(____.uid == docRefId.uid);
+//
+//   try {
+//     const userProfile = db.collection("users").doc(docRefId);
+//     console.log("Profile" + userProfile + "accessed!");
+//   } catch (error) {
+//     console.error("Profile doesn't exist", error);
+//   }
+// }
 
 // type can be: {posts, users}
 // delete all entires of docType type in the database
@@ -323,4 +423,5 @@ export {SignIn,
         calculateDistance,
         removeAllEntries,
         deletePost,
+        removePreviousProfiles,
         auth, db};

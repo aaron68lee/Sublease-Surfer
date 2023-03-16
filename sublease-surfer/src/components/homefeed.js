@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db, auth, deletePost } from '../components/backend.js';
+import { db, auth, deletePost, post } from '../components/backend.js';
 import { Link } from 'react-router-dom';
 //import {TrackingProvider, TrackingContext} from '@vrbo/react-event-tracking';
 import {orderBy, onSnapshot, limit, doc, collection, updateDoc, setDoc, query, where} from "firebase/firestore";
@@ -24,7 +24,8 @@ function HomeFeed() {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [deleted, setDeleted] = useState(false)
+  const [currProfile, setCurrProfile] = useState([]);
+  const [deleted, setDeleted] = useState(false);
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
@@ -140,10 +141,33 @@ function HomeFeed() {
       {filteredPosts && filteredPosts.map
       (post => (
         <div className='post' key={post.id} onClick={() => {
-          
           handleShowModal();
           setExpandedPost(post);
+            // const creator = getInfoByCreatorUid(expandedPost.uid);
+            // console.log("Post id: " + expandedPost.uid)
+            // // console.log("Type(creator): " + typeof(creator));
+            // creator.then(
+            //   (value) => { console.log("Value: " + value); },
+            //   (reason) => { console.log("Reason: " + reason); } 
+            //   );
+
+            // setCurrProfile(creator);
+
+
+            console.log("Curr profile: " + JSON.stringify(currProfile))
+
+
+            //   async () => {
+        //   handleShowModal();
+        //   setExpandedPost(post);
+        //     const creator = await getInfoByCreatorUid(expandedPost.uid);
+        //     alert(creator);
+        //     setCurrProfile(creator);
+        //     console.log("Curr profile: " + JSON.stringify(currProfile))
+        // }}>
         }}>
+      
+        
           <h2><img src= "./assets/address.png" alt="imgWalk" />{post.address}</h2>
           <h2> <img src="./assets/walk.png" alt="imgAddress"/> {(post.distance !== null) ? (post.distance) + " miles" : ""} </h2>
           <img src={post.imageUrl} alt="post image" className='main-listing-image'/>
@@ -198,7 +222,18 @@ function HomeFeed() {
             <Modal.Header closeButton>
               <Modal.Title>User Profile</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Nested Modal Content</Modal.Body>
+            {currProfile ? 
+            <Modal.Body>
+              Name: {currProfile.username}
+              About them: {currProfile.bio}
+                <br></br>
+                  <br></br>
+                  <br></br>
+                <br></br>
+              Contact Info: {currProfile.contact}
+            </Modal.Body>
+            : <></>
+            }
           </Modal>
 
           {/* Button to show profiles */}
