@@ -1,6 +1,6 @@
 # Sublease Surfer
 
-Sublease Surfer is a web application developed to facilitate the apartment subleasing/subletting process for college students. A detailed presentation of the application can be found [here](https://docs.google.com/presentation/d/1a_FD3G3iHuYh3M6AZVtshNhjGcXpqi1VH2AnFbN5FjA/edit?usp=sharing)
+Sublease Surfer is a [web application](https://mcj8.github.io/) developed to facilitate the apartment subleasing/subletting process for college students. A detailed presentation of the application can be found [here](https://docs.google.com/presentation/d/1a_FD3G3iHuYh3M6AZVtshNhjGcXpqi1VH2AnFbN5FjA/edit?usp=sharing)
 
 A [demo]() video will be linked later.
 
